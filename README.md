@@ -33,3 +33,27 @@ var appRoot = document.getElementById('app');
 
 ReactDOM.render(template, appRoot);
 ///////////////////////////
+
+Module 11 Conditional Rendering
+Leaned 3 ways of Conditional rendering. 1 through a function, 2 through shorthand ternary operator and 3 logical && operator.
+
+
+///////////////////////////Examples
+function getLocation(location){
+    if (location){
+        return <p>Location: {location}</p>;
+    }
+};
+
+var templateTwo = (
+    <div>
+        <h1>{user.name ? user.name : 'Anonymous'}</h1>
+        {(user.age && user.age >= 18) && <p>Age: {user.age}</p>}
+        {getLocation(user.location)}
+    </div>
+);
+
+var appRoot = document.getElementById('app');
+
+ReactDOM.render(templateTwo, appRoot);
+//////////////////////////
