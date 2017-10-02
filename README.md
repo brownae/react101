@@ -57,3 +57,5 @@ var appRoot = document.getElementById('app');
 
 ReactDOM.render(templateTwo, appRoot);
 //////////////////////////
+
+Module 12 Const and let
