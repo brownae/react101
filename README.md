@@ -34,7 +34,7 @@ var appRoot = document.getElementById('app');
 ReactDOM.render(template, appRoot);
 ///////////////////////////
 
-Module 11 Conditional Rendering
+lecture 11 Conditional Rendering
 Leaned 3 ways of Conditional rendering. 1 through a function, 2 through shorthand ternary operator and 3 logical && operator.
 
 
@@ -58,4 +58,8 @@ var appRoot = document.getElementById('app');
 ReactDOM.render(templateTwo, appRoot);
 //////////////////////////
 
-Module 12 Const and let
+lecture 13 Const and let
+file playground/es6-let-const.js
+
+lecture 14 Arrow Functions pt 1
+file playground/es6-arrow-function.js
