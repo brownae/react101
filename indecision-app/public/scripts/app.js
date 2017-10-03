@@ -1,57 +1,89 @@
 'use strict';
 
-//arguments object - no longer bound with arrow function
-// the object arguments can see ALL arguments passed to it. This goes away with arrow function.
+console.log('App.js is running');
 
-// const add = function(a,b){
-//     console.log(arguments);
-//     return a+b;
-// };
-
-// const add = (a,b) => { // throws error
-//     console.log(arguments);
-//     return a+b;
-// };
-
-// console.log(add(55,1,1001));
-
-//this keyword - no longer bound with arrow function
-// If you want to use a "this" use the es5 syntax. with arrow functions the "this" keyword looks to it's parent to define the "this". Which can be bad in some cases.
-
-// .map() as oppsed to .forEach()... .map() allows to loop through array and add in a function that can change the array as it goes, resaved with updated values.
-
-var user = {
-    name: 'Aaron',
-    cities: ['Seattle', 'Dubai', 'New York'],
-    printPlacesLived: function printPlacesLived() {
-        var _this = this;
-
-        return this.cities.map(function (city) {
-            return _this.name + ' has lived in ' + city;
-        });
-
-        console.log(this.name);
-        console.log(this.cities);
-
-        this.cities.forEach(function (city) {
-            console.log(_this.name + ' has lived in ' + city);
-        });
-    }
+var app = {
+    title: "Indecision App",
+    subtitle: 'Put your life in the hands of a computer',
+    options: ['One', 'Two']
 };
 
-console.log(user.printPlacesLived());
+var template = React.createElement(
+    'div',
+    null,
+    React.createElement(
+        'h1',
+        null,
+        app.title
+    ),
+    app.subtitle && React.createElement(
+        'p',
+        null,
+        app.subtitle
+    ),
+    app.options.length > 0 ? React.createElement(
+        'p',
+        null,
+        'Here are your options'
+    ) : React.createElement(
+        'p',
+        null,
+        'No Options'
+    ),
+    React.createElement(
+        'ol',
+        null,
+        React.createElement(
+            'li',
+            null,
+            'Item One'
+        ),
+        React.createElement(
+            'li',
+            null,
+            'Item Two'
+        )
+    )
+);
 
-var multiplier = {
-    //array of numbers
-    numbers: [10, 20, 30],
-    multiplyBy: 2,
-    //multiply method
-    multiply: function multiply() {
-        var _this2 = this;
-
-        return this.numbers.map(function (number) {
-            return _this2.multiplyBy * number;
-        });
-    }
+var count = 0;
+var addOne = function addOne() {
+    console.log('addOne');
 };
-console.log(multiplier.multiply());
+var minusOne = function minusOne() {
+    console.log('minusOne');
+};
+var reset = function reset() {
+    console.log('reset');
+};
+
+var templateTwo = React.createElement(
+    'div',
+    null,
+    React.createElement(
+        'h1',
+        null,
+        'Count: ',
+        count
+    ),
+    React.createElement(
+        'button',
+        { onClick: addOne },
+        '+1'
+    ),
+    React.createElement(
+        'button',
+        { onClick: minusOne },
+        '-1'
+    ),
+    React.createElement(
+        'button',
+        { onClick: reset },
+        'Reset'
+    )
+);
+console.log(templateTwo);
+
+var appRoot = document.getElementById('app');
+
+ReactDOM.render(templateTwo, appRoot);

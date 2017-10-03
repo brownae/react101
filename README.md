@@ -66,3 +66,6 @@ file playground/es6-arrow-function.js
 
 Lecture 15 ES6 Aside: Arrow functions
 file playground/es6-arrow-function2.js
+
+Lecture 16 Events and attributes
+Shows how to use class as className in jsx and how to do onCLock event.
