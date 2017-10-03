@@ -32,7 +32,7 @@ var templateTwo = (
 var appRoot = document.getElementById('app');
 
 ReactDOM.render(template, appRoot);
-///////////////////////////
+///////////////////////////END
 
 lecture 11 Conditional Rendering
 Leaned 3 ways of Conditional rendering. 1 through a function, 2 through shorthand ternary operator and 3 logical && operator.
@@ -56,7 +56,7 @@ var templateTwo = (
 var appRoot = document.getElementById('app');
 
 ReactDOM.render(templateTwo, appRoot);
-//////////////////////////
+//////////////////////////END
 
 lecture 13 Const and let
 file playground/es6-let-const.js
@@ -94,7 +94,7 @@ const renderCounterApp = () => {
 };
 
 renderCounterApp();
-///////////////////////
+///////////////////////END
 
 Lecture 18 Forms and input
 Learned to create a form and to use the onFormSubmit event handler from react documentation on forms. Still need to prevent the event default.
@@ -116,4 +116,23 @@ const onFormSubmit = (e) => {
     <input type="text" name="option"/>
     <button>Add Option</button>
 </form>
-//////////////////////
+//////////////////////END
+
+Lecture 19 Arrays in JSX
+Arrays are supported by JSX. You can use boolean values but they will not render. Strings, numbers and floats will render. You can also put JSX in the array and it will render. When rendering repeating li's or other elements the key property must be added and have a unique value. react keeps track of every element and it must have an identifier.
+/////////////////////Example
+//in this example we looped/mapped through the app.options and updated the array with the value wrapped in an li tag with a key that is the same value.
+<ol>
+    {
+        app.options.map((option) => {
+            return <li key={option}> {option}</li>
+        })
+    }
+</ol>
+/////////////////////END
+
+Lecture
+
+/////////////////////Example
+
+/////////////////////END
