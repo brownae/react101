@@ -68,4 +68,30 @@ Lecture 15 ES6 Aside: Arrow functions
 file playground/es6-arrow-function2.js
 
 Lecture 16 Events and attributes
-Shows how to use class as className in jsx and how to do onCLock event.
+Shows how to use class as className in jsx and how to do onClick event.
+
+Lecture 17 Manual Data Binding
+manually bound data using a custom function that re-rendered the template after each onClick event.
+///////////////////// example
+let count = 0;
+const addOne = () => {
+    count++;
+    renderCounterApp();
+};
+
+const renderCounterApp = () => {
+
+    const templateTwo = (
+        <div>
+            <h1>Count: {count}</h1>
+            <button onClick={addOne}>+1</button>
+            <button onClick={minusOne}>-1</button>
+            <button onClick={reset}>Reset</button>
+        </div>
+    );
+
+    ReactDOM.render(templateTwo, appRoot);
+};
+
+renderCounterApp();
+///////////////////////
