@@ -95,3 +95,25 @@ const renderCounterApp = () => {
 
 renderCounterApp();
 ///////////////////////
+
+Lecture 18 Forms and input
+Learned to create a form and to use the onFormSubmit event handler from react documentation on forms. Still need to prevent the event default.
+///////////////////////Example
+const onFormSubmit = (e) => {
+
+    e.preventDefault();
+
+    const option = e.target.elements.option.value; //(note:option is the name of the element we are getting value of.)
+
+    if (option){
+        app.options.push(option);
+        e.target.elements.option.value = '';
+        render();
+    };
+};
+
+<form onSubmit={onFormSubmit}>
+    <input type="text" name="option"/>
+    <button>Add Option</button>
+</form>
+//////////////////////
