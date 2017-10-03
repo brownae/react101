@@ -63,3 +63,6 @@ file playground/es6-let-const.js
 
 lecture 14 Arrow Functions pt 1
 file playground/es6-arrow-function.js
+
+Lecture 15 ES6 Aside: Arrow functions
+file playground/es6-arrow-function2.js
