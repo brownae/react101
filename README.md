@@ -131,8 +131,16 @@ Arrays are supported by JSX. You can use boolean values but they will not render
 </ol>
 /////////////////////END
 
-Lecture
+Lecture 20 Picking an option
+How to set up a randomNum using the Math.random and then picking a random option from the options given. How to disable a button with an argument.
 
 /////////////////////Example
+const onMakeDecision = () => {
+    const randomNum = Math.floor(Math.random() * app.options.length);
+    const option = app.options[randomNum];
+    alert(option);
+    console.log(randomNum);
+};
 
+<button disabled={app.options.length === 0} onClick={onMakeDecision}>What should I do?</button>
 /////////////////////END
