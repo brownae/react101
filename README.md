@@ -144,3 +144,30 @@ const onMakeDecision = () => {
 
 <button disabled={app.options.length === 0} onClick={onMakeDecision}>What should I do?</button>
 /////////////////////END
+
+Lecture 21 Build-it Visibility toggle
+This was a challenge exercise to make a simple toggle option to hide and show details. This is the whole app.
+/////////////////////Example
+let toggle = false;
+
+
+let toggler = () => {
+    toggle = !toggle;
+    render();
+    console.log('End ');
+};
+
+const render = () => {
+    const template = (
+        <div>
+            <h1>Visibility Toggle</h1>
+
+            <button onClick={toggler}>{toggle ? 'Hide Details' : 'Show Details'}</button>
+            {toggle && <p>Some details about things</p>}
+        </div>
+    );
+    ReactDOM.render(template, document.getElementById('app'));
+};
+
+render();
+/////////////////////END
