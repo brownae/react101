@@ -317,3 +317,31 @@ class Option extends React.Component {
 }
 
 /////////////////////END
+
+Lecture 29 Events and Methods.
+(Methods are functions of a class). Here we added an event handler 'onSubmit' and we wrote the method right inside the prop and handled it.
+
+/////////////////////Example
+class AddOption extends React.Component{
+    handleAddOption(e){
+        e.preventDefault();
+
+        const option = e.target.elements.option.value.trim();
+        if (option){
+            alert(option+' was typed');
+            e.target.elements.option.value = '';
+        };
+
+    }
+    render(){
+        return (
+            <div>
+                <form onSubmit={this.handleAddOption}>
+                    <input type="text" name="option"/>
+                    <button>Add Option</button>
+                </form>
+            </div>
+        );
+    }
+}
+/////////////////////END
