@@ -173,7 +173,7 @@ render();
 /////////////////////END
 
 Lecture 24 ES6 Classes pt 1
-Class = blueprint. Learned about creating classes and the syntax to set default values in the constructor.
+Class = bluepint. Learned about creating classes and the syntax to set default values in the constructor.
 /////////////////////Example
 class Person {
     constructor(name = 'Anonymous', age = 0) {
@@ -195,4 +195,31 @@ console.log(me.getDescription());
 
 const kid = new Person();
 console.log(kid.getDescription());
+/////////////////////END
+
+Lecture 25 ES6 Classes pt 2
+How to extend class. 'super' is used to refer to parent class and pass on to extended class.
+/////////////////////Example
+
+class Traveler extends Person {
+    constructor(name,age,homeLocation){
+        super(name,age);//super means get from parent
+        this.homeLocation = homeLocation;//connect the new property
+    }
+
+    getDescription(){  this is overriding the parent class. 
+        let greeting = super.getGreeting();
+
+        if (this.homeLocation()){
+            greeting += ` I'm visiting from ${this.homeLocation}.`;
+        }
+
+        return greeting;
+    }
+
+}
+
+const me = new Traveler('Aaron', 34,'Seattle, Wa');
+console.log(me.getDescription());
+
 /////////////////////END
