@@ -252,3 +252,23 @@ const jsx = (
 
 ReactDOM.render(jsx, document.getElementById('app'));
 /////////////////////END
+
+Lecture 27 Nesting Components
+Our components can render jsx, so they can render other components inside. The parent component was the only thing rendered in the reactDOM.render call on the bottom of the page, but it's children also get called.
+/////////////////////Example
+// the Option component is called inside the 'Options' component which was called inside the 'IndecisionApp' component below.
+
+    class Options extends React.Component {
+        render(){
+            return (
+                <div>
+                Options component here
+                    <Option />
+                </div>
+            );
+        }
+    }
+
+// we can render the top level parent in the ReactDOM and it will render the components inside of it and on down the line
+    ReactDOM.render(<IndecisionApp />, document.getElementById('app'));
+/////////////////////END
