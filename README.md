@@ -272,3 +272,48 @@ Our components can render jsx, so they can render other components inside. The p
 // we can render the top level parent in the ReactDOM and it will render the components inside of it and on down the line
     ReactDOM.render(<IndecisionApp />, document.getElementById('app'));
 /////////////////////END
+
+Lecture 28 Component Props
+Props are properties. We learned how to pass data down the line to nested components.
+/////////////////////Example
+
+class IndecisionApp extends React.Component {
+    render(){
+        const title = 'Indecision';
+        const subtitle = 'Put your life in the hands of a computer';
+        const options = ['Thing One','Thing Two','Thing Three'];
+
+        return (
+            <div> //With 'title={title}' we are setting up key value pairs essentially.
+                <Header title={title} subtitle={subtitle}/>
+                <Action />
+                <Options options={options}/>//HERE declared array and passed it in with the created 'options' prop.
+                <AddOption />
+            </div>
+        );
+    }
+}
+
+class Options extends React.Component {
+    render(){
+        return (
+            <div>
+            { //HERE we grabbed the array through the parent prop and then looped through each item in the array and passed it as a prop to the 'Option' component.
+                this.props.options.map((option) => <Option key={option} optionText={option}/>)
+            }
+            </div>
+        );
+    }
+}
+
+class Option extends React.Component {
+    render(){
+        return (
+            <div>//HERE we are each optionText is returned
+                {this.props.optionText}
+            </div>
+        );
+    }
+}
+
+/////////////////////END
