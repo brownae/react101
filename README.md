@@ -207,7 +207,7 @@ class Traveler extends Person {
         this.homeLocation = homeLocation;//connect the new property
     }
 
-    getDescription(){  this is overriding the parent class. 
+    getDescription(){  this is overriding the parent class.
         let greeting = super.getGreeting();
 
         if (this.homeLocation()){
@@ -222,4 +222,33 @@ class Traveler extends Person {
 const me = new Traveler('Aaron', 34,'Seattle, Wa');
 console.log(me.getDescription());
 
+/////////////////////END
+
+Lecture 26 Creating a react component
+Moved jsx Indecision app out of app.js to playground jsx-indecision.js
+react components are just extended react classes. The have to be named with an uppercase first letter and have to define a 'render(){}' method. To use them you call them inside some jsx. They look like custom html tags.
+/////////////////////Example
+//This is a bare bones working react component with static values.
+
+class Header extends React.Component {
+    render(){
+        return (
+            <div>
+                <h1>Indecision</h1>
+                <h2>Put your life in the hands of a computer</h2>
+            </div>
+        );
+    }
+}
+
+const jsx = (
+    <div>
+        <Header /> // this is calling the header above.
+        <Action />
+        <Options />
+        <AddOption />
+    </div>
+);
+
+ReactDOM.render(jsx, document.getElementById('app'));
 /////////////////////END
