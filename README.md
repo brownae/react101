@@ -388,3 +388,41 @@ React Component state
 4. Component re-rendered using new state values.*
 5. Start again at 3
 (* this happens automatically.)
+
+Lecture 32 Adding State to Counter App: Part 1
+returning to counter-example.js we re-write it to use props. and bind the methods to the correct context. Buttons just spit out a console.log().
+
+/////////////////////Example
+class Counter extends React.Component {
+    constructor(props){
+        super(props);
+        this.handleAddOne = this.handleAddOne.bind(this);
+        this.handleMinusOne = this.handleMinusOne.bind(this);
+        this.handleReset = this.handleReset.bind(this);
+    };
+
+    handleAddOne(){
+        console.log('+1');
+    }
+
+    handleMinusOne(){
+        console.log('-1');
+    }
+
+    handleReset(){
+        console.log('Reset');
+    }
+
+    render(){
+        return(
+            <div>
+                <h1>Count:</h1>
+                <button onClick={this.handleAddOne}>+1</button>
+                <button onClick={this.handleMinusOne}>-1</button>
+                <button onClick={this.handleReset}>Reset</button>
+            </div>
+        );
+    }
+}
+ReactDOM.render(<Counter />, document.getElementById('app'));
+/////////////////////END
