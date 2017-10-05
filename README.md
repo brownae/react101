@@ -372,3 +372,19 @@ class Options extends React.Component {
     }
 }
 /////////////////////END
+
+Lecture 31 What Is Component State?
+React Component state
+
+<Counter />
+
+{
+    count: 0
+}
+
+1. Set up default state of object.
+2. Component rendered with default state values.*
+3. Change state based on event.
+4. Component re-rendered using new state values.*
+5. Start again at 3
+(* this happens automatically.)
