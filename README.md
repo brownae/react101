@@ -320,7 +320,6 @@ class Option extends React.Component {
 
 Lecture 29 Events and Methods.
 (Methods are functions of a class). Here we added an event handler 'onSubmit' and we wrote the method right inside the prop and handled it.
-
 /////////////////////Example
 class AddOption extends React.Component{
     handleAddOption(e){
@@ -340,6 +339,34 @@ class AddOption extends React.Component{
                     <input type="text" name="option"/>
                     <button>Add Option</button>
                 </form>
+            </div>
+        );
+    }
+}
+/////////////////////END
+
+Lecture 30 Method binding.
+When we created the 'handleRemoveAll' method in the Options class it changed the context of the 'this' location. By default methods return undefined to the 'this' call. (Render() is not an event handler so it keeps the correct context.) To fix this we override the constructor of the 'React.Component' we extended. we let the default constructor build by using 'super(props);'. then we tie the 'this.handleRemoveAll' to itself with '.bind()' . The first parameter allows you to set the context. By doing this we are ensuring that every time the 'handleRemoveAll' method is called it's context is correct.
+
+/////////////////////Example
+class Options extends React.Component {
+    constructor(props){
+        super(props); // this has to be done or we don't carry on the data and methods from React.Component.
+        this.handleRemoveAll = this.handleRemoveAll.bind(this);
+    }
+
+    handleRemoveAll(){
+        // alert('handleRemoveAll!');
+        console.log(this.props.options);
+    }
+
+    render(){
+        return (
+            <div>
+            <button onClick={this.handleRemoveAll}>Remove All</button>
+            {
+                this.props.options.map((option) => <Option key={option} optionText={option}/>)
+            }
             </div>
         );
     }

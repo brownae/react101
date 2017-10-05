@@ -1,3 +1,4 @@
+
 class IndecisionApp extends React.Component {
     render(){
         const title = 'Indecision';
@@ -39,9 +40,16 @@ class Action extends React.Component{
 }
 
 class Options extends React.Component {
-    handleRemoveAll(){
-        alert('handleRemoveAll!');
+    constructor(props){
+        super(props);
+        this.handleRemoveAll = this.handleRemoveAll.bind(this);
     }
+
+    handleRemoveAll(){
+        // alert('handleRemoveAll!');
+        console.log(this.props.options);
+    }
+    
     render(){
         return (
             <div>
