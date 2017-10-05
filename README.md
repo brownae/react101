@@ -426,3 +426,28 @@ class Counter extends React.Component {
 }
 ReactDOM.render(<Counter />, document.getElementById('app'));
 /////////////////////END
+
+Lecture 33 Adding State to Counter App: Part 2
+wired up the buttons to live update the json object property 'counter:0'. The object is built right inside of constructor.
+/////////////////////Example
+* nothing inside the render section changed and here is an example of handleAddOne and the constructor.
+
+class Counter extends React.Component {
+    constructor(props){
+        super(props);
+        this.handleAddOne = this.handleAddOne.bind(this);
+        this.handleMinusOne = this.handleMinusOne.bind(this);
+        this.handleReset = this.handleReset.bind(this);
+        this.state = {
+            count: 0
+        };
+    };
+
+    handleAddOne(){
+        this.setState((prevState)=> {
+            return {
+                count : prevState.count + 1
+            }
+        });
+    }
+/////////////////////END
