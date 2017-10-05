@@ -444,10 +444,28 @@ class Counter extends React.Component {
     };
 
     handleAddOne(){
-        this.setState((prevState)=> {
+        this.setState((prevState)=> { //prevState or parameter grabs the state in the constructor.
             return {
                 count : prevState.count + 1
             }
         });
     }
+/////////////////////END
+
+Lecture 34 Alternative setState syntax
+Below is alternate syntax used twice to show point that react is asynchronous and so both are done at the same time and the second method is getting old data at the same time the one above is switching it to 0. It's shorter but when it's put inside an Anonymous function one runs and completes before the next starts.
+/////////////////////Example
+handleReset(){
+    // this.setState(()=>{ //original
+    //     return {
+    //         count : 0
+    //     }
+    // });
+    this.setState({ //First
+        count: 0
+    });
+    this.setState({ // Second executed asynchronously 
+        count: this.state.count + 1
+    });
+}
 /////////////////////END
