@@ -464,8 +464,44 @@ handleReset(){
     this.setState({ //First
         count: 0
     });
-    this.setState({ // Second executed asynchronously 
+    this.setState({ // Second executed asynchronously
         count: this.state.count + 1
     });
 }
+/////////////////////END
+
+Lecture 35 Build it: adding state to VisibilityToggle
+Took the build-it-visible.js and made it into a prop and re-wrote methods in context.
+
+/////////////////////Example
+class VisibilityToggle extends React.Component{
+    constructor(props){
+        super(props);
+        this.handleToggleVisibility = this.handleToggleVisibility.bind(this);
+        this.state = {
+            toggle : false
+        };
+    };
+
+    handleToggleVisibility(){
+        this.setState((prevState) => {
+            return {
+                toggle : !prevState.toggle
+            }
+        });
+
+    };
+
+    render(){
+        return (
+            <div>
+                <h1>Visibility Toggle</h1>
+                <button onClick={this.handleToggleVisibility}>{this.state.toggle ? 'Hide Details' : 'Show Details'} </button>
+                {this.state.toggle && <p>Some details about things</p>}
+            </div>
+        );
+    }
+}
+
+ReactDOM.render(<VisibilityToggle />, document.getElementById('app'));
 /////////////////////END
