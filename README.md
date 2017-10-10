@@ -662,5 +662,20 @@ class AddOption extends React.Component{
         );
     }
 }
-
 /////////////////////END
+
+Lecture 38 Summary: Props vs States.
+
+Props -
+    an object
+    Can be used when rendering
+    Changes from above cause re-rendering
+    Comes from above
+    Can't be changed by component itself
+
+State -
+    an object
+    Can be used when rendering
+    Changes cause re-rendering
+    Defined in component itself
+    Can't be changed by component itself
