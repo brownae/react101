@@ -679,3 +679,34 @@ State -
     Changes cause re-rendering
     Defined in component itself
     Can't be changed by component itself
+
+Lecture 40 SECTION 5 Intro Stateless functional components
+Here we switched some class based components to function based components.
+
+Stateless functional components are good for when you don't need to do much except pass info down or trigger a single function. If you are only calling render in a class based component, then it should probably be a Stateless functional component.
+
+Class based is when you need to do more complicated things like add a state.
+
+/////////////////////Example
+
+//NEW function based component
+const Option = (props) => { //pass in the props
+    return (
+        <div>
+            {props.optionText} // drop the 'this' not needed.
+        </div>
+    );
+};
+
+//OLD
+// class Option extends React.Component {
+//     render(){
+//         return (
+//             <div>
+//                 {this.props.optionText}
+//             </div>
+//         );
+//     }
+// }
+
+/////////////////////END
