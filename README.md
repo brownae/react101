@@ -505,3 +505,74 @@ class VisibilityToggle extends React.Component{
 
 ReactDOM.render(<VisibilityToggle />, document.getElementById('app'));
 /////////////////////END
+
+Lecture 36 Indecision State: Part 1
+We learned how to get our props to communicate with their parent by passing down functions.
+
+We set up this.state on the top level in 'class IndecisionApp'. Then we passed down a function 'handleDeleteOptions()' to the Action class. when the button to delete is clicked it triggers the 'handleDeleteOptions()' function on the top which resets the options array value to 0, which causes the 'Options' class to re-render and set to 0 on the UI.
+
+Next we created the 'handlePick()' function and passed it down to the 'Action' class. When the 'What should I do' button is pressed it triggers the 'handlePick()' function on top and the math algorithm randomly picks an option from the array and prints it to the screen.
+
+We had to bind both functions to the parent constructors 'this' context with the bind() function.
+
+Also in the 'Action' class we put in an inline method 'hasOptions={this.state.options.length > 0}' which passes down 'true' or 'false' to the button 'disabled' property to make the button disabled if there is nothing in the options array.
+
+/////////////////////Example
+class IndecisionApp extends React.Component {
+    constructor(props){
+        super(props);
+        this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
+        this.handlePick = this.handlePick.bind(this);
+        this.state = {
+            options: ['Thing One','Thing Two','Thing Four']
+        };
+    }
+
+    handleDeleteOptions(){
+        this.setState(() => {
+            return {
+                options : []
+            };
+        });
+    }
+
+    handlePick(){
+        const randomNum = Math.floor(Math.random() * this.state.options.length);
+        const option = this.state.options[randomNum];
+        alert(option);
+    }
+
+
+    render(){
+        const title = 'Indecision';
+        const subtitle = 'Put your life in the hands of a computer';
+
+        return (
+            <div>
+                <Header title={title} subtitle={subtitle}/>
+                <Action
+                    hasOptions={this.state.options.length > 0}
+                    handlePick={this.handlePick}
+                />
+                <Options
+                    options={this.state.options}
+                    handleDeleteOptions ={this.handleDeleteOptions}
+                />
+                <AddOption />
+            </div>
+        );
+    }
+}
+
+class Action extends React.Component{
+    render(){
+        return (
+            <div>
+                <button onClick={this.props.handlePick} disabled={!this.props.hasOptions}>
+                    What should I do?
+                </button>
+            </div>
+        );
+    }
+}
+/////////////////////END

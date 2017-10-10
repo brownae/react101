@@ -1,5 +1,5 @@
 class Counter extends React.Component {
-    constructor(props){
+    constructor(props){ // constructor method
         super(props);
         this.handleAddOne = this.handleAddOne.bind(this);
         this.handleMinusOne = this.handleMinusOne.bind(this);
@@ -9,7 +9,7 @@ class Counter extends React.Component {
         };
     };
 
-    handleAddOne(){
+    handleAddOne(){ //Method
         this.setState((prevState)=> {
             return {
                 count : prevState.count + 1
@@ -17,7 +17,7 @@ class Counter extends React.Component {
         });
     }
 
-    handleMinusOne(){
+    handleMinusOne(){ //Method
         this.setState((prevState) =>{
             return {
                 count : prevState.count - 1
@@ -25,7 +25,7 @@ class Counter extends React.Component {
         });
     }
 
-    handleReset(){
+    handleReset(){ //Method
         this.setState(()=>{
             return {
                 count : 0
@@ -33,7 +33,7 @@ class Counter extends React.Component {
         });
     }
 
-    render(){
+    render(){ //RENDER Method
         return(
             <div>
                 <h1>Count: {this.state.count}</h1>
@@ -46,7 +46,7 @@ class Counter extends React.Component {
 
 }
 
-ReactDOM.render(<Counter />, document.getElementById('app'));
+ReactDOM.render(<Counter />, document.getElementById('app')); // render the virtual dom on the document in the element with an ID of app.
 
 // let count = 0;
 // const addOne = () => {
