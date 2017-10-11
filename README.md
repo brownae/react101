@@ -815,3 +815,18 @@ We also added a button to each option in the list. We created a function 'handle
         );
     };
 /////////////////////END
+
+Lecture 43 Lifecycle methods
+methods that will fire at specific times in the components lifecycle.
+They are only available in class based components. They do not work in stateless functional components.
+/////////////////////Example
+    componentDidMount(){
+        console.log('fetching data!');
+    }
+    componentDidUpdate(prevProp, prevState){
+        console.log('saving data');
+    }
+    componentWillUnmount(){
+        console.log('componentWillUnmount');
+    }
+/////////////////////END
