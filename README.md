@@ -710,3 +710,26 @@ const Option = (props) => { //pass in the props
 // }
 
 /////////////////////END
+
+Lecture 41 Default prop values
+This way of setting defaultProps is the same for a class or function component.
+
+Beneath class or function type the name with '.defaultProps' attached.
+You can then get rid of where it was called earlier and it will get overridden if a prop is passed in where the component is called. In a class component where the 'this.state = {}' is declaring the prop value make it reference the props.title
+/////////////////////Example
+
+const Header = (props) =>{
+    return (
+        <div>
+            <h1>{props.title}</h1>
+            {props.subtitle && <h2>{props.subtitle}</h2>}
+        </div>
+    );
+};
+
+Header.defaultProps = {
+    title: 'Indecision'
+};
+
+<Header title={'New Name'} /> //this would override the default.
+/////////////////////END
