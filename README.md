@@ -733,3 +733,6 @@ Header.defaultProps = {
 
 <Header title={'New Name'} /> //this would override the default.
 /////////////////////END
+
+Lecture 42 React Dev Tools
+Introduces the chrome React dev tool.
