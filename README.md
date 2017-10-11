@@ -736,3 +736,82 @@ Header.defaultProps = {
 
 Lecture 42 React Dev Tools
 Introduces the chrome React dev tool.
+
+Lecture 43 Removing Individual options
+converting 'this.setState' from explicitly using a return to implicitly return an object.
+
+We also added a button to each option in the list. We created a function 'handleDeleteOption' and passed it down the chain through <Options /> to <Option />.
+/////////////////////Example
+    //Before
+    <!-- handleDeleteOptions(){
+        this.setState(() => {
+            return {
+                options : []
+            };
+        });
+    } -->
+    //after
+    this.setState(()=>({options : [] }));
+/////////////////////////
+
+    handleDeleteOption(optionToRemove){ //Created function
+        this.setState((prevState)=>({
+            options : prevState.options.filter((option)=>{
+                return optionToRemove !== option; //the filter() function removes anything from an array that returns false. So here we are saying if what is passed does not match the option then keep it. If it does match then remove it.
+            })
+        }));
+    }
+
+    render(){
+        const subtitle = 'Put your life in the hands of a computer';
+
+        return (
+            <div>
+                <Header subtitle={subtitle}/>
+                <Action
+                    hasOptions={this.state.options.length > 0}
+                    handlePick={this.handlePick}
+                />
+                <Options
+                    options={this.state.options}
+                    handleDeleteOptions ={this.handleDeleteOptions}
+                    handleDeleteOption ={this.handleDeleteOption} //Passed prop down...
+                />
+                <AddOption
+                    handleAddOption={this.handleAddOption}
+                />
+            </div>
+        );
+    }
+
+    const Options = (props) => {
+        return (
+            <div>
+            <button onClick={props.handleDeleteOptions}>Remove All</button>
+            {
+                props.options.map((option) => (
+                    <Option
+                        key={option}
+                        optionText={option}
+                        handleDeleteOption={props.handleDeleteOption} //Added as a prop in Option
+                    />
+                ))
+            }
+            </div>
+        );
+    };
+
+    const Option = (props) => {
+        return (
+            <div>
+                {props.optionText}
+                <button
+                    onClick={(e) => {
+                        props.handleDeleteOption(props.optionText);// made it here! To prevent it from passing up the event we had to do an inline function explicitly handing in the text... 'props.optionText'.
+                    }}>
+                    Remove
+                </button>
+            </div>
+        );
+    };
+/////////////////////END
