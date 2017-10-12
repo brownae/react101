@@ -816,7 +816,7 @@ We also added a button to each option in the list. We created a function 'handle
     };
 /////////////////////END
 
-Lecture 43 Lifecycle methods
+Lecture 44 Lifecycle methods
 methods that will fire at specific times in the components lifecycle.
 They are only available in class based components. They do not work in stateless functional components.
 /////////////////////Example
@@ -829,4 +829,107 @@ They are only available in class based components. They do not work in stateless
     componentWillUnmount(){
         console.log('componentWillUnmount');
     }
+/////////////////////END
+
+Lecture 45 Saving and loading options data
+    Here we used 'localStorage' to save our data. 'localStorage' is a browser based session. It persists as long as the window is open. 'localStorage(key, value)' takes two parameters. Note: 'localStorage' only works with string data.
+
+    1. We learned how to only store data if there is something there and to show error in body if there is one.
+    2. I learned that we can call the same method from the button later at the top. when it's clicked it fires the local method and then fires the parent method when it gets to it.
+    3. after all the methods are fired if it causes a change it fires the componentDidUpdate() method and thats where the 'this.state.options' gets stringify'd and stored into localStorage.
+    4. Then the componentWillMount() gets fired and it unpacks the localStorage and makes it into a json object and passes it back to the program to render it in a .map loop in the Options function based component.
+
+    I'm pretty sure this is right. :-/
+
+/////////////////////Example
+1.
+    handleAddOption(e){
+        e.preventDefault();
+
+        const option = e.target.elements.option.value.trim();//grabs input
+        const error = this.props.handleAddOption(option);// sets message to error var.
+
+        this.setState(()=>({ error: error })); binds error var to error state.
+
+        if (!error){ // if there is no error is false then reset the input value.
+            e.target.elements.option.value = '';
+        } // if there is an error then it will pass on to the re-render below.
+    }
+    render(){
+        return (
+            <div>
+                {this.state.error && <p>{this.state.error}</p>}
+                <form onSubmit={this.handleAddOption}>
+                    <input type="text" name="option"/>
+                    <button>Add Option</button>
+                </form>
+            </div>
+        );
+    }
+    }
+End 1.
+
+2.
+    //From the parent level(IndecisionApp class) which gets called last when there is a change...
+    handleAddOption(option){
+        if(!option){
+            return 'Enter valid value to add item';
+        } else if (this.state.options.indexOf(option) > -1) {
+            return 'This option already exists'
+        }
+
+        this.setState((prevState)=>({
+                options: prevState.options.concat(option)//here the new option gets concatenated onto the option list.
+            }));
+    }
+
+    //From the AddOption class...
+    handleAddOption(e){ //the e is the event
+        e.preventDefault();
+
+        const option = e.target.elements.option.value.trim();
+        const error = this.props.handleAddOption(option);
+
+        this.setState(()=>({ error: error }));
+
+        if (!error){
+            e.target.elements.option.value = '';
+        }
+    }
+    render(){
+        return (
+            <div>
+                {this.state.error && <p>{this.state.error}</p>}
+                <form onSubmit={this.handleAddOption}>
+                    <input type="text" name="option"/>
+                    <button>Add Option</button>
+                </form>
+            </div>
+        );
+    }
+
+    3.
+    componentDidUpdate(prevProp, prevState){
+        if (prevState.options.length !== this.state.options.length){
+            const json = JSON.stringify(this.state.options);
+            localStorage.setItem('options', json);
+        }
+
+    }
+
+    4.
+    componentWillMount(){
+        try {
+            const json = localStorage.getItem('options');
+            const options = JSON.parse(json);
+
+            if (options){
+                this.setState(()=>({ options: options}));
+            }
+        } catch (e) {
+            //if JSON data is not valid then it will do nothing.
+        }
+
+    }
+
 /////////////////////END
