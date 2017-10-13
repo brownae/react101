@@ -981,3 +981,35 @@ class Counter extends React.Component {
 Lecture 47 Intro to Webpack
 
 Lecture 48 What is Webpack?
+High level overview. Webpack is a bundler and task runner.
+
+Lecture 49 Avoid Global Modules
+    When we download global modules it doesn't save in dependencies in the package.json file. So if we are sharing the project the next person will be missing useful tool.
+
+    How to uninstall babel-cli & live-server:
+    $ yarn global remove babel-cli live-server
+
+    How to install locally: (note NO 'g' or 'global')
+    $ yarn add live-server babel-cli@6.24.1
+
+    next in the package.json we add a "scripts" section and create a key value pair for what we want to have happen when a script is called by name. like "serve":"live-server public/", This will start the live server with the '$yarn serve' command in terminal.
+
+/////////////////////Example
+    {
+      "name": "indecision-app",
+      "version": "1.0.0",
+      "main": "index.js",
+      "author": "Aaron Brown",
+      "license": "MIT",
+      "scripts":{
+        "serve":"live-server public/",
+        "build":"babel src/app.js --out-file=public/scripts/app.js --presets=env,react --watch"
+      },
+      "dependencies": {
+        "babel-cli": "6.24.1",
+        "babel-preset-env": "1.5.2",
+        "babel-preset-react": "6.24.1",
+        "live-server": "^1.2.0"
+      }
+    }
+/////////////////////END
