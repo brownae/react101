@@ -1099,3 +1099,23 @@ Lecture 52 Default exports
         export default (a,b) => a - b;
 
     ///////END
+
+Lecture 53 Import NPM modules
+    Find a useful npm module and install it locally. To call that file write in the top of the page...
+    Read module docs to know how to use the functions installed.
+    ///////Example
+    (validatior is the name of the package module we installed)
+        import validator from 'validator';
+
+        console.log(validator.isEmail('test'));
+
+    //We also installed react and react-dom with npm locally then called them.
+        //This is lacking babel so we needed to use React.createElement.
+        import React from 'react';
+        import ReactDOM from 'react-dom';
+
+        const template = React.createElement('p',{},'testing123');
+
+        ReactDOM.render(template, document.getElementById('app'));
+
+    ///////END
