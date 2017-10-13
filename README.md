@@ -1013,3 +1013,35 @@ Lecture 49 Avoid Global Modules
       }
     }
 /////////////////////END
+
+Lecture 50 Installing and configuring Webpack
+    THIS IS TO SET UP A BARE BONES CONFIGURATION.
+
+    To install basic. from project root folder.
+    $ yarn add webpack
+    This adds webpack to our project. Next add to scripts in package.json. Here we changed "build" to "build-babel" and then made "build":"webpack",
+    this makes the script go to the 'webpack.config.js' node file. Which we created next on the root level of project.
+    ///////Example
+    "scripts": {
+      "serve": "live-server public/",
+      "build":"webpack",
+      "build-babel": "babel src/app.js --out-file=public/scripts/app.js --presets=env,react --watch",
+    },
+    ////////END
+    In the 'webpack.config.js' we put in the following...
+    ////////Example
+    // must give ENTRY point and OUTPUT
+    const path = require('path');//this gives us access to the node .join() function.
+
+    module.exports = {
+        entry: './src/app.js',
+        output: {
+            path:path.join(__ dirname, 'public'),
+            filename: 'bundle.js'
+        }
+    };
+    ////////END
+    Run $ yarn run build
+    if it works then it is good to go. The all you need to do is reference bundle.js on your index page.
+
+    In the scripts section on package.json change "build":"webpack" to "build":"webpack --watch", to have it watch for changes.
