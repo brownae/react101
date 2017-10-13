@@ -5,9 +5,28 @@ class Counter extends React.Component {
         this.handleMinusOne = this.handleMinusOne.bind(this);
         this.handleReset = this.handleReset.bind(this);
         this.state = {
-            count: props.count
+            count: 0
         };
     };
+
+    componentWillMount(){
+        try {
+            const count = parseInt(localStorage.getItem('count'));
+            console.log('Will mount');
+            if (!isNaN(count)){
+                this.setState(()=>({ count: count}));
+            }
+        } catch (e) {
+            //if JSON data is not valid then it will do nothing.
+        }
+
+    }
+
+    componentDidUpdate(prevProp, prevState){
+        if (prevState.count !== this.state.count){
+            localStorage.setItem('count', this.state.count);
+        }
+    }
 
     handleAddOne(){ //Method
         this.setState((prevState)=> {
@@ -45,10 +64,6 @@ class Counter extends React.Component {
     }
 
 }
-
-Counter.defaultProps = {
-    count: 0
-};
 
 ReactDOM.render(<Counter />, document.getElementById('app')); // render the virtual dom on the document in the element with an ID of app.
 

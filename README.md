@@ -933,3 +933,47 @@ End 1.
     }
 
 /////////////////////END
+
+Lecture 45 Saving and loading the count
+    We used the lifecycle methods to store the count every time the number was updated in componentDidUpdate(prevProp, prevState) and then to call the number from localStorage in componentWillMount() which happens when the page loads. it parses the localStorage value to an int and then passes it to the this.state.count.
+
+    essentially the localStorage always keeps track of the count and then passes it back in when the page is loaded
+/////////////////////Example
+class Counter extends React.Component {
+    constructor(props){ // constructor method
+        super(props);
+        this.handleAddOne = this.handleAddOne.bind(this);
+        this.handleMinusOne = this.handleMinusOne.bind(this);
+        this.handleReset = this.handleReset.bind(this);
+        this.state = {
+            count: 0 // <-This is not even needed
+        };
+    };
+
+    componentWillMount(){
+        try {
+            const count = parseInt(localStorage.getItem('count'));
+            if (!isNaN(count)){
+                this.setState(()=>({ count: count}));
+            }
+        } catch (e) {
+            //if JSON data is not valid then it will do nothing.
+        }
+
+    }
+
+    componentDidUpdate(prevProp, prevState){ //fires with every update.
+        if (prevState.count !== this.state.count){
+            localStorage.setItem('count', this.state.count);
+        }
+    }
+
+    handleAddOne(){ //Method
+        this.setState((prevState)=> {
+            return {
+                count : prevState.count + 1
+            }
+        });
+    }
+
+/////////////////////END
