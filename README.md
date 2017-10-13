@@ -1045,3 +1045,23 @@ Lecture 50 Installing and configuring Webpack
     if it works then it is good to go. The all you need to do is reference bundle.js on your index page.
 
     In the scripts section on package.json change "build":"webpack" to "build":"webpack --watch", to have it watch for changes.
+
+Lecture 51 ES6 import/export
+
+    Here we learned how to export and import a file.
+    ///////Example
+
+    // this should be at the top of the page where we want to import. We must have the names of the functions we want to import and the path from where it is coming from.
+        import { square, add } from './utils';
+    If we just imported the page like this...
+        import './utils';
+    the program will run that page then come back.
+
+    //There are two ways to export a function from a file. Named exports and default. Here are two ways to do named exports.
+    
+    first is where we export by name
+        export { square, add };
+
+    the second way is the default where we add 'export' in front of where it is defined.
+        export const add = (a,b) => a + b;
+    ///////END
