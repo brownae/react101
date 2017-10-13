@@ -32,7 +32,7 @@ var templateTwo = (
 var appRoot = document.getElementById('app');
 
 ReactDOM.render(template, appRoot);
-///////////////////////////END
+///////////////////////////End
 
 lecture 11 Conditional Rendering
 Leaned 3 ways of Conditional rendering. 1 through a function, 2 through shorthand ternary operator and 3 logical && operator.
@@ -56,7 +56,7 @@ var templateTwo = (
 var appRoot = document.getElementById('app');
 
 ReactDOM.render(templateTwo, appRoot);
-//////////////////////////END
+//////////////////////////End
 
 lecture 13 Const and let
 file playground/es6-let-const.js
@@ -94,7 +94,7 @@ const renderCounterApp = () => {
 };
 
 renderCounterApp();
-///////////////////////END
+///////////////////////End
 
 Lecture 18 Forms and input
 Learned to create a form and to use the onFormSubmit event handler from react documentation on forms. Still need to prevent the event default.
@@ -116,7 +116,7 @@ const onFormSubmit = (e) => {
     <input type="text" name="option"/>
     <button>Add Option</button>
 </form>
-//////////////////////END
+//////////////////////End
 
 Lecture 19 Arrays in JSX
 Arrays are supported by JSX. You can use boolean values but they will not render. Strings, numbers and floats will render. You can also put JSX in the array and it will render. When rendering repeating li's or other elements the key property must be added and have a unique value. react keeps track of every element and it must have an identifier.
@@ -129,7 +129,7 @@ Arrays are supported by JSX. You can use boolean values but they will not render
         })
     }
 </ol>
-/////////////////////END
+/////////////////////End
 
 Lecture 20 Picking an option
 How to set up a randomNum using the Math.random and then picking a random option from the options given. How to disable a button with an argument.
@@ -143,7 +143,7 @@ const onMakeDecision = () => {
 };
 
 <button disabled={app.options.length === 0} onClick={onMakeDecision}>What should I do?</button>
-/////////////////////END
+/////////////////////End
 
 Lecture 21 Build-it Visibility toggle
 This was a challenge exercise to make a simple toggle option to hide and show details. This is the whole app.
@@ -170,7 +170,7 @@ const render = () => {
 };
 
 render();
-/////////////////////END
+/////////////////////End
 
 Lecture 24 ES6 Classes pt 1
 Class = bluepint. Learned about creating classes and the syntax to set default values in the constructor.
@@ -195,7 +195,7 @@ console.log(me.getDescription());
 
 const kid = new Person();
 console.log(kid.getDescription());
-/////////////////////END
+/////////////////////End
 
 Lecture 25 ES6 Classes pt 2
 How to extend class. 'super' is used to refer to parent class and pass on to extended class.
@@ -222,7 +222,7 @@ class Traveler extends Person {
 const me = new Traveler('Aaron', 34,'Seattle, Wa');
 console.log(me.getDescription());
 
-/////////////////////END
+/////////////////////End
 
 Lecture 26 Creating a react component
 Moved jsx Indecision app out of app.js to playground jsx-indecision.js
@@ -251,7 +251,7 @@ const jsx = (
 );
 
 ReactDOM.render(jsx, document.getElementById('app'));
-/////////////////////END
+/////////////////////End
 
 Lecture 27 Nesting Components
 Our components can render jsx, so they can render other components inside. The parent component was the only thing rendered in the reactDOM.render call on the bottom of the page, but it's children also get called.
@@ -271,7 +271,7 @@ Our components can render jsx, so they can render other components inside. The p
 
 // we can render the top level parent in the ReactDOM and it will render the components inside of it and on down the line
     ReactDOM.render(<IndecisionApp />, document.getElementById('app'));
-/////////////////////END
+/////////////////////End
 
 Lecture 28 Component Props
 Props are properties. We learned how to pass data down the line to nested components.
@@ -316,7 +316,7 @@ class Option extends React.Component {
     }
 }
 
-/////////////////////END
+/////////////////////End
 
 Lecture 29 Events and Methods.
 (Methods are functions of a class). Here we added an event handler 'onSubmit' and we wrote the method right inside the prop and handled it.
@@ -343,7 +343,7 @@ class AddOption extends React.Component{
         );
     }
 }
-/////////////////////END
+/////////////////////End
 
 Lecture 30 Method binding.
 When we created the 'handleRemoveAll' method in the Options class it changed the context of the 'this' location. By default methods return undefined to the 'this' call. (Render() is not an event handler so it keeps the correct context.) To fix this we override the constructor of the 'React.Component' we extended. we let the default constructor build by using 'super(props);'. then we tie the 'this.handleRemoveAll' to itself with '.bind()' . The first parameter allows you to set the context. By doing this we are ensuring that every time the 'handleRemoveAll' method is called it's context is correct.
@@ -371,7 +371,7 @@ class Options extends React.Component {
         );
     }
 }
-/////////////////////END
+/////////////////////End
 
 Lecture 31 What Is Component State?
 React Component state
@@ -425,7 +425,7 @@ class Counter extends React.Component {
     }
 }
 ReactDOM.render(<Counter />, document.getElementById('app'));
-/////////////////////END
+/////////////////////End
 
 Lecture 33 Adding State to Counter App: Part 2
 wired up the buttons to live update the json object property 'counter:0'. The object is built right inside of constructor.
@@ -450,7 +450,7 @@ class Counter extends React.Component {
             }
         });
     }
-/////////////////////END
+/////////////////////End
 
 Lecture 34 Alternative setState syntax
 Below is alternate syntax used twice to show point that react is asynchronous and so both are done at the same time and the second method is getting old data at the same time the one above is switching it to 0. It's shorter but when it's put inside an Anonymous function one runs and completes before the next starts.
@@ -468,7 +468,7 @@ handleReset(){
         count: this.state.count + 1
     });
 }
-/////////////////////END
+/////////////////////End
 
 Lecture 35 Build it: adding state to VisibilityToggle
 Took the build-it-visible.js and made it into a prop and re-wrote methods in context.
@@ -504,7 +504,7 @@ class VisibilityToggle extends React.Component{
 }
 
 ReactDOM.render(<VisibilityToggle />, document.getElementById('app'));
-/////////////////////END
+/////////////////////End
 
 Lecture 36 Indecision State: Part 1
 We learned how to get our props to communicate with their parent by passing down functions.
@@ -575,7 +575,7 @@ class Action extends React.Component{
         );
     }
 }
-/////////////////////END
+/////////////////////End
 
 Lecture 37 Indecision State: Part 2
 Here we learned how to pass values up to the parent and update 'options'. We created the 'handleAddOption' function and bound it's 'this' context to the IndecisionApp class then passed it down into render, to <AddOption/> class. There we built into the handleAddOption function that was there and after minor validation passed the values up.
@@ -662,7 +662,7 @@ class AddOption extends React.Component{
         );
     }
 }
-/////////////////////END
+/////////////////////End
 
 Lecture 38 Summary: Props vs States.
 
@@ -709,7 +709,7 @@ const Option = (props) => { //pass in the props
 //     }
 // }
 
-/////////////////////END
+/////////////////////End
 
 Lecture 41 Default prop values
 This way of setting defaultProps is the same for a class or function component.
@@ -732,7 +732,7 @@ Header.defaultProps = {
 };
 
 <Header title={'New Name'} /> //this would override the default.
-/////////////////////END
+/////////////////////End
 
 Lecture 42 React Dev Tools
 Introduces the chrome React dev tool.
@@ -814,7 +814,7 @@ We also added a button to each option in the list. We created a function 'handle
             </div>
         );
     };
-/////////////////////END
+/////////////////////End
 
 Lecture 44 Lifecycle methods
 methods that will fire at specific times in the components lifecycle.
@@ -829,7 +829,7 @@ They are only available in class based components. They do not work in stateless
     componentWillUnmount(){
         console.log('componentWillUnmount');
     }
-/////////////////////END
+/////////////////////End
 
 Lecture 45 Saving and loading options data
     Here we used 'localStorage' to save our data. 'localStorage' is a browser based session. It persists as long as the window is open. 'localStorage(key, value)' takes two parameters. Note: 'localStorage' only works with string data.
@@ -932,7 +932,7 @@ End 1.
 
     }
 
-/////////////////////END
+/////////////////////End
 
 Lecture 45 Saving and loading the count
     We used the lifecycle methods to store the count every time the number was updated in componentDidUpdate(prevProp, prevState) and then to call the number from localStorage in componentWillMount() which happens when the page loads. it parses the localStorage value to an int and then passes it to the this.state.count.
@@ -976,7 +976,7 @@ class Counter extends React.Component {
         });
     }
 
-/////////////////////END
+/////////////////////End
 
 Lecture 47 Intro to Webpack
 
@@ -1012,7 +1012,7 @@ Lecture 49 Avoid Global Modules
         "live-server": "^1.2.0"
       }
     }
-/////////////////////END
+/////////////////////End
 
 Lecture 50 Installing and configuring Webpack
     THIS IS TO SET UP A BARE BONES CONFIGURATION.
@@ -1027,7 +1027,7 @@ Lecture 50 Installing and configuring Webpack
       "build":"webpack",
       "build-babel": "babel src/app.js --out-file=public/scripts/app.js --presets=env,react --watch",
     },
-    ////////END
+    ////////End
     In the 'webpack.config.js' we put in the following...
     ////////Example
     // must give ENTRY point and OUTPUT
@@ -1040,7 +1040,7 @@ Lecture 50 Installing and configuring Webpack
             filename: 'bundle.js'
         }
     };
-    ////////END
+    ////////End
     Run $ yarn run build
     if it works then it is good to go. The all you need to do is reference bundle.js on your index page.
 
@@ -1064,7 +1064,7 @@ Lecture 51 ES6 import/export
 
     the second way is the default where we add 'export' in front of where it is defined.
         export const add = (a,b) => a + b;
-    ///////END
+    ///////End
 
 Lecture 52 Default exports
     With default exports we can just have one.
@@ -1098,7 +1098,7 @@ Lecture 52 Default exports
         export const add = (a,b) => a + b;
         export default (a,b) => a - b;
 
-    ///////END
+    ///////End
 
 Lecture 53 Import NPM modules
     Find a useful npm module and install it locally. To call that file write in the top of the page...
@@ -1118,4 +1118,51 @@ Lecture 53 Import NPM modules
 
         ReactDOM.render(template, document.getElementById('app'));
 
-    ///////END
+    ///////End
+
+Lecture 54 Setting Up Babel with Webpack
+We need to use a loader for webpack to know what to do with the files before it passes them down. Webpack can't render JSX. We need to install babel.
+
+    ///////Example
+    We install...
+    // babel core which is for tools like Webpack, by itself it doesn;t have much functionality, and we included the babel-loader which is a webpack plugin and will allow us to teach webpack how to run babel when it see's certain files.
+
+        $ yarn add babel-core@6.25.0 babel-loader@7.1.1
+    after we need to set it up in webpack.config.js. We are going to setup module.rules
+
+    const path = require('path');//this gives us access to the node .join() function.
+    // must give ENTRY point and OUTPUT
+
+    module.exports = {
+        entry: './src/app.js',
+        output: {
+            path: path.join(__ dirname, 'public'),
+            filename: 'bundle.js'
+        },
+        module: {
+            rules: [{
+                loader: 'babel-loader' //we want Webpack loader to use babel-loader.
+                test: /\.js$/, // this is using regular expression syntax. We want to run all files that end in .js
+                exclude: /node_modules/ //We want to exclude this file
+            }]
+        }
+    };
+
+    NEXT we setup a new file for babel called .babelrc this is where we put in presets we want babel to use.
+    We write this inside...
+
+        {
+            "presets": [
+                "env",
+                "react"
+            ]
+        }
+    Then run the build from the command line ...
+        $ yarn run build
+
+    ///////End
+
+Lecture 55 One Component per file
+
+    ///////Example
+    ///////End
