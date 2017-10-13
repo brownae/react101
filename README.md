@@ -1119,3 +1119,45 @@ Lecture 53 Import NPM modules
         ReactDOM.render(template, document.getElementById('app'));
 
     ///////END
+
+Lecture 54 Setting Up Babel with Webpack
+We need to use a loader for webpack to know what to do with the files before it passes them down. Webpack can't render JSX. We need to install babel.
+
+    ///////Example
+    We install...
+    // babel core which is for tools like Webpack, by itself it doesn;t have much functionality, and we included the babel-loader which is a webpack plugin and will allow us to teach webpack how to run babel when it see's certain files.
+
+        $ yarn add babel-core@6.25.0 babel-loader@7.1.1
+    after we need to set it up in webpack.config.js. We are going to setup module.rules
+
+    const path = require('path');//this gives us access to the node .join() function.
+    // must give ENTRY point and OUTPUT
+
+    module.exports = {
+        entry: './src/app.js',
+        output: {
+            path: path.join(__ dirname, 'public'),
+            filename: 'bundle.js'
+        },
+        module: {
+            rules: [{
+                loader: 'babel-loader' //we want Webpack loader to use babel-loader.
+                test: /\.js$/, // this is using regular expression syntax. We want to run all files that end in .js
+                exclude: /node_modules/ //We want to exclude this file
+            }]
+        }
+    };
+
+    NEXT we setup a new file for babel called .babelrc this is where we put in presets we want babel to use.
+    We write this inside...
+
+        {
+            "presets": [
+                "env",
+                "react"
+            ]
+        }
+    Then run the build from the command line ...
+        $ yarn run build
+
+    ///////END
