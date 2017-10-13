@@ -1058,10 +1058,44 @@ Lecture 51 ES6 import/export
     the program will run that page then come back.
 
     //There are two ways to export a function from a file. Named exports and default. Here are two ways to do named exports.
-    
+
     first is where we export by name
         export { square, add };
 
     the second way is the default where we add 'export' in front of where it is defined.
         export const add = (a,b) => a + b;
+    ///////END
+
+Lecture 52 Default exports
+    With default exports we can just have one.
+
+    ///////Example
+    //In export area you need to set 'as default'. You can only do it to one.
+        const square = (x) => x * x;
+        const add = (a,b) => a + b;
+        const subtract = (a,b) => a - b;
+
+        export { square, add, subtract as default };
+
+    //On the import page you need to reference it BEFORE the curly braces. Because it is the default you could actually change the name of subtract to anything and call it below with that name as well.
+        import subtract, { square, add } from './utils';
+
+        console.log('app.js is running!');
+        console.log(square(4));
+        console.log(add(100,23));
+        console.log(subtract(100,81));
+
+    an alternate way set the default would be to write export default then reference the name. like below.
+
+        export const square = (x) => x * x;
+        export const add = (a,b) => a + b;
+        const subtract = (a,b) => a - b;
+        export default subtract;
+
+    OR we could get rid of the const name and do inline... Then when we assign the default on the import we define the name to use.
+
+        export const square = (x) => x * x;
+        export const add = (a,b) => a + b;
+        export default (a,b) => a - b;
+
     ///////END

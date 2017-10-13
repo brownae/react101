@@ -3,5 +3,6 @@ const isAdult = (age) => age >= 18;
 
 const canDrink = (age) => age >= 21;
 
+const isSenior = (age) => age >= 65;
 
-export { isAdult, canDrink }; // this is for passing in various things we want to export.
+export { isAdult, canDrink, isSenior as default }; // this is for passing in various things we want to export.
