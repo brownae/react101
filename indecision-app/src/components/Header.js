@@ -8,7 +8,6 @@ const Header = (props) =>{
         </div>
     );
 };
-
 export default Header;
 
 Header.defaultProps = {

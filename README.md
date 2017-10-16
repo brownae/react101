@@ -1201,3 +1201,30 @@ Lecture 55 One Component per file
 
     export default Options;
     ///////End
+
+Lecture 56 Source Maps with Webpack
+    Here we add a webpack dev-tool called cheap-module-eval-source-map
+    https://webpack.js.org/configuration/devtool/
+    It's set up inside of webpack.config.js and then we need to restart webpack from terminal.
+
+    This tool lets the chrome browser know where a bug originated in our code.
+    ///////Example
+    const path = require('path');//this gives us access to the node .join() function.
+    // must give ENTRY point and OUTPUT
+
+    module.exports = {
+        entry: './src/app.js',
+        output: {
+            path: path.join(__ dirname, 'public'),
+            filename: 'bundle.js'
+        },
+        module: {
+            rules: [{
+                loader: 'babel-loader',
+                test: /\.js$/,
+                exclude: /node_modules/
+            }]
+        },
+        devtool: 'cheap-module-eval-source-map'
+    };
+    ///////End
