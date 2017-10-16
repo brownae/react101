@@ -1163,6 +1163,41 @@ We need to use a loader for webpack to know what to do with the files before it 
     ///////End
 
 Lecture 55 One Component per file
+    In this lecture we moved each component to it's own file. Webpack stitches them together.
 
+    Note: When exporting a class that will do one thing we can export it inline. like...
     ///////Example
+    export default class AddOption extends React.Component{
+        constructor(props){
+            super(props);
+            this.handleAddOption = this.handleAddOption.bind(this);
+            this.state = {
+                error: undefined
+                ...
+    ///////End
+    As we move each component to it's file we need to be mindful that the component has what it needs and that the path to those files is correct. Note each file will need react imported to it.
+    ///////Example
+    import React from 'react';
+    import Option from './Option';
+
+
+    const Options = (props) => {
+        return (
+            <div>
+            <button onClick={props.handleDeleteOptions}>Remove All</button>
+            {props.options.length === 0 && <p>Please add an option to get started</p>}
+            {
+                props.options.map((option) => (
+                    <Option
+                        key={option}
+                        optionText={option}
+                        handleDeleteOption={props.handleDeleteOption}
+                    />
+                ))
+            }
+            </div>
+        );
+    };
+
+    export default Options;
     ///////End
