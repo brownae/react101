@@ -1229,7 +1229,7 @@ Lecture 56 Source Maps with Webpack
     };
     ///////End
 
-Lecture 57 Webpack Dev Server
+Lecture 57 Webpack Dev-Server
     Here we are going to switch from using 'liveServer' to Webpacks development server. It comes with nice to have features.
     https://webpack.js.org/configuration/dev-server/
     We installed locally
@@ -1271,3 +1271,48 @@ Lecture 57 Webpack Dev Server
         }, ...
 
     "webpack-dev-server" when ran '$ yarn run dev-server' will render the bundle.js in it's head and send it to the browser and listen for changes. It is really fast. when we need a bundle for distrobution we can run '$ yarn run build'.
+
+Lecture 58 ES6 Class properties
+    We installed a bable plugin called 'Class properties transform' (http://babeljs.io/docs/plugins/transform-class-properties/). This allows us to convert our class based components to the brand new class properties syntax. We no longer have to worry about binding the 'this' value to the class scope and we don't need to add the constructor.   
+
+    SETUP:
+        $ yarn add babel-plugin-transform-class-properties@6.24.1
+    then in .babelrc ...
+        {
+            "presets": [
+                "env",
+                "react"
+            ],
+            "plugins": [
+                "transform-class-properties"
+            ]
+        }
+    and then we start webpack again... and we're good.
+        $ yarn run dev-server
+
+    ///////Example
+        class OldSyntax {
+            constructor(){
+                this.name = 'Mike';
+                this.getGreeting = this.getGreeting.bind(this);
+            }
+            getGreeting(){
+                return `Hi my name is ${this.name}.`;
+            }
+        }
+        const oldSyntax = new OldSyntax();
+        const getGreeting = oldSyntax.getGreeting; // without constructor this would break the binding.
+        console.log(getGreeting());
+
+    // ---------------------
+        class NewSyntax {
+            name = 'Jen';
+            getGreeting = () => {
+                return `Hi my name is ${this.name}.`;
+            }; // <- new syntax needs a semicolon
+        }
+        const newSyntax = new NewSyntax();
+        const newGetGreeting = newSyntax.getGreeting;
+        console.log(newGetGreeting());
+
+    ///////End
