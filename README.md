@@ -1316,3 +1316,58 @@ Lecture 58 ES6 Class properties
         console.log(newGetGreeting());
 
     ///////End
+
+Lecture 59 Section Intro: Using a Third Party Component.
+    We are going to use a third party component that adds a modal instead of the alert.
+
+Lecture 60 Passing Children to Component
+    In this one we learned two ways to pass data into a component.
+
+    ONE:
+    //We can add a prop to the Layout component and then call it inside with props.content
+
+        const Layout = (props) => {
+            return (
+                <div>
+                    <p>Header</p>
+                    {props.content}
+                    <p>Footer</p>
+                </div>
+            );
+        }
+
+        const template = (
+            <div>
+                <h1>Page title</h1>
+                <p>This is my page!</p>
+            </div>
+        );
+
+        ReactDOM.render(<Layout content={template}/>, document.getElementById('app'));
+
+    TWO:
+    //We can open and close the layout tag below and pass inline info in by putting it between and calling props.children.
+
+        import React from 'react';
+        import ReactDOM from 'react-dom';
+        import IndecisionApp from './components/IndecisionApp';
+
+        const Layout = (props) => {
+            return (
+                <div>
+                    <p>Header</p>
+                    {props.children}
+                    <p>Footer</p>
+                </div>
+            );
+        }
+
+
+        ReactDOM.render(<Layout> <p>This is in line</p> </Layout>, document.getElementById('app'));
+
+        OR ... to make it easier to look at...
+        ReactDOM.render((
+            <Layout>
+                <p>This is in line</p>
+            </Layout>
+            ), document.getElementById('app'));
