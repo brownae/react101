@@ -1228,3 +1228,46 @@ Lecture 56 Source Maps with Webpack
         devtool: 'cheap-module-eval-source-map'
     };
     ///////End
+
+Lecture 57 Webpack Dev Server
+    Here we are going to switch from using 'liveServer' to Webpacks development server. It comes with nice to have features.
+    https://webpack.js.org/configuration/dev-server/
+    We installed locally
+        $ yarn add webpack-dev-server@2.5.1
+    We then setup in our webpack.config.js 'devServer.contentBase'. This tells webpack where our public file is to take and render to browser.
+    ///////Example
+    module.exports = {
+        entry: './src/app.js',
+        output: {
+            path: path.join(__ dirname, 'public'),
+            filename: 'bundle.js'
+        },
+        module: {
+            rules: [{
+                loader: 'babel-loader',
+                test: /\.js$/,
+                exclude: /node_modules/
+            }]
+        },
+        devtool: 'cheap-module-eval-source-map',
+        devServer: {             
+        //this is what we added. I ad a space here in the read only between the underscores and dirname.
+            contentBase: path.join(__ dirname, 'public')
+        }
+    };
+    ///////End
+    NEXT we write a script to call to run when we want to run the server.
+    In package.json.
+        {
+          "name": "indecision-app",
+          "version": "1.0.0",
+          "main": "index.js",
+          "author": "Aaron Brown",
+          "license": "MIT",
+          "scripts": {
+            "serve": "live-server public/",
+            "build": "webpack",
+            "dev-server": "webpack-dev-server"
+        }, ...
+
+    "webpack-dev-server" when ran '$ yarn run dev-server' will render the bundle.js in it's head and send it to the browser and listen for changes. It is really fast. when we need a bundle for distrobution we can run '$ yarn run build'.
