@@ -1445,5 +1445,52 @@ Lecture 62 Bonus Refactoring Other Stateless Functional Components
 
         export default Action;
 
-Lecture Section Intro - Styling React
+Lecture 63 Section Intro - Styling React
     Just an intro to talk about using scss.
+
+Lecture 64 Setting up webpack with SCSS
+    Installing two packages...
+        https://www.npmjs.com/package/css-loader
+        https://www.npmjs.com/package/style-loader
+        $ yarn add style-loader@0.19.0 css-loader@0.28.7
+    Then we add to the webpack.config.js
+        module: {
+            rules: [{
+                loader: 'babel-loader',
+                test: /\.js$/,
+                exclude: /node_modules/
+            }], { // add a comma and add another rule
+                test:/\.css$/
+                use: [
+                    'style-loader',
+                    'css-loader'
+                ]
+            }
+        },
+        This will render just our css.
+    In the head of the app.js file we import the css like this...
+        import './styles/styles.css';
+    When we run our dev-server it will work. At this point we COULD style the entire app using css.
+
+    //Next we are setting up for sass. we installed these two packages
+        $ yarn add sass-loader@6.0.6 node-sass@4.5.3
+    sass-loader, allows us to import the sass files
+    node-sass, complies the sass to css.
+    //Now we just add sass-loader in the webpack config.
+        module: {
+            rules: [{
+                loader: 'babel-loader',
+                test: /\.js$/,
+                exclude: /node_modules/
+            }, { //<--This rule tells webpack what to do when it encounters a .sass 
+                test:/\.sass$/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'sass-loader' // <----Just add this, sass-loader will use node-sass.
+                ]
+            }]
+        },
+    Make sure you are importing sass in the app.js import file...
+        import './styles/styles.sass';
+    Run the dev-server.
