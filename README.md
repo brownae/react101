@@ -1371,3 +1371,46 @@ Lecture 60 Passing Children to Component
                 <p>This is in line</p>
             </Layout>
             ), document.getElementById('app'));
+
+Lecture 61 Setting up React-Modal
+    We installed the react-modal and put it in it's own file in OptionModal.js, we also had to import 'import Modal from 'react-modal'; at the top.'. Then in IndecisionApp we added an object to the 'state' called 'selectedOption: undefined' and made a method in the called 'clearSelectedOption' and then passed it down to the OptionModal. The method is set to undefined but gets set to a value which changes it's state to truthy.
+    https://github.com/reactjs/react-modal
+
+    ///////Example
+
+        import React from 'react';
+        import Modal from 'react-modal';
+
+        //note this is using implicit return shorthand.
+        const OptionModal = (props) => (
+            <Modal
+                isOpen={!!props.selectedOption}//Note two !! changes the value to true or false absolutely. nothing truthy or falsy.
+                onRequestClose = {props.clearSelectedOption}// this is a Modal option. Which means when a user pushes escape or clicks outside the modal do this... in our case we run 'props.clearSelectedOption'. 
+                contentLabel="Selected Option" >
+
+                <h3>Selected Option</h3>
+                {props.selectedOption && <p>{props.selectedOption}</p>} //If there is something there then render.
+                <button onClick={props.clearSelectedOption}>Okay</button>
+            </Modal>
+        );
+
+        export default OptionModal;
+
+        //In IndecisionApp...
+            export default class IndecisionApp extends React.Component {
+                state = {
+                    options: [],
+                    selectedOption: undefined
+                };
+
+                clearSelectedOption = () => {
+                    this.setState(()=>({selectedOption: undefined}));
+                };...
+            In the render section at the bottom...
+                <OptionModal
+                    selectedOption = {this.state.selectedOption}
+                    clearSelectedOption = {this.clearSelectedOption}
+                />
+
+    ///////End
+    Then we added it in the bottom of the IndecisionApp and passed in a prop.

@@ -3,10 +3,16 @@ import AddOption from './AddOption';
 import Header from './Header';
 import Action from './Action';
 import Options from './Options';
+import OptionModal from './OptionModal';
 
 export default class IndecisionApp extends React.Component {
     state = {
-        options: []
+        options: [],
+        selectedOption: undefined
+    };
+
+    clearSelectedOption = () => {
+        this.setState(()=>({selectedOption: undefined}));
     };
 
     handleDeleteOptions = () => {
@@ -22,7 +28,9 @@ export default class IndecisionApp extends React.Component {
     handlePick = () => {
         const randomNum = Math.floor(Math.random() * this.state.options.length);
         const option = this.state.options[randomNum];
-        alert(option);
+        this.setState(()=>({
+            selectedOption: option
+        }));
     };
 
     handleAddOption = (option) => {
@@ -66,18 +74,22 @@ export default class IndecisionApp extends React.Component {
 
         return (
             <div>
-                <Header subtitle={subtitle}/>
+                <Header subtitle = {subtitle}/>
                 <Action
-                    hasOptions={this.state.options.length > 0}
-                    handlePick={this.handlePick}
+                    hasOptions = {this.state.options.length > 0}
+                    handlePick = {this.handlePick}
                 />
                 <Options
-                    options={this.state.options}
-                    handleDeleteOptions ={this.handleDeleteOptions}
-                    handleDeleteOption ={this.handleDeleteOption}
+                    options = {this.state.options}
+                    handleDeleteOptions = {this.handleDeleteOptions}
+                    handleDeleteOption = {this.handleDeleteOption}
                 />
                 <AddOption
-                    handleAddOption={this.handleAddOption}
+                    handleAddOption = {this.handleAddOption}
+                />
+                <OptionModal
+                    selectedOption = {this.state.selectedOption}
+                    clearSelectedOption = {this.clearSelectedOption}
                 />
             </div>
         );
