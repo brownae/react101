@@ -1507,3 +1507,28 @@ Lecture 65 Architecture and Header Styles
         html
             font-size: 62.5%
     We are setting up our sass file structures and starting to style.
+
+Lecture 66 Reset That $#!*
+    Setting up a css reset.
+    https://necolas.github.io/normalize.css/
+    $ yarn add normalize.css@7.0.0
+
+    once installed inside out webpack.config.js we update the rule for sass. from ...
+        }, {
+            test:/\.sass$/, //<-- To ... test: /\.(sass|css)$/,
+            use: [
+                'style-loader',
+                'css-loader',
+                'sass-loader'
+            ]
+        }]
+    },
+    We also import it from node modules above our main styles.sass in the app.js
+
+        import React from 'react';
+        import ReactDOM from 'react-dom';
+        import IndecisionApp from './components/IndecisionApp';
+        import 'normalize.css/normalize.css'; // Put above styles!
+        import './styles/styles.sass';
+
+        ReactDOM.render(<IndecisionApp />, document.getElementById('app'));
