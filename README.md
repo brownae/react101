@@ -1482,7 +1482,7 @@ Lecture 64 Setting up webpack with SCSS
                 loader: 'babel-loader',
                 test: /\.js$/,
                 exclude: /node_modules/
-            }, { //<--This rule tells webpack what to do when it encounters a .sass 
+            }, { //<--This rule tells webpack what to do when it encounters a .sass
                 test:/\.sass$/,
                 use: [
                     'style-loader',
@@ -1494,3 +1494,16 @@ Lecture 64 Setting up webpack with SCSS
     Make sure you are importing sass in the app.js import file...
         import './styles/styles.sass';
     Run the dev-server.
+
+Lecture 65 Architecture and Header Styles
+    We learned how to break up our styles into multiple styles. I also learned a little about...
+        //BEM(block element modifier) naming convention
+        .header__title
+            font-size: 3.2rem
+            margin: 0
+    css rem vs em...
+        While em is relative to the font-size of its direct or nearest parent, rem is only relative to the html (root) font-size.
+    we set up the html to 62.5% which makes 1rem = 10px.
+        html
+            font-size: 62.5%
+    We are setting up our sass file structures and starting to style.
