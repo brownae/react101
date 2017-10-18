@@ -1532,3 +1532,6 @@ Lecture 66 Reset That $#!*
         import './styles/styles.sass';
 
         ReactDOM.render(<IndecisionApp />, document.getElementById('app'));
+
+Lecture 67 Theming with variables
+    We are setting up a settings.sass file where we define our spacing sizes
