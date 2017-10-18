@@ -1444,3 +1444,6 @@ Lecture 62 Bonus Refactoring Other Stateless Functional Components
             );
 
         export default Action;
+
+Lecture Section Intro - Styling React
+    Just an intro to talk about using scss.
