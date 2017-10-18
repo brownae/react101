@@ -1385,7 +1385,7 @@ Lecture 61 Setting up React-Modal
         const OptionModal = (props) => (
             <Modal
                 isOpen={!!props.selectedOption}//Note two !! changes the value to true or false absolutely. nothing truthy or falsy.
-                onRequestClose = {props.clearSelectedOption}// this is a Modal option. Which means when a user pushes escape or clicks outside the modal do this... in our case we run 'props.clearSelectedOption'. 
+                onRequestClose = {props.clearSelectedOption}// this is a Modal option. Which means when a user pushes escape or clicks outside the modal do this... in our case we run 'props.clearSelectedOption'.
                 contentLabel="Selected Option" >
 
                 <h3>Selected Option</h3>
@@ -1414,3 +1414,33 @@ Lecture 61 Setting up React-Modal
 
     ///////End
     Then we added it in the bottom of the IndecisionApp and passed in a prop.
+
+Lecture 62 Bonus Refactoring Other Stateless Functional Components
+    We can explicitly return a component that only returns one thing. So in this section we go through and remove the return lines from components that only return one thing and are stateless.
+
+    //Before
+        import React from 'react';
+
+        const Action = (props) =>{
+            return (
+                <div>
+                    <button onClick={props.handlePick} disabled={!props.hasOptions}>
+                        What should I do?
+                    </button>
+                </div>
+            );
+        };
+
+        export default Action;
+    //after
+        import React from 'react';
+
+        const Action = (props) => (
+                <div>
+                    <button onClick={props.handlePick} disabled={!props.hasOptions}>
+                        What should I do?
+                    </button>
+                </div>
+            );
+
+        export default Action;
