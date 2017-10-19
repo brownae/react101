@@ -1498,9 +1498,23 @@ Lecture 64 Setting up webpack with SCSS
 Lecture 65 Architecture and Header Styles
     We learned how to break up our styles into multiple styles. I also learned a little about...
         //BEM(block element modifier) naming convention
-        .header__title
-            font-size: 3.2rem
-            margin: 0
+    //Example...
+        Block component
+            .btn {}
+
+        Element that depends upon the block
+            .btn__price {}
+
+        Modifier that changes the style of the block            
+            .btn--orange {}
+            .btn--big {}
+
+        <a class="btn btn--big btn--orange" href="http://css-tricks.com">
+            <span class="btn__price">$9.99</span>
+            <span class="btn__text">Subscribe</span>
+        </a>
+    //Example end
+
     css rem vs em...
         While em is relative to the font-size of its direct or nearest parent, rem is only relative to the html (root) font-size.
     we set up the html to 62.5% which makes 1rem = 10px.
@@ -1549,3 +1563,6 @@ Lecture 68 Big Button & Options List
             opacity: .5
         //when button is disabled it will change opacity
     Did styles on buttons.
+
+Lecture 69 Styling the Options List
+    We styled the widget and the things inside it. Pretty straight forward.
