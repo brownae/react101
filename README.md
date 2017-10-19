@@ -1534,4 +1534,18 @@ Lecture 66 Reset That $#!*
         ReactDOM.render(<IndecisionApp />, document.getElementById('app'));
 
 Lecture 67 Theming with variables
-    We are setting up a settings.sass file where we define our spacing sizes
+    We are setting up a settings.sass file where we define our spacing sizes and colors.
+
+Lecture 68 Big Button & Options List
+    We learned about sass functions.
+    http://sass-lang.com/documentation/Sass/Script/Functions.html
+    we used the darken function...
+        .big-button
+            background-color: $purple
+            border: none
+            border-bottom: .6rem solid darken($purple, 10%)
+    Learned about the css sudo class ':disabled'.
+        .big-button:disabled
+            opacity: .5
+        //when button is disabled it will change opacity
+    Did styles on buttons.
