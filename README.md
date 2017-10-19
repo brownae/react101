@@ -1566,3 +1566,7 @@ Lecture 68 Big Button & Options List
 
 Lecture 69 Styling the Options List
     We styled the widget and the things inside it. Pretty straight forward.
+
+Lecture 70 Styling Option Items
+    We created add-option.sass and option.sass
+    I learned about CSS flex-grow Property. It tells the element you are styling to grow into the available space.
