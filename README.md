@@ -1570,3 +1570,20 @@ Lecture 69 Styling the Options List
 Lecture 70 Styling Option Items
     We created add-option.sass and option.sass
     I learned about CSS flex-grow Property. It tells the element you are styling to grow into the available space.
+
+Lecture 71 Styling React Modal
+    Styled the modal by targeting it's built in classes and also set up a parameter for the modal tha allows us to name the class inside the modal div.
+
+    //Example
+    <Modal
+        isOpen={!!props.selectedOption}
+        onRequestClose = {props.clearSelectedOption}
+        contentLabel="Selected Option"
+        closeTimeoutMS={200} //We can set the timeout
+        className="modal"> // here we specify OUR class name that we can style.
+
+        <h3 className="modal__title" >Selected Option</h3>
+
+        {props.selectedOption && <p className='modal__body'>{props.selectedOption}</p>}
+        <button className='button' onClick={props.clearSelectedOption}>Okay</button>
+    </Modal>
