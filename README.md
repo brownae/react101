@@ -1587,3 +1587,6 @@ Lecture 71 Styling React Modal
         {props.selectedOption && <p className='modal__body'>{props.selectedOption}</p>}
         <button className='button' onClick={props.clearSelectedOption}>Okay</button>
     </Modal>
+
+Lecture 72 Mobile Considerations
+    We set up media queries and made a few tweaks
