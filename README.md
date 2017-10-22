@@ -1593,3 +1593,8 @@ Lecture 72 Mobile Considerations
 
 Lecture 73 Favicon
     We installed a favicon
+
+Lecture 74 - 75
+    Explains React Router and client side vs server side rendering.
+
+Lecture
