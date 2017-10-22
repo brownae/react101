@@ -1597,4 +1597,6 @@ Lecture 73 Favicon
 Lecture 74 - 75
     Explains React Router and client side vs server side rendering.
 
-Lecture
+Lecture 76 Setting Up Expensify app
+    Cloning indecision-app and making a basic boilerplate for starting new projects and the next project "Expensify app".
+    We saved one as a boilerplate and made another one we will work in called expensify-app.
