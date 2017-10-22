@@ -1590,3 +1590,6 @@ Lecture 71 Styling React Modal
 
 Lecture 72 Mobile Considerations
     We set up media queries and made a few tweaks
+
+Lecture 73 Favicon
+    We installed a favicon
