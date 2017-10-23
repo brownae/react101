@@ -1715,3 +1715,23 @@ Lecture 79 Linking Between Routes
     //We added the prop "activeClassName" and set it to "is-active". This is one of the perks of using NavLink. When we are on the page selected it changes the class to the page to "is-active". AND just like with the route we need to set the home page element to 'exact={true}'. Otherwise the class will always be applied to the home page because it starts with a '/'.
 
     We should use <Link> almost everywhere in our app except with the nav bar.
+
+Lecture 80 Organizing Our Routes
+    Here we break things into their own files AND we put the AppRouter in it's own folder called 'router' to keep it out of the way. A couple things to remember... When you put the component in it's own file it still needs access to "React from 'react'" so we need to import it at the top as well as any other asset we may be using in that page like <Link> or <NavLink> as well as exporting the default...
+
+    //Example
+        import React from 'react';
+        import { Link } from 'react-router-dom';
+
+
+        const NotFoundPage = () => (
+            <div>
+                404 - <Link to="/">Go to Home Page</Link>
+            </div>
+        );
+
+        export default NotFoundPage;
+
+    Then we import this component to the page that needs it. In the top of that page we import it from it's file and the path is relative to where we are...
+
+        import NotFoundPage from '../components/NotFoundPage';
