@@ -1652,3 +1652,23 @@ Lecture 77 React-router 101
 
         ReactDOM.render(routes, document.getElementById('app'));
     //Example-End
+
+Lecture 78 Setting Up a 404
+    We use an element provided by react-router called <Switch>.
+    We import it at the top of app.js and then replace our div that is wrapping the routes with the <Switch> tag. This changes the behavior of how it goes through the child elements. It looks through and stops when it finds a match instead of rendering everything that can be rendered. If no matches then it will match with the route that has no path and render the 404 page.
+
+        import { BrowserRouter, Route, Switch } from 'react-router-dom';
+
+        const routes = (
+            <BrowserRouter>
+                <Switch> // from <div> to <Switch>
+                    <Route path='/' component={ExpenseDashboardPage} exact={true}/>
+                    <Route path='/create'  component={AddExpensePage}/>
+                    <Route path='/edit'  component={EditExpensePage}/>
+                    <Route path='/help'  component={HelpPage}/>
+                    <Route component={NotFoundPage}/>
+                </Switch> // from </div> to </Switch>
+            </BrowserRouter>
+        );
+
+        ReactDOM.render(routes, document.getElementById('app'));
