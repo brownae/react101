@@ -1672,3 +1672,46 @@ Lecture 78 Setting Up a 404
         );
 
         ReactDOM.render(routes, document.getElementById('app'));
+
+Lecture 79 Linking Between Routes
+    Here we learned that anchor tags be default go to the server. We could us JS to prevent but React-router has a build it element/component for this called <Link>. This is to take advantage of the speed of client side routing.
+        // Here is how you would use in place of an <a></a> tag.
+            <div>
+                404 - <Link to="/">Go to Home Page</Link>
+            </div>
+    What if we want a header on every page? BrowserRouter needs the next child to be a container element/component. So we can creat a div inside of <BrowserRouter> and around <Switch>.
+        // Like so...
+        const routes = (
+            <BrowserRouter>
+                <div> // <- div wrapping Switch
+                    <Header /> // <- Header added
+                    <Switch>
+                        <Route path='/' component={ExpenseDashboardPage} exact={true}/>
+                        <Route path='/create'  component={AddExpensePage}/>
+                        <Route path='/edit'  component={EditExpensePage}/>
+                        <Route path='/help'  component={HelpPage}/>
+                        <Route component={NotFoundPage}/>
+                    </Switch>
+                </div>
+            </BrowserRouter>
+        );
+
+        ReactDOM.render(routes, document.getElementById('app'));
+    The <Link> tag is useful for switching between pages within the app, BUT the NavLink is ideal for a nav bar becasue it adds extra features, like highlighting the page you are currently on. SO we will set up our header with NavLink tags. First we have to import it at the top....
+
+        // like so...
+        import { BrowserRouter, Route, Switch, Link, NavLink } from 'react-router-dom';
+
+        // And then use NavLink...
+        const Header = () => (
+            <header>
+                <h1>Exspensify</h1>
+                <NavLink to="/" activeClassName="is-active" exact={true} >Dashboard</NavLink>
+                <NavLink to="/create" activeClassName="is-active" >Create Expense</NavLink>
+                <NavLink to="/edit" activeClassName="is-active">Edit Expense</NavLink>
+                <NavLink to="/help" activeClassName="is-active">Help</NavLink>
+            </header>
+        );
+    //We added the prop "activeClassName" and set it to "is-active". This is one of the perks of using NavLink. When we are on the page selected it changes the class to the page to "is-active". AND just like with the route we need to set the home page element to 'exact={true}'. Otherwise the class will always be applied to the home page because it starts with a '/'.
+
+    We should use <Link> almost everywhere in our app except with the nav bar.
