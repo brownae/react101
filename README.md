@@ -1600,4 +1600,55 @@ Lecture 74 - 75
 Lecture 76 Setting Up Expensify app
     Cloning indecision-app and making a basic boilerplate for starting new projects and the next project "Expensify app".
     We saved one as a boilerplate and made another one we will work in called expensify-app.
-     
+
+Lecture 77 React-router 101
+    We install react React-router
+    $ yarn add react-router-dom@4.2.2
+    We then imported two things in app.js, 'BrowserRouter, Route'.
+        import { BrowserRouter, Route } from 'react-router-dom';
+    We then set added a tweak to the dev-server in webpack.config.js ... the dev sever need to not look to the server for pages but the app.js for pages(Hence client side server) so we added a line to the dev-sever... this means when you get a 404 not found look to the client for the page to render.
+
+        devServer: {
+            contentBase: path.join(__ dirname, 'public'),
+            historyApiFallback: true //<-- Added this line
+        }
+
+    After this we set up some dummy components and then set up the router in app.js
+    //Example-Start
+        const ExpenseDashboardPage = () => (
+            <div>
+                This is from my Dashboard component.
+            </div>
+        );
+
+        const AddExpensePage = () => (
+            <div>
+                This is from AddExpensePage component.
+            </div>
+        );
+
+        const EditExpensePage = () => (
+            <div>
+                This is from EditExpensePage component.
+            </div>
+        );
+
+        const HelpPage = () => (
+            <div>
+                This is from HelpPage component.
+            </div>
+        );
+
+        const routes = (
+            <BrowserRouter>
+                <div>
+                    <Route path='/' component={ExpenseDashboardPage} exact={true}/> //We had to set up the exact because the '/' matches everything.
+                    <Route path='/create'  component={AddExpensePage}/>
+                    <Route path='/edit'  component={EditExpensePage}/>
+                    <Route path='/help'  component={HelpPage}/>
+                </div>
+            </BrowserRouter>
+        );
+
+        ReactDOM.render(routes, document.getElementById('app'));
+    //Example-End
