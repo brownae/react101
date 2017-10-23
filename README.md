@@ -1735,3 +1735,38 @@ Lecture 80 Organizing Our Routes
     Then we import this component to the page that needs it. In the top of that page we import it from it's file and the path is relative to where we are...
 
         import NotFoundPage from '../components/NotFoundPage';
+
+Lecture 81 Query Strings and URL parameters
+    In this video we are learning about the props that react router passes as it renders pages. These props are 'history', 'location', 'match', 'staticContext'. Location keeps an eye on the URL and when things are passed through on it. We learn how to make the URL dynamic so that when we want to edit a page or a post we can pass the id on the end and get a specific post or query.
+
+    //example
+        <BrowserRouter>
+            <div>
+                <Header />
+                <Switch>
+                    <Route path='/' component={ExpenseDashboardPage} exact={true}/>
+                    <Route path='/create'  component={AddExpensePage}/>
+                    <Route path='/edit/:id' //<- we added the /:id component={EditExpensePage}/>
+                    <Route path='/help'  component={HelpPage}/>
+                    <Route component={NotFoundPage}/>
+                </Switch>
+            </div>
+        </BrowserRouter>
+    With what we added to the edit path it no longer can render with just a url of '/edit' but now requires an id for ReactRouter to see it.
+
+    This is how we set up the EditExpensePage so we could see the props in the console, and render what is passed in.
+
+        //Example
+        import React from 'react';
+
+        const EditExpensePage = (props) => {
+            console.log(props);
+            return (
+                <div>
+                    Editing the expense with the id of {props.match.params.id}.//<- we can drill into the props to get the data that was passed.
+                </div>
+            );
+        };
+
+        export default EditExpensePage;
+        //End
