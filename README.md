@@ -1770,3 +1770,64 @@ Lecture 81 Query Strings and URL parameters
 
         export default EditExpensePage;
         //End
+
+Lecture 82 Build It: Router for Portfolio Site
+    We clone the exspensify-app and make a portfolio app. We had to delete most of the components and pages routed in the AppRouter and the nav section in the header and redo this app with 4 pages(HomePage, PortfolioPage, ContactPage and 404). Then we hooked it back up. On the porfolio page we had to put two <Link>'s to two portfolio pieces and pass in a number 1 to display the correct project.
+        //Examples
+        //AppRouter.js
+        import React from 'react';
+        import { BrowserRouter, Route, Switch, Link, NavLink } from 'react-router-dom';
+        import HomePage from '../components/HomePage';
+        import ProjectPortfolioPage from '../components/ProjectPortfolioPage';
+        import ContactPage from '../components/ContactPage';
+        import ProjectPage from '../components/ProjectPage';
+        import NotFoundPage from '../components/NotFoundPage';
+        import Header from '../components/Header';
+
+
+        const AppRouter = () => (
+            <BrowserRouter>
+                <div>
+                    <Header />
+                    <Switch>
+                        <Route path='/' component={HomePage} exact={true}/>
+                        <Route path='/portfolio'  component={PortfolioPage}/>
+                        <Route path='/contact'  component={ContactPage}/>
+                        <Route path='/project/:id'  component={PortfolioProjectPage}/>
+                        <Route component={NotFoundPage}/>
+                    </Switch>
+                </div>
+            </BrowserRouter>
+        );
+
+        export default AppRouter;
+
+        //Portfolio Page
+        import React from 'react';
+        import { Link } from 'react-router-dom'; // I forgot to import this at first.
+
+        const PortfolioPage = () => (
+            <div>
+                <h1>Portfolio Page!</h1>
+                <p>Checkout my Portfolio!</p>
+                <Link to="/portfolio/1">Project 1</Link>
+                <Link to="/portfolio/2">Project 2</Link>
+            </div>
+        );
+
+        export default PortfolioPage;
+
+        //Project Page
+        import React from 'react';
+
+        const ProjectPage = (props) => {
+            console.log(props);
+            return (
+                <div>
+                    <h1>Project numeber {props.match.params.id}</h1>
+                    <p>Check out this amazing project!</p>
+                </div>
+            );
+        };
+
+        export default ProjectPage;
