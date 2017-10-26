@@ -1964,3 +1964,55 @@ Lecture 87 Subscribing and Dynamic Actions
             type: 'SET',
             count: 101
         });
+
+Lecture 88 ES6 Object Destructuring
+    In this lecture we learned we can destructure objects. Which can make passing down the data more clear and/or less typing.
+
+    This is a slight break from redux to point out a new ES6 syntax for object destructuring which will help to work with arrays and objects.
+
+    Cool stuff!!
+        //Our object...
+        const person = {
+            name: 'Aaron',
+            age: 33,
+            location: {
+                city: 'Seattle',
+                temp: 55
+            }
+        };
+
+    If we wanted to use the data form this object here is the older way to do that...
+
+            console.log(`It's ${person.location.temp} in ${person.location.city}.`);
+            //This is a lot of typing.
+
+    So using the new syntax we could assign each thing in the object to a variable in shorthand. Like this...
+
+        const {city, temp} = person.location; // city and temp directly match city and temp from the object so they bind.
+
+        // then we would only have to write...
+        console.log(`It's ${temp} in ${city}.`);
+
+    Lets say you want to change the const/var name from temp to temperature so it's clearer. you do the same as above but use the ':'. like...
+
+        const {city, temp: temperature} = person.location; // The colon kind of binds the new word(temperature) to the standing variable(temp)
+
+        // then we would only have to write...
+        console.log(`It's ${temperature} in ${city}.`);
+
+    Now lets say you want to set a default incase the there is no name in the object. you use the '='. That is done like...
+
+        const {name = 'Anonymous', age} = person;
+
+        console.log(`${name} is ${age}.`);
+
+        // if there is no 'name' defined in the object it will return 'Anonymous'.
+
+    To get crazy you can use both on one variable. you just use in this order ':', '='...
+
+        const {city, temp: temperature = 'Unkown'} = person.location;
+
+        if (city && temperature){
+            console.log(`It's ${temperature} in ${city}.`);
+        }
+        //temp is now temperature and if it's not there then the default will be 'Unkown'.
