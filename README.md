@@ -1856,4 +1856,52 @@ Lecture 85 Setting Up Redux
     //End
     In the next video we will learn how to change the default with actions.
 
-    
+Lecture 86 Dispatching Actions
+    Learning all about Actions which allows us to change things in the redux store.
+
+    Action is an object that gets sent to the store, it's our way to communicate with the store. We pass a second argument to 'createStore()' called 'action', then inside we create a switch statement where we do different things depending on the action sent in.
+
+    Below we dispatch an Action by calling 'store.dispatch()' then inside we put an object that sets a 'type'. We set it to something and then when that matches in the switch it triggers what we want to have happen. 'INCREMENT' returns 'count: state.count + 1' and increments the state of count by 1.
+    Everytime a 'store.dispatch()' is called it runs the redux store (const store).
+
+    //Example
+    import { createStore } from 'redux';
+
+    const store = createStore((state = {count: 0}, action) => {
+        // console.log('Running');
+        switch (action.type){
+            case 'INCREMENT':
+                return {
+                    count: state.count + 1
+                };
+            case 'DECREMENT':
+                return {
+                    count: state.count - 1
+                };
+            case 'RESET':
+                return {
+                    count: 0
+                };
+            default:
+                return state;
+        }
+
+    });
+
+    console.log(store.getState());
+
+    // increment, decrement, reset.
+    store.dispatch({
+        type: 'INCREMENT'
+    });
+
+    store.dispatch({
+        type: 'RESET'
+    });
+
+    store.dispatch({
+        type: 'DECREMENT'
+    });
+
+
+    console.log(store.getState());
