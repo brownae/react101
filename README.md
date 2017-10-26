@@ -1834,3 +1834,26 @@ Lecture 82 Build It: Router for Portfolio Site
 
 Lectures 83 & 84
     Explains why we need redux. What I got is that data needs to be passed down from top to bottom but some components on the bottom of the structure need access to some data that their parents don't so by using redux we can bypass sending data down from the top only and instead supply data directly to the component that needs it. This also allows components to be free standing and flexible, so They can be used in lots of differnt places.
+
+Lecture 85 Setting Up Redux
+    Here we installed redux with
+        $ yarn add redux@3.7.2
+    Then we told webpack.config.js to listen to the redux-101.js file instead of app.js. We created that file in playground.
+    To use redux we must use 'createStore' so we import it and then make a very simple example.
+
+    The first argument in createStore(), must be a function. and in the params of hte funtion we pass in the default state. This is just returning the default state.
+
+    We can fetch the data using the .getState() method on the store.
+
+    //Example
+        import { createStore } from 'redux';
+
+        const store = createStore((state = {count: 0}) => {
+            return state;
+        });
+
+        console.log(store.getState());
+    //End
+    In the next video we will learn how to change the default with actions.
+
+    
