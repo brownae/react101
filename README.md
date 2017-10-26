@@ -1905,3 +1905,62 @@ Lecture 86 Dispatching Actions
 
 
     console.log(store.getState());
+
+Lecture 87 Subscribing and Dynamic Actions
+    Here we learn more options that redux provides.
+    'subscribe' allows us listen to the store for ANY changes.
+    and adding onto the object after 'type' allows us to create dynamic actions when that action type is called.
+
+    'subscribe' allows us listen to the store for ANY changes. Every time a change is made it runs the subscribe.
+    //Example
+        store.subscribe(()=>{
+            console.log(store.getState());
+        });
+    However if we want stop subscribing we can assign the method to a const and call that to stop following the changes. The state keeps changing but it stops runing the 'subscribe()' method.
+    //Example
+        const unsubscribe = store.subscribe(()=>{
+            console.log(store.getState());
+        });
+
+        store.dispatch({
+            type: 'INCREMENT'
+        });
+
+        unsubscribe(); //It stops tracking here
+
+    With dispatch() you must define a 'type'. After you have done that you can add as much as you want.
+
+    Below we add a new key value pair ... 'incrementBy: 5'. Then inside the switch case 'INCREMENT' we create a new variable called 'incrementBy'. It's value will depend on if the 'typeof' 'action.incrementBy' is a number. If it is then use that number, if false then use the number 1. This is done with a ternary operator.
+
+    //Example.
+        const store = createStore((state = {count: 0}, action) => {
+            // console.log('Running');
+            switch (action.type){
+
+                case 'INCREMENT':
+                    const incrementBy = typeof action.incrementBy === 'number' ? action.incrementBy : 1;
+
+                    return {
+                        count: state.count + incrementBy
+                    }; ...
+
+        store.dispatch({
+            type: 'INCREMENT',
+            incrementBy: 5
+        });
+
+        this will return 5.
+    incrementBy is tied to to the object it is created with.?
+    We can also assign by defining a type and then following it with a value. Below we have a type of 'SET' and when it is called we set count to 101 by returning 'count: action.count'.
+        //Example
+        ...
+        case 'SET':
+            return {
+                count: action.count
+            }
+        ...
+
+        store.dispatch({
+            type: 'SET',
+            count: 101
+        });
