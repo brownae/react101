@@ -1831,3 +1831,6 @@ Lecture 82 Build It: Router for Portfolio Site
         };
 
         export default ProjectPage;
+
+Lectures 83 & 84
+    Explains why we need redux. What I got is that data needs to be passed down from top to bottom but some components on the bottom of the structure need access to some data that their parents don't so by using redux we can bypass sending data down from the top only and instead supply data directly to the component that needs it. This also allows components to be free standing and flexible, so They can be used in lots of differnt places.
