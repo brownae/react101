@@ -1986,6 +1986,10 @@ Lecture 88 ES6 Object Destructuring
             console.log(`It's ${person.location.temp} in ${person.location.city}.`);
             //This is a lot of typing.
 
+            we could also do this to remove typing but it's also a lot of typing.
+            const temp = person.location.temp
+            const city = person.location.city
+
     So using the new syntax we could assign each thing in the object to a variable in shorthand. Like this...
 
         const {city, temp} = person.location; // city and temp directly match city and temp from the object so they bind.
@@ -2016,3 +2020,41 @@ Lecture 88 ES6 Object Destructuring
             console.log(`It's ${temperature} in ${city}.`);
         }
         //temp is now temperature and if it's not there then the default will be 'Unkown'.
+
+Lecture 89 Array Destructuring
+    Here we learned how to restructure an array for many of hte same reasons as destructuring an object.
+
+    Our Array...
+        const address = ['1299 S Juniper Street', 'Philadelphia', 'Pennsylvania', '19147'];
+
+    Old School way...
+        console.log(`You are in ${address[1]} ${address[2]}.`);
+        //If you look at this out of context you don't know what address[1]is.
+
+    new syntax. It is like deconstructing an object but you use square brackets'[]' instead of curly braces '{}'.
+
+        const [street, city, state, zip] = address;
+
+        console.log(`You are in ${city} ${state}.`);
+
+    If you don't want to assign everything in the array to a variable you can leave places blank but keep the commas. like...
+
+        const [ , , state,] = address //The commas act as placeholders for the index. Here we are only assigning 'state'.
+
+        console.log(`You are in ${state}.`);
+
+    If you want to rename a variable, it is easy since there is no name assigned in the array, it's done by index. So you can name anything what you want to so long as you have it in the right order.
+
+        const [ , city, yourState,] = address
+
+        console.log(`You are in ${city} ${yourState}.`);
+
+    Setting a default. You just use the '='.
+
+        const address = [];
+
+        const [ , city = 'New York', ,] = address
+
+        console.log(`You are in ${city}.`);
+
+        //it's kind of goofy but the default naming would only really work if the array came in empty or if the last item in the array was not there and the order of naming assignments lined up.
