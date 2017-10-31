@@ -2081,3 +2081,14 @@ Lecture 90 Refactoring and Organizing
             });
 
     In the above function we did a bit of destructuring. The first line says... A const with a name of 'incrementBy' set to an arrow function that implicitly returns an object. We pass in the first parenthesis '{ incrementBy = 1 } = {}', which says if incrementBy exists  and has a value great, but if not set it to 1 and the '= {}' means it is an object by default then it gets decontructed and will pass in the 'incrementBy: 1'. Yes, it's kind of confusing.
+
+Lecture 91 Reducers
+    Reducers are a core concept in Redux. The definition of reducer from the redux website is...
+        "Actions describe the fact that something happened, but don't specify HOW the application's state changes in response. This is the job of reducers."
+    The switch we wrote is a perfect example of a reducer.
+
+    Key attributes of a reducer...
+        1. Reducers are pure functions. They take what is given to them and process it. They do not rely on variables outside their own scope/function. The output is determined by the input. It does not change anything outside of the scope.
+        2. Never change state or action. It should only read the state and action when passed in and then return the modified version/ new instance of the object and then let react change the state.
+
+    So my understanding is that reducers read the 'state' and 'action' and then create & modify a new instance of it and return that value. It doesn't actually change the value at the source. That will happen if need be outside of the reducer via react or redux.
