@@ -2092,3 +2092,47 @@ Lecture 91 Reducers
         2. Never change state or action. It should only read the state and action when passed in and then return the modified version/ new instance of the object and then let react change the state.
 
     So my understanding is that reducers read the 'state' and 'action' and then create & modify a new instance of it and return that value. It doesn't actually change the value at the source. That will happen if need be outside of the reducer via react or redux.
+
+Lecture 92 Working with Multiple Reducers
+    In the previous example we passed in a single reducer to
+        'store = createStore(countReducer);'
+    That can get really messy when you need to do a lot of things. So in this lecture we learned about and imported 'combineReducers'. This is a built in redux function that lets us combine reducers. We created two reducers called, 'expensesReducer' and 'filtersReducer' and we created variables that set their default states...
+
+        const expensesReducerDefaultState = [];
+
+        const filtersReducerDefaultState = {
+            text: '',
+            sortBy: 'date', //date or amount
+            startDate: undefined,
+            endDate: undefined
+        };
+
+    This are the reducers...
+
+        const expensesReducer = (state = expensesReducerDefaultState, action) => {
+            switch (action.type){
+                default:
+                    return state;
+            }
+        };
+
+        const filtersReducer = (state = filtersReducerDefaultState, action) => {
+            switch (action.type){
+                default:
+                    return state;
+            }
+        };
+
+    Then we combined them inside the createStore() function...
+        //We broke it to multiple lines to read easier
+
+        const store = createStore(
+            combineReducers({
+                expenses: expensesReducer,
+                filter: filtersReducer
+            })
+        );
+
+        We are saying here that we want expenses to be handled by 'expensesReducer' and filter to be handled by 'filtersReducer'.
+
+    When we log 'store.getState()' to the console we get an object with expenses: [] and filer with the default object settings from 'filtersReducerDefaultState'.
