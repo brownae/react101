@@ -1841,7 +1841,7 @@ Lecture 85 Setting Up Redux
     Then we told webpack.config.js to listen to the redux-101.js file instead of app.js. We created that file in playground.
     To use redux we must use 'createStore' so we import it and then make a very simple example.
 
-    The first argument in createStore(), must be a function. and in the params of hte funtion we pass in the default state. This is just returning the default state.
+    The first argument in createStore(), must be a function. and in the params of the function we pass in the default state. This is just returning the default state.
 
     We can fetch the data using the .getState() method on the store.
 
@@ -1928,7 +1928,7 @@ Lecture 87 Subscribing and Dynamic Actions
 
         unsubscribe(); //It stops tracking here
 
-    With dispatch() you must define a 'type'. After you have done that you can add as much as you want.
+    With dispatch() you MUST define a 'type'. After you have done that you can add as much as you want.
 
     Below we add a new key value pair ... 'incrementBy: 5'. Then inside the switch case 'INCREMENT' we create a new variable called 'incrementBy'. It's value will depend on if the 'typeof' 'action.incrementBy' is a number. If it is then use that number, if false then use the number 1. This is done with a ternary operator.
 
@@ -2058,3 +2058,26 @@ Lecture 89 Array Destructuring
         console.log(`You are in ${city}.`);
 
         //it's kind of goofy but the default naming would only really work if the array came in empty or if the last item in the array was not there and the order of naming assignments lined up.
+
+Lecture 90 Refactoring and Organizing
+    In this lecture we learned about Action generators. Where we tell 'store.dispatch' what we want to do through a function.  We prefer them over inline action objects. So instead of having to define and pass data each time like this object...
+
+        store.dispatch({
+            type: 'INCREMENT',
+            incrementBy: 5
+        });
+
+    We can set up a function above and then call that function and pass in or not pass in what's needed. like this instead.
+
+        store.dispatch(incrementCount({incrementBy:5}));
+    OR...
+        store.dispatch(incrementCount());
+
+    incrementCount() is this function we defined at the top. By doing this it is more reliable. If a misspelled word happens it will throw an error. Where as with action objects it doesn't.
+
+        const incrementCount = ({ incrementBy = 1 } = {}) => ({
+                type: 'INCREMENT',
+                incrementBy: incrementBy
+            });
+
+    In the above function we did a bit of destructuring. The first line says... A const with a name of 'incrementBy' set to an arrow function that implicitly returns an object. We pass in the first parenthesis '{ incrementBy = 1 } = {}', which says if incrementBy exists  and has a value great, but if not set it to 1 and the '= {}' means it is an object by default then it gets decontructed and will pass in the 'incrementBy: 1'. Yes, it's kind of confusing.
