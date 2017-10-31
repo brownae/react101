@@ -2136,3 +2136,84 @@ Lecture 92 Working with Multiple Reducers
         We are saying here that we want expenses to be handled by 'expensesReducer' and filter to be handled by 'filtersReducer'.
 
     When we log 'store.getState()' to the console we get an object with expenses: [] and filer with the default object settings from 'filtersReducerDefaultState'.
+
+Lecture 93 ES6 Spread Operator in Reducers
+    Note we installed uuid which generated "universally unique id's". This is used temporarily until our database does this.
+        https://www.npmjs.com/package/uuid
+    Here we created an addExpense function. and we deconstructed the input parameters to make a object if one does not exist.
+
+        // ADD_EXPENSE
+        const addExpense = (//we broke it down into lines-easy to read.
+            { // if any of these things aren't passed in then make them and set them.
+                description = '',
+                note = '',
+                amount = 0,
+                createdAt = 0
+            } = {}
+        ) => ({
+            type: 'ADD_EXPENSE',
+            expense: {
+                id: uuid(),
+                description,//this is shorthand notation it means 'description: description'
+                note,
+                amount,
+                createdAt
+            }
+        });
+
+    We created a switch to handle the 'type:' when it is passed into the store.dispatch() and then triggers the two reducers (expensesReducer & filtersReducer)
+        //Example
+        const expensesReducer = (state = expensesReducerDefaultState, action) => {
+            switch (action.type){
+                case 'ADD_EXPENSE':
+                    return state.concat(action.expense);//note concat...
+                default:
+                    return state;
+            }
+        };
+    When we use the concat function it does not change the original state. We then took this a step further and learned about the 'ES6 Spread Operator'. it looks like this sort of like this '...variable'. the ... is like saying grab all the crap inside of the thing that follows.
+
+        //Example
+        const expensesReducer = (state = expensesReducerDefaultState, action) => {
+            switch (action.type){
+                case 'ADD_EXPENSE'://the following has the exact same effect.
+                    return [
+                        ...state, //*HERE*
+                        action.expense
+                    ];
+                default:
+                    return state;
+            }
+        };
+    We are saying take all the current items and then add on the 'action.expense'.
+
+    Then we wired the removeExpense function. And handled it in the switch.
+
+        // REMOVE_EXPENSE
+        const removeExpense = ({id} = {}) =>({
+            type: 'REMOVE_EXPENSE',
+            id
+        });
+
+        const expensesReducer = (state = expensesReducerDefaultState, action) => {
+            switch (action.type){
+                case 'ADD_EXPENSE':
+                    return [
+                        ...state,
+                        action.expense
+                    ];
+                case 'REMOVE_EXPENSE':
+                    return state.filter(({id})=> id !== action.id );
+                    //note filter() keeps the truthy value and drops the false. So if the action.id matches the id that is false they do match and it's dropped.
+                default:
+                    return state;
+            }
+        };
+
+    So when we make the call below on the two instances of store.dispatch()... we remove the rent expense from the object array.
+        const expenseOne = store.dispatch(addExpense({ description: 'Rent', amount: 100}));
+        const expenseTwo = store.dispatch(addExpense({ description: 'Coffee', amount: 300}));
+
+        //call
+        store.dispatch(removeExpense({ id: expenseOne.expense.id }));
+    This one really confused me.
