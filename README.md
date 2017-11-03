@@ -2137,7 +2137,7 @@ Lecture 92 Working with Multiple Reducers
 
     When we log 'store.getState()' to the console we get an object with expenses: [] and filer with the default object settings from 'filtersReducerDefaultState'.
 
-Lecture 93 ES6 Spread Operator in Reducers
+Lecture 93 ES6 Spread Operator in Reducers on arrays
     Note we installed uuid which generated "universally unique id's". This is used temporarily until our database does this.
         https://www.npmjs.com/package/uuid
     Here we created an addExpense function. and we deconstructed the input parameters to make a object if one does not exist.
@@ -2217,3 +2217,37 @@ Lecture 93 ES6 Spread Operator in Reducers
         //call
         store.dispatch(removeExpense({ id: expenseOne.expense.id }));
     This one really confused me.
+
+Lecture 94 Spreading Objects Operator
+    using the spreading objects operator we are able to create new objects bringing in data from existing objects.
+
+    BUT browsers don't currently support it so we need to bring in a plugin from to babel.
+        https://babeljs.io/docs/plugins/transform-object-rest-spread/
+
+    In this lecture we created an action object that lets us set the filter text value to what we want.
+
+    We first created the call at the bottom.
+
+        //we called the action object function 'setTextFilter' and passed in one argument an object text with a value of 'rent'.
+            store.dispatch(setTextFilter({ text:'rent' }));
+
+        Then at the top we set up the action object function... the first argument in our function is 'text' and if it's not set we set it to an empty string by default. Then we implicitly return an object.
+            // SET_TEXT_FILTER
+            const setTextFilter = (text = '') => ({
+                type: 'SET_TEXT_FILTER',
+                text
+            });
+
+        Then we go to the filtersReducer where the object function gets passed to and we tell it what we want to do when it see's the type 'SET_TEXT_FILTER'. we tell it to return a copy of the state object but then overide 'text' with a value of the text from the action object. (The action object is like the virtual object that is made with every change. It is made by the .dispatch() function, its the payload or way to communicate with the redux store.)
+
+            const filtersReducer = (state = filtersReducerDefaultState, action) => {
+                switch (action.type){
+                    case 'SET_TEXT_FILTER':
+                        return {
+                            ...state,
+                            text: action.text
+                        };
+                    default:
+                        return state;
+                }
+            };
