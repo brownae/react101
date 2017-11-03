@@ -1833,7 +1833,9 @@ Lecture 82 Build It: Router for Portfolio Site
         export default ProjectPage;
 
 Lectures 83 & 84
-    Explains why we need redux. What I got is that data needs to be passed down from top to bottom but some components on the bottom of the structure need access to some data that their parents don't so by using redux we can bypass sending data down from the top only and instead supply data directly to the component that needs it. This also allows components to be free standing and flexible, so They can be used in lots of differnt places.
+    Explains why we need redux. What I got is that data needs to be passed down from top to bottom but some components on the bottom of the structure need access to some data that their parents don't so by using redux we can bypass sending data down from the top only and instead supply data directly to the component that needs it. This also allows components to be free standing and flexible, so They can be used in lots of different places.
+
+    Think of redux as something similar to the window object. It is a global object that can be used anywhere in the client side of the program.
 
 Lecture 85 Setting Up Redux
     Here we installed redux with
@@ -2251,3 +2253,27 @@ Lecture 94 Spreading Objects Operator
                         return state;
                 }
             };
+
+Lecture 95 Wrapping Up Our Reducers
+    In this lecture we created the action objects to SORT_BY_DATE & SORT_BY_AMOUNT.
+
+    //Make the call and name the function. we set the first to take a number argument and the second blank so it will reset to undefined
+        store.dispatch(setStartDate(125));
+        store.dispatch(setStartDate());
+
+    Next we made the action object function...
+        // SET_START_DATE
+        const setStartDate = (startDate) => ({
+            type: 'SET_START_DATE',
+            startDate
+        });
+        // there was no need to set the default state of 'startDate' to undefined because that is the default.
+
+    Then we added the type case to the the switch in the filtersReducer...
+
+        case 'SET_START_DATE':
+            return {
+                ...state,
+                startDate: action.startDate
+            };
+    Now all our action objects are set for the reducers.
