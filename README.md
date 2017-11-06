@@ -2277,3 +2277,41 @@ Lecture 95 Wrapping Up Our Reducers
                 startDate: action.startDate
             };
     Now all our action objects are set for the reducers.
+
+Lecture 96 Filtering Redux Data
+    In this lecture we set up the filter by creating the fucntion 'getVisibleExpenses'.
+
+    first inside the store.subscribe() section we created a const where we stored the state and then another where we passed the state into a function called 'getVisibleExpenses' which we have not created yet and sotred that in side of 'const visibleExpenses', then spit that out to the console.
+
+        store.subscribe(() => {
+            const state = store.getState();
+            const visibleExpenses = getVisibleExpenses(state.expenses, state.filters);
+            console.log(visibleExpenses);
+        });
+
+    We then created the getVisibleExpenses function. we passed in expenses and filters. BUT filters we deconstructed and assigned with the '{}'. Then we said filter the results by each expense and only out of each expense if all three parameters are true(startDateMatch && endDateMatch && textMatch).
+
+        // Get visible expenses
+        const getVisibleExpenses = (expenses, { text, sortBy, startDate, endDate }) => {
+            return expenses.filter((expense) => {
+
+                const startDateMatch = typeof startDate !== 'number' || expense.createdAt >= startDate;
+
+                const endDateMatch = typeof endDate !== 'number' || expense.createdAt <= endDate;
+
+                const textMatch = expense.description.toLowerCase().includes(text.toLowerCase());
+
+                return startDateMatch && endDateMatch && textMatch;
+            });
+        };
+        //EXPLAINING startDateMatch & endDateMatch
+            if the typeof startDate is not equal to a number then return true. This makes it so it's always true so we don't prevent filtering if there is no start date. However if it is a number then the first parameter is false and we go on to the next. which says if the the time that the expense was created is after the time of the startDate(the time period we are looking for) then return true if not then return false. The opposite is the case of endDateMatch
+
+        We used the following store.dispatches to manipulate the state and test our filter. Not all at once though.
+
+            store.dispatch(setStartDate(0));
+            store.dispatch(setEndDate(2000));
+
+            store.dispatch(setTextFilter('rent'));
+
+        
