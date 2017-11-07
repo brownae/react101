@@ -2331,3 +2331,6 @@ Lecture 97 Sorting Redux Data
     };
         We use a compare function to sort the date if that is what was assigned into the 'sortBy' property in the object. It's pretty straight forward.
         So if 'a.createdAt < b.createdAt' then that is true and 1 is returned and 'b.createdAt' gets moved above a. if a.        So if 'a.createdAt < b.createdAt' then that is true and 1 is returned and 'b.createdAt' gets moved above a. if 'a.createdAt' was more than 'b.createdAt' then it would be false and -1 would be returned and b would stay beneath.
+
+Lecture 98 Section Intro: Connecting React and Redux
+    We need to connect the two so that components can grab info from the redux store and so that components can do something when they are interacted with and update the store.
