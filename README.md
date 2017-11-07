@@ -2314,4 +2314,20 @@ Lecture 96 Filtering Redux Data
 
             store.dispatch(setTextFilter('rent'));
 
-        
+Lecture 97 Sorting Redux Data
+    In this lecture we added onto the 'getVisibleExpenses' function. by concatenating the .sort() function.
+        ....
+            const textMatch = expense.description.toLowerCase().includes(text.toLowerCase());
+
+            return startDateMatch && endDateMatch && textMatch;
+
+        }).sort((a, b) => {
+            if (sortBy === 'date'){
+                return a.createdAt < b.createdAt ? 1 : -1;
+            } else if (sortBy === 'amount'){
+                return a.amount < b.amount ? 1 : -1;
+            }
+        });
+    };
+        We use a compare function to sort the date if that is what was assigned into the 'sortBy' property in the object. It's pretty straight forward.
+        So if 'a.createdAt < b.createdAt' then that is true and 1 is returned and 'b.createdAt' gets moved above a. if a.        So if 'a.createdAt < b.createdAt' then that is true and 1 is returned and 'b.createdAt' gets moved above a. if 'a.createdAt' was more than 'b.createdAt' then it would be false and -1 would be returned and b would stay beneath.
