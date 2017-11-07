@@ -2334,3 +2334,32 @@ Lecture 97 Sorting Redux Data
 
 Lecture 98 Section Intro: Connecting React and Redux
     We need to connect the two so that components can grab info from the redux store and so that components can do something when they are interacted with and update the store.
+
+Lecture 99 Organizing Redux
+    In this lecture we broke up the redux-expensify.js file into pieces and moved them into the expensify app. (so out of playground). We created 4 folders and put the following files inside...
+
+        actions ->  expenses.js (addExpense,removeExpense, editExpense)
+                    filters.js (setTextFilter, sortByDate, sortByAmount, setStartDate, setEndDate)
+
+        reducers -> expenses.js (expensesReducer)
+                    filters.js (filtersReducer)
+
+        selectors-> expenses.js(getVisibleExpenses)
+
+        store ->    configureStore.js(store)
+
+    Then we imported all of these to the head of the app.js and we ran some store.dispatch()'s to test and see if all was working.
+
+        const store = configureStore();//this calls in the store
+
+        store.subscribe(() => { //this runs with every change.
+            const state = store.getState();
+            const visibleExpenses = getVisibleExpenses(state.expenses, state.filters);
+
+            console.log(visibleExpenses);
+        });
+
+        store.dispatch(addExpense({description: 'Water bill', amount: 300}));
+        store.dispatch(addExpense({description: 'Gas bill', amount: 100}));
+
+        store.dispatch(setTextFilter('water'));
