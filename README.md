@@ -2363,3 +2363,39 @@ Lecture 99 Organizing Redux
         store.dispatch(addExpense({description: 'Gas bill', amount: 100}));
 
         store.dispatch(setTextFilter('water'));
+
+Lecture 100 The Higher Order Component
+    Higher Order Component(HOC) - Is just a react component that renders another component. The HOC is the component that creates the lower ones inside it. This is useful when you want to use a component you already have but want to modify it in some way.
+
+    The point of HOC is to reuse code. We can ...
+        Render hijacking
+        Prop Manipulation
+        Abstract State
+
+    We created hoc.js in the playground folder. We set up a react workspace. We then created a simple component that required a prop.
+        //example
+            const Info = (props) => (
+                <div>
+                    <h1>Info</h1>
+                    <p>The info is: { props.info }</p>
+                </div>
+            );
+
+        ReactDOM.render(<Info info="These are the details" />, document.getElementById('app'));
+
+    Then we created a function that would create a component and then also used the component we already created. This is a reusable peice.
+
+        //require authentication
+        const requireAuthentication = (WrappedComponent) => {
+            return (props) => (
+                <div>
+                    { props.isAuthenticated ? (<Info {...props}/>) : (<p>Must login to see info.</p>) }
+                </div>
+            );
+        };
+
+        const AuthInfo = requireAuthentication(Info);
+            // This becomes the component we call and we pass in the component we want to manipulate/use.
+
+        ReactDOM.render(<AuthInfo isAuthenticated={false} info="These are the details" />, document.getElementById('app'));
+            //AuthInfo is the component and we add a prop to it 'isAuthenticated={false}', which gets passed down as a prop that gets used in our HOC component. In the requireAuthentication function we return a jsx 'div' and inside we use a ternary operator that says if 'isAuthenticated' is true then show the Info component. If it's false then show the message 'Must login to see info.'.
