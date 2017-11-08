@@ -2455,3 +2455,45 @@ Lecture 101 Connecting Store and Component with React-Redux
             i.e.
                 connect(function that says what we want from store)(component)
     This allows our components to exist in isolation with out having to be tethered to parents and children.
+
+Lecture 102 Rendering Individual Expenses
+    Here we create the ExpenseListItem component and then pass it over to the ExpenseList component and use the .map to loop through our expenses to the screen.
+
+    //ExpenseListItem
+        import React from 'react';
+
+        const ExpenseListItem = ({ description, amount, createdAt }) =>(
+            <div>
+                <h3>{description}</h3>
+                <p>{amount} - {createdAt}</p>
+            </div>
+        );
+
+        export default ExpenseListItem;
+
+    //ExpenseList
+        import React from 'react';
+        import { connect } from 'react-redux';
+        import ExpenseListItem from './ExpenseListItem';
+        import selectExpenses from '../selectors/expenses'; // this is the filter inside selectors.
+
+        const ExpenseList = (props) => (
+            <div>
+                <h1>Expense List</h1>
+                {props.expenses.map((expense)=>(
+                        <ExpenseListItem key={expense.id} {...expense}/>
+                        //We pass in two props key gives each item in the loop a unique id and '...expense' provides a copy of everything inside 'expense:'.
+                    ))
+                }
+            </div>
+        );
+
+        const mapStateToProps = (state)=> {
+            return {
+                expenses: selectExpenses(state.expenses, state.filters)
+                //The value of expenses is no longer 'state.expenses', because it would never change and show all results. So it's now the value of the result of the filter in the selectors->expenses.
+            };
+        };
+
+        export default connect(mapStateToProps)(ExpenseList);
+    // This is a lot going on. Maybe watch again.
