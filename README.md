@@ -2399,3 +2399,59 @@ Lecture 100 The Higher Order Component
 
         ReactDOM.render(<AuthInfo isAuthenticated={false} info="These are the details" />, document.getElementById('app'));
             //AuthInfo is the component and we add a prop to it 'isAuthenticated={false}', which gets passed down as a prop that gets used in our HOC component. In the requireAuthentication function we return a jsx 'div' and inside we use a ternary operator that says if 'isAuthenticated' is true then show the Info component. If it's false then show the message 'Must login to see info.'.
+
+Lecture 101 Connecting Store and Component with React-Redux
+    //Switch webpack.config.js back to watching app.js.
+    We install the react-redux library and import it in app.js.
+    $ yarn add react-redux@5.0.6
+
+    In app.js we import Provider from react redux and then make a new const below to allow our components to use it. It has a prop that IS the store. Then we tell ReactDOM to render that(jsx).
+
+        import { Provider } from 'react-redux';
+    ...
+        const jsx = (
+            <Provider store={store}>
+                <AppRouter />
+            </Provider>
+        );
+
+
+        ReactDOM.render(jsx, document.getElementById('app'));
+
+    In expense dashboard component we import '<ExpenseList />', a component we will create. and put it in the component.
+
+        import React from 'react';
+        import ExpenseList from './ExpenseList';
+
+        const ExpenseDashboardPage = () => (
+            <div>
+                <ExpenseList />
+            </div>
+        );
+
+        export default ExpenseDashboardPage;
+
+    Then we create the component 'ExpenseList' in our components folder. We import react and connect from react-redux.
+
+        import React from 'react';
+        import { connect } from 'react-redux';
+
+        const ExpenseList = (props) => ( //This is the component we want
+            <div>
+                <h1>Expense List</h1>
+                {props.expenses.length}
+                {props.filters.text}
+            </div>
+        );
+
+        const mapStateToProps = (state)=> { //this is a function we make to define what we want to bring in from the store.
+            return {
+                expenses: state.expenses,
+                filters: state.filters
+            };
+        };
+
+        export default connect(mapStateToProps)(ExpenseList); //Here we use a built in react-redux HOC component 'connect' that connects our store with OUR component.
+            i.e.
+                connect(function that says what we want from store)(component)
+    This allows our components to exist in isolation with out having to be tethered to parents and children.
