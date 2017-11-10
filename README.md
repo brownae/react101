@@ -2497,3 +2497,51 @@ Lecture 102 Rendering Individual Expenses
 
         export default connect(mapStateToProps)(ExpenseList);
     // This is a lot going on. Maybe watch again.
+
+Lecture 103 Controlled Input for Filters
+    In this lecture we did two things.
+
+    1. we created a new component that is an input box called 'ExpenseListFilters' and then exported it and then imported it to the 'ExpenseDashboardPage'. Once it was showing up we went back to 'ExpenseListFilters' and did the following...(For the sake of being able to type input and then filter the view of results)
+
+        import React from 'react';
+        import { connect } from 'react-redux'; //Imported this
+        import { setTextFilter } from '../actions/filters'; //Imported this
+
+        const ExpenseListFilters = (props) => (
+            <div>
+            //Set the value to the current text and then told it to dispatch when there was a change. On the dispatch it will set the filter parameter to whatever was JUST typed.
+                <input type='text' value={props.filters.text} onChange={(e)=>{
+                    props.dispatch(setTextFilter(e.target.value));
+                }}/>
+            </div>
+        );
+
+        //This function gives the component access to the filters.
+        const mapStateToProps = (state) => {
+            return {
+                filters: state.filters
+            };
+        };
+        //Connect is the function we brought in from 'react-redux' that allows the data binding between the user and the store. It gives the component access to the state/store.
+        export default connect(mapStateToProps)(ExpenseListFilters);
+
+    2. We added a button to the ExpenseListItem that 'onClick' would delete that list item from the store.
+
+        import React from 'react';
+        import { connect } from 'react-redux'; //Imported this
+        import { removeExpense } from '../actions/expenses'; //Imported this
+
+        const ExpenseListItem = ({ dispatch, id, description, amount, createdAt }) =>( //We had to assign/pass in 'dispatch' and 'id' from the props.
+            <div>
+                <h3>{description}</h3>
+                <p>{amount} - {createdAt}</p>
+                // on click we run an arrow function that just sends out a dispatch which runs the 'removeExpense' function and requires an object of the id.
+                <button onClick={()=>{
+                    dispatch(removeExpense({id}));
+                }}>Remove</button>
+            </div>
+        );
+
+        //Note because we didn't need any info FROM 'expenses' or 'filters' to do it's job. It just needed access to the dispatch function. Which it gets from the connect even when the first argument is empty.
+
+        export default connect()(ExpenseListItem);
