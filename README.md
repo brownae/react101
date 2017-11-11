@@ -2545,3 +2545,22 @@ Lecture 103 Controlled Input for Filters
         //Note because we didn't need any info FROM 'expenses' or 'filters' to do it's job. It just needed access to the dispatch function. Which it gets from the connect even when the first argument is empty.
 
         export default connect()(ExpenseListItem);
+
+Lecture 104 Dropdown for Picking Sortby
+    In this lecture we created the select dropdown and then set its value base on the current value set in the store. Then we listen to the onChange event and if the value changes to the other it then sends out a dispatch with the correct action object function. This was added just beneath the 'input' in 'ExpenseListFilters'. We did have to import 'sortByDate' & 'sortByAmount' from '../actions/filters'.
+
+        <select
+            value={props.filters.sortBy}
+            onChange={(e)=>{
+                if (e.target.value === 'date'){
+                    props.dispatch(sortByDate());
+                } else if (e.target.value === 'amount') {
+                    props.dispatch(sortByAmount());
+                }
+            }}>
+
+            <option value="date">Date</option>
+            <option value="amount">Amount</option>
+        </select>
+
+    
