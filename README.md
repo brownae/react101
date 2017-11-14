@@ -2684,3 +2684,113 @@ Lecture 106 Setting Up a Date Picker
             this.setState(() => ({ calendarFocused: focused }));
         };
     Everything is now working and updating in real time to the state inside this class component ExpenseForm. Next we need to wire it up to DO something when submitted.
+
+Lecture 107 Wiring Up Add Expense
+    In this lecture we did a few little tweaks in the beginning to make it so that a person cannot enter a decimal for the first number in amount.
+
+        //We updated the regular expression. and we change the conditional statement to say if it's NOT empty and meets the requirement of the regular expression then update.
+        onAmountChange = (e) => {
+            const amount = e.target.value;
+
+            if (!amount || amount.match(/^\d{1,}(\.\d{0,2})?$/)) {
+                this.setState(() => ({ amount }));
+            }
+        };
+
+    We also change the 'onDateChange' function to not allow the user to empty it out. We did this by adding a conditional statement that says only if createdAt has a truthy value do you let the state be change. So it will not allow an empty date to be passed or stored.
+
+        onDateChange = (createdAt) => {
+            if (createdAt){
+                this.setState(() => ({ createdAt }));
+            }
+        };
+
+    Next we set up the onSubmit on the form.
+        ...
+        <form onSubmit={this.onSubmit}>
+            <input
+                type='text'
+                ...
+
+    I didn't understand this at first but next we added a prop to <ExpenseForm /> in 'AddExpensePage.js'.
+        //By adding onSubmit as a prop we are able to pass up the values from the state of this component. We put in an arrow function and pass in expense which will hold the returned values from the form.
+        ...
+        <h1>Add Expense</h1>
+        <ExpenseForm
+            onSubmit={(expense)=> {
+                console.log(expense);
+            }}
+        />...
+
+    Then we created the function we just called.
+
+        onSubmit = (e) => {
+            // We pass in the event and immediately prevent the default page load.
+            e.preventDefault();
+
+            //Here we said if there is no description or amount then throw an error. We added error to the state at the top and set its value to and empty string.
+            if (!this.state.description || !this.state.amount){
+                //error message
+                const error = 'Must enter a Description & Amount';
+                this.setState(() => ({ error }));
+
+            } else {
+                //If both are set then set the error to an empty string and then return to the props.onSubmit the object of the current values held in the state of the expense form.
+                this.setState(() => ({ error: ''}));
+                this.props.onSubmit({
+                    description: this.state.description,
+
+                    amount: parseFloat(this.state.amount, 10) * 100,
+                    //amount is saved as a string so we parse it and make it into pennies.
+
+                    createdAt: this.state.createdAt.valueOf(),
+                    // createdAt had a 'momentjs' object and we need to return a unix timestamp. so my adding '.valueOf()' we return a unix timestamp in milliseconds. We leared this from the momentjs docs.
+
+                    note: this.state.note
+                });
+            }
+        };
+
+    Now as it stands when we onSubmit it returns the expense to the console.log window. Now we take the data from the 'expense' and plug it into the redux store.
+
+    - On AddExpensePage.js we import connect from 'react-redux' and addExpense from 'actions/expenses'.
+    - Then we add the connect to the export default on the bottom.
+    - Pass in 'props' to the AddExpensePage function.
+    - Then we called props.dispatch and passed in the 'addExpense' function with the expense variable that has an object in it with description, amount, createdAt & note.
+
+
+        import React from 'react';
+        import { connect } from 'react-redux';
+        import ExpenseForm from './ExpenseForm';
+        import { addExpense } from '../actions/expenses';
+
+        const AddExpensePage = (props) => (
+            <div>
+                <h1>Add Expense</h1>
+                <ExpenseForm
+                    onSubmit={(expense)=> {
+                        props.dispatch(addExpense(expense));
+                    }}
+                />
+            </div>
+        );
+
+        export default connect()(AddExpensePage);
+
+    //Now when we submit it takes the data the user typed in and saves it in the redux store. We can see it on the dashboard page. Next we want to reroute the user to the Dashboard page when they hit submit.
+
+    Components we render inside of react-router all get access to special props. We use one of the 'history' methods called 'push()', which is how we change pages and you pass in the path you want to go to.
+
+        const AddExpensePage = (props) => (
+            <div>
+                <h1>Add Expense</h1>
+                <ExpenseForm
+                    onSubmit={(expense)=> {
+                        props.dispatch(addExpense(expense));
+                        props.history.push('/')
+                        //So we pass in the '/' to route us to the home page. This work just as if they hit a link to that page. so if they click the back button it will keep track and take them back.
+                    }}
+                />
+            </div>
+        );
+    //AND that's it.
