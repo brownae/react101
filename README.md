@@ -2637,3 +2637,50 @@ Lecture 105 Creating Expense Add/Edit Form
         }
 
     We also learned regex101.com is a great tool for making regular expressions.
+
+Lecture 106 Setting Up a Date Picker
+    In this lecture we set up the date picker. we started by installing 3 things
+        1. 'moment' momentjs.com - Is like a date() function but returns much better formatting.
+        2. 'react-dates' https://github.com/airbnb/react-dates is an airbnb react project that gives us their calendar date picker.
+        3. and 'react-addons-shallow-compare' which react-dates uses so we do too.  
+
+        $ yarn add moment@2.18.1 react-dates@12.7.0 react-addons-shallow-compare@15.6.0
+
+    we imported to our ExpenseForm component...
+
+        import moment from 'moment';
+        import { SingleDatePicker } from 'react-dates';
+        import 'react-dates/lib/css/datepicker.css'; // this is the css for the datepicker/
+
+    then we just add the 'SingleDatePicker' component to our form. There are other components we could use from 'react-dates' like start and end date but we don't need it. It is all in the docs on their github.
+
+    This is underneath our '<input/>' in ExpenseForm.
+
+        <SingleDatePicker // the first 4 are REQUIRED
+            date={this.state.createdAt}//set default date
+            onDateChange={this.onDateChange} function that runs on change
+            focused={this.state.calendarFocused} // this is required but I don't know what it does.
+            onFocusChange={this.onFocusChange} //
+            numberOfMonths={1} // makes only one month show up
+            isOutsideRange={() => false} //allows us to pick dates in the past.
+        />
+
+    To have a default state for the values we added a few things to the state object.
+        state = {
+            description: '',
+            note: '',
+            amount: '',
+            createdAt: moment(), //returns a timestamp present time.
+            calendarFocused: false //Was required to be set up to false. We named 'calendarFocused' in stead of 'focused' to be more specific.
+        };
+
+    Then we had to create the functions to handle the onchanges...
+
+        onDateChange = (createdAt) => { //Set the state to the date passed in
+            this.setState(() => ({ createdAt })); //long version '{createdAt: createdAt}'
+        };
+
+        onFocusChange = ({focused}) => {//destructured and named then returns the value of focused to calendarFocused in the state.
+            this.setState(() => ({ calendarFocused: focused }));
+        };
+    Everything is now working and updating in real time to the state inside this class component ExpenseForm. Next we need to wire it up to DO something when submitted.
