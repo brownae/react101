@@ -2563,4 +2563,77 @@ Lecture 104 Dropdown for Picking Sortby
             <option value="amount">Amount</option>
         </select>
 
-    
+Lecture 105 Creating Expense Add/Edit Form
+    In this lecture we focused on setting up the Expense Form which we created in components/ExpenseForm.js. We plan on using this format and code on the other pages so we created a class component. We plug in the classs component in the AddExpensePage.js.
+
+        import React from 'react';
+        import ExpenseForm from './ExpenseForm';
+
+        const AddExpensePage = () => (
+            <div>
+                <h1>Add Expense</h1>
+                <ExpenseForm /> // HERE
+            </div>
+        );
+
+        export default AddExpensePage;
+
+    Then we went and hashed out the details in our form. First we imported React then created the class called 'ExpenseForm' as seen below, and we exported it. We set up the 'state' and also the 'render(){}'
+
+    Next (on the bottom) we created our form in the 'render()' with the inputs we needed, setting autofocus to the first one. We set the value to the default of the state above and then we set the 'onChange' to run a function every time there is a change. See on amount change... (note i removed onDescriptionChange and onNoteChange for brevity)
+
+        import React from 'react';
+
+        export default class ExpenseForm extends React.Component {
+
+            state = {
+                description: '',
+                note: '',
+                amount: ''
+            };
+
+            ...
+
+            onAmountChange = (e) => { // pass in the event
+                const amount = e.target.value; get the value from the textarea/input.
+
+                if (amount.match(/^\d*(\.\d{0,2})?$/)) {
+
+                    //This is a regular expression above. It is saying only if true allow the state to change if it matches the regular expression. otherwise then no changes can be made. The regular expression only allows numbers and essentially the curency format. i.e. 100.00
+
+                    this.setState(() => ({ amount }));
+                }
+            };
+
+            render(){
+                return (
+                    <div>
+                        <form>
+                            <input
+                                type='text'
+                                placeholder='Description'
+                                autoFocus
+                                value={this.state.description}
+                                onChange={this.onDescriptionChange}
+                            />
+                            <input
+                                type='text'
+                                    // We needed to set the type to 'text' instead of 'number' so we could set our regular expression on it.
+                                placeholder='Amount'
+                                value={this.state.amount}
+                                onChange={this.onAmountChange}
+                            />
+                            <textarea
+                                placeholder='Add a note for your expense (optional)'
+                                value={this.state.note}
+                                onChange={this.onNoteChange}
+                            ///>
+                            </textarea>
+                            <button>Add Expense</button>
+                        </form>
+                    </div>
+                )
+            }
+        }
+
+    We also learned regex101.com is a great tool for making regular expressions.
