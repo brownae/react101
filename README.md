@@ -2794,3 +2794,84 @@ Lecture 107 Wiring Up Add Expense
             </div>
         );
     //AND that's it.
+
+Lecture 108 Wiring up Edit Expense
+    First thing we needed to do was link each expense to the EditExpensePage.js and have the id of the expense go with it. We did this by importing the 'Link' from react-router and Then wrapping the h3 with the link tag. Then we passed in 'to={`/edit/${id}`}' which directs us to the page with the id of the item we clicked on.
+
+        const ExpenseListItem = ({ dispatch, id, description, amount, createdAt }) =>(
+            <div>
+                <Link to={`/edit/${id}`}>
+                    <h3>{description}</h3>
+                </Link>
+                <p>{amount} - {createdAt}</p>
+                <button onClick={()=>{
+                    dispatch(removeExpense({id}));
+                }}>Remove</button>
+            </div>
+        );
+
+    Next we went to the 'EditExpensePage.js' and we imported 'connect' from react-redux and we connected it in on the bottom and with the first one needing to connect to the redux store we did 'mapStateToProps' and the second argument being the component function 'EditExpensePage'. We set up 'mapStateToProps' like this...
+
+        const mapStateToProps = (state, props) => { //Passing in both the state and props.
+            return {
+                    //'.find()' returns where the condition of true is met. In this case if the id in the redux store matches the id of the prop then it returns true and returns that object.
+                expense: state.expenses.find((expense) => expense.id === props.match.params.id)
+            };
+        };
+
+        export default connect(mapStateToProps)(EditExpensePage);
+
+    For the 'EditExpensePage' function we first imported..
+        import ExpenseForm from './ExpenseForm';
+        import { editExpense } from '../actions/expenses';
+
+    Then we added the <ExpenseForm /> and we passed it two props. The 'props.expense' coming from the parent with the id in it... and the 'onSubmit' handler which dispatches the 'editExpense()' which we imported and we pass in two arguments, the id and the expense variable being returned from the form with the updated state from the form.
+        const EditExpensePage = (props) => {
+            return (
+                <div>
+                    <ExpenseForm
+                        expense={props.expense}
+                        onSubmit={(expense)=>{
+                            props.dispatch(editExpense(props.expense.id ,expense));
+                            props.history.push('/');
+                            //the 'history.push' redirects us to the home page after the redux store gets updated.
+                        }}
+                    />
+                </div>
+            );
+        };
+
+    The form we kept mostly as is but made a modification to the state. We wanted it to have the default value of what was in the redux store if it existed and if not then set it to an empty string. We updated the state like this...
+
+            //We had to make a constructor and pass in the props and use the super(props) as to keep it connected then we used a ternary operator to use the prop data if it exists and a default empty string if not.
+
+        export default class ExpenseForm extends React.Component {
+                //NOTE with our 'transform-class-properties' plugin the constructor isn't really necessary but we used it anyway.
+            constructor(props){  
+                super(props);
+
+                this.state = {
+                    description: props.expense ? props.expense.description : '',
+                    note: props.expense ? props.expense.note : '',
+                    amount: props.expense ? (props.expense.amount /100).toString() : '',
+                    createdAt: props.expense ? moment(props.expense.createdAt) : moment(),
+                    calendarFocused: false,
+                    error: ''
+                };      
+                //On 'amount' we took the value and divided it by 100 to make it not in pennies anymore and we converted it to a string.
+
+                //On 'createdAt' we just needed to wrap it in the moment() function so it would return a date.
+            }
+        ...
+    //Now when you click to edit the program passes in the info from the redux store into the form fields via the state from the redux store. It finds it because the id is passed in to grab it out and display it.
+
+    //Lastly we removed the 'remove' button from the 'ExpenseListItem' and put it in the 'EditExpensePage'. So we gutted the button and from the ExpenseListItem page and get rid of connect and the two imports 'connect' and 'removeExpense'.
+
+    //We put the button under the '<ExpenseForm />' and then imported 'removeExpense' at the top then added props to the front of .dispatch().
+    The on the last page 'dispatch' was passed in deconstructed and named. Same with 'id' so we needed to do 'id : props.expense.id'. And then props.history.push('/') to route us back to the home page.
+
+        <button
+            onClick={()=>{
+                props.dispatch(removeExpense({id : props.expense.id }));
+                props.history.push('/');
+        }}>Remove</button>
