@@ -2875,3 +2875,23 @@ Lecture 108 Wiring up Edit Expense
                 props.dispatch(removeExpense({id : props.expense.id }));
                 props.history.push('/');
         }}>Remove</button>
+
+Lecture 109 Redux Dev Tools
+    We are installing REDUX deve tools for the chrome browser. We first install the extension in chrome web store then we modify how we 'createStore()' in our code.
+
+    https://github.com/zalmoxisus/redux-devtools-extension
+
+    In the store/configureStore.js we add this one line...
+
+        // Store creation
+        export default () => {
+            const store = createStore(
+                combineReducers({
+                    expenses: expensesReducer,
+                    filters: filtersReducer
+                }), // add a comma and add the line below.
+                window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+            );
+
+            return store;
+        };
