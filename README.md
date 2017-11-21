@@ -2991,3 +2991,47 @@ Lecture 110 Filtering By dates
 
 Lecture 111 Into: Testing React Components
     Here Andrew explains why writting tests for our app is useful. It seems mundane with a small app but as the app grows it will become a LOT of work to test each component. By having a testing script we can make changes and run the script and know we didn't break anything in less than 2 seconds.
+
+Lecture 112 Setting up jest.
+    In this lecture we install and set up Jest.
+    install to our project...
+        $ yarn add jest@21.2.1
+    And then add a script to our package.json...
+        "scripts": {
+          "serve": "live-server public/",
+          "build": "webpack",
+          "dev-server": "webpack-dev-server",
+          "test":"jest" //HERE
+        },
+    Now if we run '$ yarn test' it will look through our project for any test cases and run them. However at this point none exist. If we want to keep it running and do a watch we just write.
+        $ yarn test --watch
+
+    Next we create a 'test' folder in our 'src'. All our tests will go here.
+    we create file 'add.test.js'. NOTE 'test.js' is the extension that Jest looks for to know it's a test.
+
+    we wrote up this example page...
+        //This is our first function to test
+        const add = (a,b) => a + b;
+
+        //This is our second function to test
+        const generateGreeting = (name = 'Anonymous') => `Hello ${name}!`;
+
+            //'test()' is a global variable only allowed in test.js files. It takes two arguments, test description and an arrow function where you call the function being tested.
+
+            //'expect()' and 'toBe()' are also global variables. You pass in the variable to be checked in and then put in what you are expecting in the 'toBe()'.
+        test('Should add two numbers',() => {
+            const result = add(3,4);
+            expect(result).toBe(7);
+        });
+
+        test('Should add name passed onto "Hello" ',() => {
+            const result = generateGreeting('Mike');
+            expect(result).toBe('Hello Mike!');
+        });
+
+        test('Should generate greeting with no name',() => {
+            const result = generateGreeting();
+            expect(result).toBe('Hello Anonymous!');
+        });
+
+    All these tests shold pass.
