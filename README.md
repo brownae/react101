@@ -2988,3 +2988,6 @@ Lecture 110 Filtering By dates
                 const endDateMatch = endDate ? endDate.isSameOrAfter(createdAtMoment, 'day') : true;
                 const textMatch = expense.description.toLowerCase().includes(text.toLowerCase());
             ...
+
+Lecture 111 Into: Testing React Components
+    Here Andrew explains why writting tests for our app is useful. It seems mundane with a small app but as the app grows it will become a LOT of work to test each component. By having a testing script we can make changes and run the script and know we didn't break anything in less than 2 seconds.
