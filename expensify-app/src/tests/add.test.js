@@ -15,4 +15,4 @@ test('Should add name passed onto "Hello" ',() => {
 test('Should generate greeting with no name',() => {
     const result = generateGreeting();
     expect(result).toBe('Hello Anonymous!');
-});
+});       
