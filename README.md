@@ -2895,3 +2895,96 @@ Lecture 109 Redux Dev Tools
 
             return store;
         };
+
+    And that's it.
+
+Lecture 110 Filtering By dates
+    We are setting the start date and end date for our app so the user can filter between a date range.
+
+    First we updated filter.js. We imported the moment.js lib and we called momnet two times to set the startDate and endDate with the start of the current month to the end of the current month.
+
+        import moment from 'moment';
+
+        // Filters Reducer
+        const filtersReducerDefaultState = {
+            text: '',
+            sortBy: 'date',
+            startDate: moment().startOf('month'),
+            endDate: moment().endOf('month')
+        };
+    Next we added the datepicker widget to the ExpenseListFilters.js. We started out by switching the function to a class function by deleting...
+
+        'const ExpenseListFilters = (props) => '
+
+    and replacing it with...
+
+    class ExpenseListFilters extends React.Component {
+        render() {
+            return (
+                ...Here is the jsx from the const.
+            );
+        }
+    }
+
+    We then imported at the top ...
+        import { DateRangePicker } from 'react-dates';
+
+    Now because we just made it a class based component function we need to add a 'this.' to the beginning of all the calls to 'prop'.
+        Like...
+            <input
+                type='text'
+                value={this.props.filters.text} //THIS
+                onChange={(e)=>{
+                this.props.dispatch(setTextFilter(e.target.value));
+                }}
+            />
+    Then we put in our new DateRangePicker component.The first five are required.
+
+        <DateRangePicker
+            startDate={this.props.filters.startDate}//pulled from our props
+            endDate={this.props.filters.endDate}//pulled from our props
+            onDatesChange={this.onDatesChange}//need to create the function
+            focusedInput={this.state.calendarFocused}//We need to set this in the state for this class function component.
+            onFocusChange={this.onFocusChange}//need to create the function
+            showClearDates={true}//This enables an 'X' to clear dates.
+            numberOfMonths={1}//This enables only one month to be shown.
+            isOutsideRange={() => false}//This lets us select back in time.
+        />
+
+    Next we create the 'state' for this class and set the calendarFocused.
+        state = {
+            calendarFocused: null
+        };
+    Then we create the two functions we named but haven't created. 'onDatesChange' and 'onFocusChange'.
+            // We could pass in the prop but instead we destructure and pass in the names.
+        onDatesChange = ({ startDate, endDate }) => {
+                //We call the dispatch on the props and call the action functions from actions/filters.js and pass in the start and end dates. For them to work we need to make sure we import them at the top.
+            this.props.dispatch(setStartDate(startDate));
+            this.props.dispatch(setEndDate(endDate));
+        };
+
+        We are required to set this up for the component and I don't really know what it does.
+        onFocusChange = (calendarFocused) => {
+            this.setState(() => ({ calendarFocused }));
+        };
+
+    Things should be fuctioning at this point except the filters don't actually filter. So next we go to 'selectors/expenses.js' and do a little refactoring.
+
+    //We are getting info from moment.js docs. https://momentjs.com/docs/#/query/is-same-or-before/
+    https://momentjs.com/docs/#/query/is-same-or-after/
+
+    Here we imported moment.js and then modified 'const startDateMatch' and 'const endDateMatch'. But first we created 'createdAtMoment' where we assigned it's value to the moment the entry being filtered was createdAt.
+
+    Then we used a ternary operator and said for instance on 'startDateMatch'...
+        If 'startDate' is truthy then return true if it's the same or before the the 'createdAtMoment' of the expense. AND if 'startDate' is falsey then retun true. Which means the filter isn't set and return everything.
+
+        import moment from 'moment';
+
+        // Get visible expenses
+        export default (expenses, { text, sortBy, startDate, endDate }) => {
+            return expenses.filter((expense) => {
+                const createdAtMoment = (expense.createdAt);
+                const startDateMatch = startDate ? startDate.isSameOrBefore(createdAtMoment, 'day') : true;
+                const endDateMatch = endDate ? endDate.isSameOrAfter(createdAtMoment, 'day') : true;
+                const textMatch = expense.description.toLowerCase().includes(text.toLowerCase());
+            ...
