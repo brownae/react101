@@ -3080,3 +3080,23 @@ Lecture 113 Testing Expenses Action Generator
                 }
             });
         });
+
+Lecture 114 Testing Filters Action Generators
+    In this lecture we created tests for our actions/filters.js. Nothing was that different from the last lecture except the 'sortByDate' and 'sortByAmount' shorthand we used...
+
+        test('Should set sort by date action object', () => {
+            expect(sortByDate()).toEqual({ type: 'SORT_BY_DATE' });
+        });
+        //We can pass the empty function 'sortByDate()' right into the expect and keep the toEqual all on the same line.
+
+    We also imported moment and used it to test the date filters.
+
+        //setStartDate
+        test('Should generate set start date action object', () => {
+            const action = setStartDate(moment(0));
+            expect(action).toEqual({
+                type: 'SET_START_DATE',
+                startDate: moment(0)
+            });
+        });
+        // We needed to make sure we set the time in the moment or they would not match. Thus the '0' in moment(0).
