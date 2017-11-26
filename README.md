@@ -3100,3 +3100,29 @@ Lecture 114 Testing Filters Action Generators
             });
         });
         // We needed to make sure we set the time in the moment or they would not match. Thus the '0' in moment(0).
+
+Lecture 115 Testing Expenses Selector
+    In this lecture we wrote 5 tests for the 'selectors/expenses.js', 'selectExpenses' function. Which gets called and used in 'components/ExpenseList.js'. It populates the value of the expenses js object from the state only with items that match the filter.
+
+    We imported 'moment' and 'selectExpenses'. Then we created some test data and made an array of 3 objects.
+
+    Then in each test we created and tweaked the filters object to test every scenario it might have. Then we did the expect() and .toEqual() to provide what we expected.
+
+    On new thing we learned is a new moment.js function.
+    ...
+        //We can use moment to take us to a time and then add or subtract from that time with '.add()' and '.subtract()'. They take two arguments, (number, type of increment - seconds/minutes/days/months/years)
+
+        },{
+            id: 2,
+            description: 'Rent',
+            note: '',
+            amount: 109500,
+            createdAt: moment(0).subtract(4, 'days').valueOf()
+        },{
+            id: 3,
+            description: 'Credit Card',
+            note: '',
+            amount: 4500,
+            createdAt: moment(0).add(4, 'days').valueOf()
+        }]
+    ...
