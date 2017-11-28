@@ -3151,3 +3151,45 @@ Lecture 116 Testing Filters Reducer
         });
 
     Note: use .toEqual() when we are returning an object and .toBe() when we are returning a single value.
+
+Lecture 117 Testing Expenses Reducer
+    In this lecture we tested 'expensesReducer' in 'reducers/expenses.test.js'. We would need some test data to run these tests. So we removeed the test data we already wrote in 'selectors/expenses.test.js' and moved it to a new folder called 'fixtures' inside the file 'expenses.js'. Then we just imported that data to the files that would need it. like 'selectors/expenses.test.js' and 'reducers/expenses.test.js'. like ...
+
+        import expenses from '../fixtures/expenses';
+
+    Then we can just call on expenses in our test for the array of object data.
+
+    The following two were tricky for me...
+
+        //add expense
+        test('Should add new expense',() => {
+            const expense = {
+                id: 4,
+                description: 'Newest Expense',
+                note: '',
+                amount: 4000,
+                createdAt: 1000
+            };
+            const action = {
+                type: 'ADD_EXPENSE',
+                expense: expense
+            };
+            const state = expensesReducer(expenses, action);
+            expect(state).toEqual([...expenses,expense]);
+            //Here on this last line we expand the expenses and then add a comma and then put the expense we just added. This stumped me.
+        });
+
+        //Edit expense
+        test('Should edit expense',() => {
+            const action = {
+                type: 'EDIT_EXPENSE',
+                id: expenses[0].id,
+                updates: {
+                    description: 'Chewing gum'
+                }
+            }
+            const state = expensesReducer(expenses, action);
+            expect(state[0].description).toBe(action.updates.description);
+
+            //I kept selecting the expense by doing 'state.expense[0]'. But that was wrong, 'state' IS the array of expenses. So the correct way to get to the description in the state is... 'state[0].description'
+        });
