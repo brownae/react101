@@ -3126,3 +3126,28 @@ Lecture 115 Testing Expenses Selector
             createdAt: moment(0).add(4, 'days').valueOf()
         }]
     ...
+
+Lecture 116 Testing Filters Reducer
+    In this lecture we tested the filters in 'reducers/filters.js'. It was pretty straight forward. Here are two samples explained.
+
+        //Default - nothing passed in.
+
+        //'@@INIT' is what redux passes in on page load. So technically the switch staement works with this. It doesn't match anything in the switch and so it passes through the default settings.
+
+        test('Should setup default filter values',() => {
+            const state = filtersReducer(undefined,{ type: '@@INIT' });
+            expect(state).toEqual({
+                text: '',
+                sortBy: 'date',
+                startDate: moment().startOf('month'),
+                endDate: moment().endOf('month')
+            });
+        });
+
+        //sortBy amount
+        test('Should set sortBy to amount',() => {
+            const state = filtersReducer(undefined,{ type: 'SORT_BY_AMOUNT' });
+            expect(state.sortBy).toBe('amount');
+        });
+
+    Note: use .toEqual() when we are returning an object and .toBe() when we are returning a single value.
