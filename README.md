@@ -3221,3 +3221,84 @@ Lecture 118 Snapshot Testing
             //we expect the output of renderer to match a snapshot of the original. '.toMatchSnapshot()' is a built in 'jest.js' function.
             '.getRenderOutput()' is a built in 'react-test-renderer' function.
         //Jest creates a folder automatically in our tests folder called '__snapshots__'. This is where it will store the snapshot of what ever component we save. Note the first time we run it, it will ALWAYS pass and create a snapshot. From there on out it will compair to see if it's different than the original. If it is, the test will fail. We can then either fix the mistake or type 'u' in the terminal to update the snapshot.
+
+Lecture 119 Enzyme
+    In this lecture we install 'Enzyme' which is apparently much better for testing. We also have to add a few other things with it so that it works...
+
+    $ yarn add enzyme@3.2.0 enzyme-adapter-react-16@1.0.0 raf@3.3.2
+    //The first is enzyme the second is an adapter so we don't need to code for older versions of react. The third(raf(request animation frame)) is something our browser has built in and does with our code automatically and it does not happen in a test environment unless we bring it in... so we are.
+
+    Next we need to do some more steps to setup enzyme.
+
+    We created 'tests/setupTests.js'. This file allows us to configure the test environment we are going to run in.
+
+    //inside we put ... And docs for this are(http://airbnb.io/enzyme/)
+
+        import Enzyme from 'enzyme';
+        import Adapter from 'enzyme-adapter-react-16';
+
+        Enzyme.configure({
+            adapter: new Adapter()
+        });
+
+    Next we configure it to work with Jest. (https://facebook.github.io/jest/docs/en/configuration.html#content)
+    We went to the docs/configuration and clicked on the 'setupFiles[array]'. This when set up, makes it so jest runs this first and then our tests.
+
+    On the base level next to our package.json we create 'jest.config.json'.
+
+    in it we put the things we need to run. before jest runs.
+        {
+            "setupFiles": [
+                "raf/polyfill",
+                "<rootDir>/src/tests/setupTests.js"
+            ]
+        }
+
+    Then in our 'package.json' file we update the test attribute to "jest --config=jest.config.json".
+    ...
+        "build": "webpack",
+        "dev-server": "webpack-dev-server",
+        "test": "jest --config=jest.config.json" //HERE
+      },
+    ...
+
+    We are now setup for enzyme 3.
+
+    When we use the '.toMatchSnapshot()' as things are now we will get a lot of extra enzyme crap. So to make it go away and get back to what we want we install 'enzyme-to-json'.
+        $ yarn add enzyme-to-json@3.2.2
+
+    Then we import ...
+
+        import toJSON from 'enzyme-to-json';
+
+    //and change our code to...
+
+        test('Should render Header correctly',() => {
+            const wrapper = shallow(<Header />);
+            expect(toJSON(wrapper)).toMatchSnapshot();
+        });
+        //We called the toJSON and passed in our wrapper which now weeds out all the irrelevant data. Our snapshot is now more relevant and succinct.
+
+    AND one more thing! inside the 'jest.config.json' we are going to add one more thing.
+        {
+            "setupFiles": [
+                "raf/polyfill",
+                "<rootDir>/src/tests/setupTests.js"
+            ],//ADD THIS below...
+            "snapshopSerializers": [     
+                "enzyme-to-json/serializer"
+            ]
+        }
+
+    Now we no longer need ... the import or to use the 'toJSON()'. So we end up with...
+
+        import React from 'react';
+        import { shallow } from 'enzyme';
+        import Header from '../../components/Header';
+
+        test('Should render Header correctly',() => {
+            const wrapper = shallow(<Header />);
+            expect(wrapper).toMatchSnapshot();
+        });
+
+    NOW we are set up!
