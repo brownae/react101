@@ -3301,4 +3301,48 @@ Lecture 119 Enzyme
             expect(wrapper).toMatchSnapshot();
         });
 
-    NOW we are set up!
+    NOW we are set up! This video was painful. Seems like a ton of work. But I'm trusting it will make things run smoother.
+
+Lecture 120 Snapshot Testing with Dynamic Components
+    In this lecture we test our first component, ExpenseList.js. We did change the component to render a message if it was passed an empty array. and then to make the list like normal if a list is passed in.
+
+    We also added 'export' in front of the component so we would be able to import the component itself into the test area. NOTE: the default export is the 'connected()()' part of the component which would bring in values from redux state, which we do NOT want to do. We want to test the component in isolation.
+
+    Then we created 'tests/components/ExpenseList.test.js'. We imported the following.
+
+        import React from 'react';
+        import { shallow } from 'enzyme';
+        import { ExpenseList } from '../../components/ExpenseList';
+        import expenses from '../fixtures/expenses';
+
+    //Then wrote the following two tests.
+
+        //On this one we give the prop the expenses array that we created in fixtures(aka test data).
+        test('Should render expense list with expenses',() =>{
+            const wrapper = shallow(<ExpenseList expenses={expenses}/>);
+            expect(wrapper).toMatchSnapshot();
+        });
+
+        This one we pass in an empty array.
+        test('Should render expense list with empty message',() =>{
+            const wrapper = shallow(<ExpenseList expenses={[]}/>);
+            expect(wrapper).toMatchSnapshot();
+        });
+    Both worked and snapshots were stored.
+
+    We then created a test for ExpenseListItem.js This was similar with only a few differences to be noted.
+
+        import React from 'react';
+        import { shallow } from 'enzyme';
+        import expenses from '../fixtures/expenses';
+        import ExpenseListItem from '../../components/ExpenseListItem';
+
+        //Above ExpenseListItem does not need to be wrapped in '{}' because it is the default export. I had it wrapped and it gave me errors.
+
+        test('Should render ExpenseListItem item correctly',() =>{
+            const wrapper = shallow(<ExpenseListItem {...expenses[0]} />);
+            expect(wrapper).toMatchSnapshot();
+        });
+
+        //In this test I never would have thought to pass in an expanded expense item without calling and assigning a prop. But it's the only way I've gotten it to work.
+            ...shallow(<ExpenseListItem {...expenses[0]} />); ...
