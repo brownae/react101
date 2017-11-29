@@ -3193,3 +3193,31 @@ Lecture 117 Testing Expenses Reducer
 
             //I kept selecting the expense by doing 'state.expense[0]'. But that was wrong, 'state' IS the array of expenses. So the correct way to get to the description in the state is... 'state[0].description'
         });
+
+Lecture 118 Snapshot Testing
+    Testing components is very different than regular functions. They need to render to make sure they work. Facebook/React created a tool called 'react-test-renderer' to do render components in a testing atmosphere. We installed it using.
+        $ yarn add react-test-renderer@16.2.0
+    Next we import it into our test file. We are testing Header.js first since it is so simple. We created 'tests/components/Header.test.js'. In the top we import 3 things.
+
+        import react from 'React';
+        import ReactShallowRenderer from 'react-test-renderer/shallow';
+        import Header from '../../components/Header';
+
+    Then we write the following test.
+
+        test('Should render Header correctly',() => {
+            const renderer = new ReactShallowRenderer();
+            renderer.render(<Header />);
+            // console.log(renderer.getRenderOutput());
+            expect(renderer.getRenderOutput()).toMatchSnapshot();
+        });
+
+        // We start the test as normal then we create a new instance of ReactShallowRenderer and store it in 'renderer'. ReactShallowRenderer only takes the top level results without burrowing down into children components and tags.
+        // Then we call renderer and add on '.render()', this allows us to pass in the component we want to test and render it virtually.
+        // Then we run our test case with ...
+
+            expect(renderer.getRenderOutput()).toMatchSnapshot();
+
+            //we expect the output of renderer to match a snapshot of the original. '.toMatchSnapshot()' is a built in 'jest.js' function.
+            '.getRenderOutput()' is a built in 'react-test-renderer' function.
+        //Jest creates a folder automatically in our tests folder called '__snapshots__'. This is where it will store the snapshot of what ever component we save. Note the first time we run it, it will ALWAYS pass and create a snapshot. From there on out it will compair to see if it's different than the original. If it is, the test will fail. We can then either fix the mistake or type 'u' in the terminal to update the snapshot.
