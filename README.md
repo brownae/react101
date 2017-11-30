@@ -3346,3 +3346,42 @@ Lecture 120 Snapshot Testing with Dynamic Components
 
         //In this test I never would have thought to pass in an expanded expense item without calling and assigning a prop. But it's the only way I've gotten it to work.
             ...shallow(<ExpenseListItem {...expenses[0]} />); ...
+
+Lecture 121 Mocking Libraries with Jest
+    In this lecture we solve the problem of taking snapshots with timestamps in them. Time is always changing so the snapshot will always be wrong.
+
+    We look in the docs under 'Manual Mocks'.
+    https://facebook.github.io/jest/docs/en/manual-mocks.html#content
+
+    We create the following 'tests/__mocks__/moment.js'(the double underscores and name is significant to jest) inside of that file we put...
+
+        const moment = require.requireActual('moment');
+
+        export default (timestamp = 0) => {
+            return moment(timestamp);
+        };
+
+        //We create an export default arrow function. That passes in a timestamp. If it's not set it will be set to 0 and if it's set then it passes it on and it will put it through moment.js. We need to use moment so at the top we can't import it because it will look for the 'moment' in the same file. So we need to import it using 'require.requireActual()'.
+
+        //Jest will always go here when it see's 'moment()'. Then we control the current datetime to always be 0. If it was a created at time then it would just be passed along.
+
+    The component we tested was ExpenseForm.js the test for it looks just like the other component tests we have done. But here it is anyway...
+
+        import React from 'react';
+        import { shallow } from 'enzyme';
+        import ExpenseForm from '../../components/ExpenseForm';
+        import expenses from '../fixtures/expenses';
+
+        //default
+        test('Should render ExpenseForm correctly',() => {
+            const wrapper = shallow(<ExpenseForm />);
+            expect(wrapper).toMatchSnapshot();
+        });
+
+        //With data passed into the prop.
+        test('Should render ExpenseForm with data correctly',() => {
+            const wrapper = shallow(<ExpenseForm expense={expenses[1]}/>);
+            expect(wrapper).toMatchSnapshot();
+        });
+
+        //I'm not sure why on the second test we pass in the expense this way instead of '<ExpenseForm {...expenses[1]}/>' <-this does NOT work.
