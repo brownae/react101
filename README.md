@@ -3385,3 +3385,36 @@ Lecture 121 Mocking Libraries with Jest
         });
 
         //I'm not sure why on the second test we pass in the expense this way instead of '<ExpenseForm {...expenses[1]}/>' <-this does NOT work.
+
+Lecture 122 Testing User Interaction
+    http://airbnb.io/enzyme/docs/api/ShallowWrapper/simulate.html
+    In this lecture we learned about three new things, 'simulate()','.at()' and that we can put '.state()' on the component we are testing and have access to it's state, we can be specific by passing in what we want on that state. like ...'wrapper.state('note')' (wrapper is a var holding our component).
+
+    '.simulate()' is a built in method with enzyme. It allows us to simulate all kinds of changes, like click, change, submit and more... See the docs. It takes two arguments the first is what to simulate and the second is the mock event object that will get passed through to the event handlers. This is where we burrow in to set what we need to pass into the event. for example on a 'change' event we expect the value to be on 'e.target.value'. So the second argument would be '{ target: { value } });'. I'm still a little confused on why this works.
+
+    '.at()' is a built in method of enzyme as well. We can add it on to specify the index we want. So if there are 3 input nodes in our form we could specify like this... 'wrapper.find('textarea').at(0)'
+
+    Examples...
+
+        test('Should set note on textarea change',() => {
+            const value = 'New note';
+            const wrapper = shallow(<ExpenseForm />);
+            //We find the textarea and simulate the change event and pass in the 'value' to the event. '{target: {value}}'.
+            wrapper.find('textarea').simulate('change', {
+                target: { value }
+            });
+            //Then here we go to the state and see if the value of 'note' is the same as the value.
+            expect(wrapper.state('note')).toBe(value);
+        });
+
+        //on INVALID do not change amount
+        //This one shows how we used '.at()' since the amount was the second input on the form it's 'wrapper.find('input').at(1)'.
+        test('Should NOT set amount if invalid input',() => {
+            const value = '12.122';
+            const wrapper = shallow(<ExpenseForm />);
+            wrapper.find('input').at(1).simulate('change', {
+                target: { value }
+            });
+            expect(wrapper.state('amount')).toBe('');
+        });
+        //In this test we expect nothing to be set becuse we don't allow 2 places past the decimal.
