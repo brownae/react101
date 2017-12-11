@@ -3418,3 +3418,61 @@ Lecture 122 Testing User Interaction
             expect(wrapper.state('amount')).toBe('');
         });
         //In this test we expect nothing to be set becuse we don't allow 2 places past the decimal.
+
+Lecture 123 Test Spies
+    (Note: I was not really understaning this as I went trough it. Maybe re-watch)
+    In this lecture we learned about spies aka mocked functions. You create a new spy by simply attaching a 'jest.fn()' to a variable like this....
+
+        const onSubmitSpy = jest.fn();
+
+    When you use or pass in the spy it goes through the program and can tell you information about what happened.
+
+    Here is the test we wrote using the mocked function.
+
+        test('Should call onSubmit prop for valid form submission',() => {
+            const onSubmitSpy = jest.fn(); //Create spy
+
+            //Here we add on two props to our expense form. The expense and what to run on submit. in this case we run our spy function.
+            const wrapper = shallow(<ExpenseForm expense={expenses[0]} onSubmit={onSubmitSpy}/>);
+
+            //Here we run the form with simulate and we make sure to prevent the default.
+            wrapper.find('form').simulate('submit', {
+                preventDefault: () => { }
+            });
+
+            //Because we are passing in true data we expect the error message to be set to an empty string.
+            expect(wrapper.state('error')).toBe('');
+
+            //Here we expect the 'onSubmitSpy' function to have been called last with this object and data.
+            expect(onSubmitSpy).toHaveBeenLastCalledWith({
+                description: expenses[0].description,
+                amount: expenses[0].amount,
+                note: expenses[0].note,
+                createdAt: expenses[0].createdAt
+            });
+        });
+
+    Next we made tests for 'onDateChange' and 'onFocusChange'. These both live in '<ExpenseForm />' in the '<SingleDatePicker />' We learned how to burrow in and test those props...
+
+
+        test('Should set new date on date change',() => {
+            const now = moment(); //create a moment after we imported it up top.
+
+            //just shallow rendered the 'ExpenseForm'
+            const wrapper = shallow(<ExpenseForm />);
+
+            //Then we burrow in by using '.find()' to get the component and then '.prop()' which is new to us, to grap the prop by name. Then we tag on the argument/call the function and pass in what we want to pass in.
+            wrapper.find('SingleDatePicker').prop('onDateChange')(now);
+
+            //Then we make sure it changed the state to what we were expecting.
+            expect(wrapper.state('createdAt')).toEqual(now);
+        });
+
+
+        test('Should set calendar focus on change',() => {
+            const wrapper = shallow(<ExpenseForm />);
+            wrapper.find('SingleDatePicker').prop('onFocusChange')({focused: true});
+            expect(wrapper.state('calendarFocused')).toBe(true);
+        });
+
+    
