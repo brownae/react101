@@ -3475,4 +3475,109 @@ Lecture 123 Test Spies
             expect(wrapper.state('calendarFocused')).toBe(true);
         });
 
-    
+Lecture 124 Testing AddExpensePage
+    In this lecture we do a little refactoring to make the component more easily testable.
+
+    We started with this....
+
+        const AddExpensePage = (props) => (
+            <div>
+                <h1>Add Expense</h1>
+                <ExpenseForm
+                    onSubmit={(expense)=> {
+                        props.dispatch(addExpense(expense));
+                        props.history.push('/');
+                    }}
+                />
+            </div>
+        );
+
+        export default connect()(AddExpensePage);
+
+    Changed to this...(Note: still not done)...
+
+        const AddExpensePage = (props) => (
+            <div>
+                <h1>Add Expense</h1>
+                <ExpenseForm
+                    onSubmit={(expense)=> {
+                        props.addExpense(expense); //slightly shorter, easier to test
+                        props.history.push('/');
+                    }}
+                />
+            </div>
+        );
+
+        //We created this to connect on the 'addExpense' function below. When expense form hits the 'props.onSubmit' it come and run this section.
+
+        const mapDispatchToProps = (dispatch) => ({
+            addExpense: (expense) => dispatch(addExpense(expense))
+        });
+
+        //The first argument we don't need so we label it undefined and then we do use the 'mapDispatchToProps' for the second.
+
+        export default connect(undefined, mapDispatchToProps)(AddExpensePage);
+
+    To avoid inline functions and to make the code easier for refactoring and updating later we change the whole thing to a class based component. So it becomes this...
+
+        //We add the 'export' to it so we can test it all by itself.
+        export class AddExpensePage extends React.Component {
+            //this is a method
+            onSubmit = {
+                (expense)=> {
+                this.props.addExpense(expense);
+                this.props.history.push('/');
+            };
+
+            //We call the method here.
+            render() {
+                return (
+                    <div>
+                        <h1>Add Expense</h1>
+                        <ExpenseForm
+                            onSubmit={this.onSubmit}
+                        />
+                    </div>
+                );
+            }
+        }
+
+        const mapDispatchToProps = (dispatch) => ({
+            addExpense: (expense) => dispatch(addExpense(expense))
+        });
+
+        export default connect(undefined, mapDispatchToProps)(AddExpensePage);
+
+    Now we write the test. We do a couple of new things in this test. I'll explain as we go.
+
+        import React from 'react';
+        import { shallow } from 'enzyme';
+        import { AddExpensePage } from '../../components/AddExpensePage';
+        import expenses from '../fixtures/expenses';
+
+        //Here we declare three variables but do not set them
+        let addExpense, history, wrapper;
+
+        //Here we use the jest Global 'beforeEach()' function which will run the arrow function before each test that gets run. This is to keep us from re-writing this over and over when all tests need this.
+
+        beforeEach(() => {
+            addExpense = jest.fn();
+            history = { push: jest.fn() };
+            wrapper = shallow(<AddExpensePage addExpense={addExpense} history={history} />);
+        });
+
+        //Then we write the tests as if we had already written the variable we need.
+        test('Should render AddExpensePage correctly',() =>{
+            expect(wrapper).toMatchSnapshot();
+        });
+
+        test('Should handle onSubmit',() => {
+            //This finds and runs the onSubmit spy with data from the second expense in the fixtures data.
+            wrapper.find('ExpenseForm').prop('onSubmit')(expenses[1]);
+            expect(history.push).toHaveBeenLastCalledWith('/');
+            expect(addExpense).toHaveBeenLastCalledWith(expenses[1]);
+        });
+
+    This was confusing for me and I think I understand about 70%.
+
+Lecture 125 Testing EditExpensePage
