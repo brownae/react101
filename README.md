@@ -3581,3 +3581,92 @@ Lecture 124 Testing AddExpensePage
     This was confusing for me and I think I understand about 70%.
 
 Lecture 125 Testing EditExpensePage
+    In this lecture we did a little refactoring. We changed "EditExpensePage" component to a class based component. We used "mapDispatchToProps".
+
+    // Changed to class based and added "mapStateToProps".
+        import React from 'react';
+        import { connect } from 'react-redux';
+        import ExpenseForm from './ExpenseForm';
+        import { editExpense, removeExpense } from '../actions/expenses';
+
+        export class EditExpensePage extends React.Component {
+
+            onSubmit = (expense) => {
+                this.props.editExpense(this.props.expense.id ,expense);
+                this.props.history.push('/');
+            };
+
+            onRemove = () =>{
+                this.props.removeExpense({id : this.props.expense.id });
+                this.props.history.push('/');
+            };
+
+            render() {
+                return (
+                    <div>
+                        <ExpenseForm
+                            expense={this.props.expense}
+                            onSubmit={this.onSubmit}
+                        />
+                        <button onClick={this.onRemove}>Remove</button>
+                    </div>
+                );
+            }
+        }
+
+        //This gives our props access to the redux state.
+        const mapStateToProps = (state, props) => ({
+            expense: state.expenses.find((expense) => expense.id === props.match.params.id)
+        });
+
+        //This gives our props access to our action functions 'editExpense' and 'removeExpense'. It 'maps' the data to the function.
+        const mapDispatchToProps = (dispatch, props) => ({
+            editExpense: (id, expense) => dispatch(editExpense(id, expense)),
+            removeExpense: (data) => dispatch(removeExpense(data))
+        });
+
+        //It's a second argument to 'connect'.
+        export default connect(mapStateToProps, mapDispatchToProps)(EditExpensePage);
+
+    Next we created the test file for the component in 'tests/components/EditExpensePage.test.js'. Then we imported the things we  would need and wrote our tests. We learned about the 'beforeEach(()=>{})' function in jest. Which is a function we can use to run a set of test code before each test is run. This is helpful when we are writting up multiple tests that will all need the exact same setup. We can write it once and then call it before each test. It looks like this...
+
+        import React from 'react';
+        import { shallow } from 'enzyme';
+        import { EditExpensePage } from '../../components/EditExpensePage';
+        import expenses from '../fixtures/expenses';
+
+        let editExpense, removeExpense, history, wrapper;
+
+        //This runs before each test.
+        beforeEach(() => {
+            editExpense = jest.fn();
+            removeExpense = jest.fn();
+            history = { push: jest.fn() };
+            wrapper = shallow(
+                <EditExpensePage
+                    editExpense={editExpense}
+                    removeExpense={removeExpense}
+                    history={history}
+                    expense={expenses[2]}
+                />
+            );
+        });
+
+        test('Should render to match snapshot',() => {
+            expect(wrapper).toMatchSnapshot();
+        });
+
+        //Here we grab the wrapper(EditExpensePage component) and we find the ExpenseForm component and the onSubmit function and pass in the second expense for data. Then we write 2 cases of what we expected to get back.
+        test('Should handle edit expense',() => {
+            wrapper.find('ExpenseForm').prop('onSubmit')(expenses[2]);
+            expect(history.push).toHaveBeenLastCalledWith('/');
+            expect(editExpense).toHaveBeenLastCalledWith(expenses[2].id, expenses[2]);
+        });
+
+        test('Should handle remove expense',() => {
+            wrapper.find('button').simulate('click');
+            expect(history.push).toHaveBeenLastCalledWith('/');
+            expect(removeExpense).toHaveBeenLastCalledWith({
+                id: expenses[2].id
+            });
+        });
