@@ -3670,3 +3670,85 @@ Lecture 125 Testing EditExpensePage
                 id: expenses[2].id
             });
         });
+
+Lecture 126 Testing ExpenstListFilters
+    In this lecture we go into 'ExpenstListFilters' and take out all the inline functions and make them into methods above and call them. We did that with these two, they are now methods...
+
+        onTextChange = (e)=>{
+        this.props.dispatch(setTextFilter(e.target.value));
+        };
+
+        onSortChange = (e)=>{
+            if (e.target.value === 'date'){
+                this.props.dispatch(sortByDate());
+            } else if (e.target.value === 'amount') {
+                this.props.dispatch(sortByAmount());
+            }
+        };
+
+    Then we hooked up the 'mapDispatchToProps'. It takes in a 'dispatch' and implicitly returns an object. This is what we did...
+
+        const mapDispatchToProps = (dispatch) => ({
+            setTextFilter: (text) => dispatch(setTextFilter(text)),
+            sortByDate: () => dispatch(sortByDate()),
+            sortByAmount: () => dispatch(sortByAmount()),
+            setStartDate: (startDate) => dispatch(setStartDate(startDate)),
+            setEndDate: (endDate) => dispatch(setEndDate(endDate)),
+        });
+
+        //Make sure to connect it as the second argument.
+        export default connect(mapStateToProps, mapDispatchToProps)(ExpenseListFilters);
+
+    Then we remove the .dispatch() used above.
+
+        //Before...
+        onTextChange = (e)=>{
+        this.props.dispatch(setTextFilter(e.target.value));
+        };
+
+        //After...
+        onTextChange = (e)=>{
+        this.props.setTextFilter(e.target.value);
+        };
+
+    Now we are ready to write our tests.
+
+        //typical imports...
+        import React from 'react';
+        import { shallow } from 'enzyme';
+        import { ExpenseListFilters } from '../../components/ExpenseListFilters';
+        import { filters, altFilters } from '../fixtures/filters';
+
+        //assign variables
+        let setTextFilter, sortByDate, sortByAmount, setStartDate, setEndDate, wrapper;
+
+        //So when we assign each prop to a 'jest.fn'(spy) we are passing it down with the data and can tell us what happened. I don't entireley understand why this works though.
+        beforeEach(() => {
+            setTextFilter = jest.fn;
+            sortByDate = jest.fn;
+            sortByAmount = jest.fn;
+            setStartDate = jest.fn;
+            setEndDate = jest.fn;
+            wrapper = shallow(
+                <ExpenseListFilters
+                    filters={filters}
+                    setTextFilter={setTextFilter}
+                    sortByDate={sortByDate}
+                    sortByAmount={sortByAmount}
+                    setStartDate={setStartDate}
+                    setEndDate={setEndDate}
+                />
+            )
+        });
+
+        test('Should render ExpenseListFilters correctly',() => {
+            expect(wrapper).toMatchSnapshot();
+        });
+
+        //Here we learned a new enzyme method we can use called '.setProps()'. It allows us to set a prop or in this case simply override the one before so we can try using our alternate data filters.
+        test('Should render ExpenseListFilters with alt data correctly',() => {
+            wrapper.setProps({
+                filters: altFilters
+            });
+            expect(wrapper).toMatchSnapshot();
+        });
