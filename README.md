@@ -3809,3 +3809,6 @@ Lecture 128 Section Intro: Deploying Your Apps
 
 Lecture 129 Installing git
     Just installed git. I already had it installed.
+
+Lecture 130 What is Git?
+    A high level overview of what git does.
