@@ -3752,3 +3752,53 @@ Lecture 126 Testing ExpenstListFilters
             });
             expect(wrapper).toMatchSnapshot();
         });
+
+Lecture 127 Testing ExpenstListFilters: Part II
+    In this lecture we wrote the rest of the test cases. Here are the ones I found tricky explained...
+
+        //Because the default filter setting which is called 'filter' and imported from fixtures is set to 'sortByDate', we want to test that it changes to 'sortByDate', so we override with the 'altFilters' which is set to 'sortByAmount'.
+
+        test('Should sort by date',() => {
+            const value = 'date'; //what we want to filter by.
+
+            //overriding to have default prop that passes down 'sortByAmount'.
+            wrapper.setProps({
+                filters: altFilters
+            });
+
+            //find the select element and simulate the change event and make it's target value 'value' which is 'date'.
+            wrapper.find('select').simulate('change', {
+                target: { value }
+            });
+            //Here we just expect that the correct function ran. The 'sortByDate' function.
+            expect(sortByDate).toHaveBeenCalled();
+        });
+
+        //Here we want to trigger the onDatesChange handler and make sure that it works when passed new values. So we create two new dates and then grab the prop 'onDatesChange' and pass in the values and see if the functions 'setStartDate' and 'setEndDate' were called with the data we passed in.
+        test('Should handle date change',() => {
+            const startDate = moment(0).add(4, 'years');//set values
+            const endDate = moment(0).add(8, 'years');
+
+            //Grab the 'onDatesChange' prop and pass in the object it expects.
+            wrapper.find('DateRangePicker').prop('onDatesChange')({ startDate, endDate });
+
+            //We expect both start and end date functions to have been called with the data we assigned to them.
+            expect(setStartDate).toHaveBeenLastCalledWith(startDate);
+            expect(setEndDate).toHaveBeenLastCalledWith(endDate);
+        });
+
+
+        //This is to test the DateRangePicker onFocusChange. Which tells the state which date is being set. It can be 'startDate', 'endDate' or 'null'.
+        test('Should handle date focus changes',() => {
+            const calendarFocused = 'endDate';
+
+            //find and grab onFocusChange and pass it the data. The var we created 'calendarFocused'.
+            wrapper.find('DateRangePicker').prop('onFocusChange')(calendarFocused);
+
+            //We expect the 'calendarFocused' in the redux state to be changed to 'endDate'
+            expect(wrapper.state('calendarFocused')).toBe(calendarFocused);
+        });
+
+    //I should go through and rewatch this whole testing section. I understand after we do it but feel kinda blank when I have to think about doing it myself.
+
+    
