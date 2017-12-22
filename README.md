@@ -12,6 +12,7 @@ $ git status - View the changes to your project code
 $ git add - Add files to staging area
 $ git commit - Create a new commit with files from staging area
 $ git log - View recent commits
+$ q - To quit the git log
 
 
 Notes:
@@ -3846,3 +3847,52 @@ Lecture 131 Integrating Git into our Project
 
     To see recent commits use git log.
         $ git log
+
+Lecture 132 Setting up SSH and Github
+    Documentation here - https://help.github.com/articles/connecting-to-github-with-ssh/
+    In this lecture we log into our github account and we link our git repo to it. I already had this done so I am just along for the ride.
+    'SSH' = Secure Shell. A safe way for two machines to communicate.
+
+    Check to see if SSH is already set up.
+        // 'ls' :list all the folders. '-a' :Show all the hidden folders as well. '~/.ssh' :tilda is short for user directory and were looking for the .ssh just one level up. If you see only '. ..' you don't have keys set up. If you see things like.. 'github_rsa github_rsa.pub' then you do. The '.pub' is the public key. Never share the other key. It is a password.
+
+        $ ls -a ~/.ssh
+
+    How to generate one if you don't have one.
+        //This command generates the private and public keys.
+        $ ssh-keygen -t rsa -b 4096 -C "aebrown9@gmail.com"
+            //Breakdown
+                ssh-keygen  :ssh key generation.
+                -t :lets us specify the type.
+                rsa :the type of key we are going to use.
+                -b 4096 :bits, the size of the key the bigger the harder it is to hack. we are using the required 4096 bit size.
+                -C "aebrown9@gmail.com" :short for comment followed but double quotes to put in your e-mail address. It's associated with the key pair.
+        //Next we need to use ssh agent so github will know which key to use. to see if it's running run this weird command.
+            $ eval "$(ssh-agent -s)"
+        //if it is running you will get 'Agent pid 3753' .. the agent id.
+
+        Next add the new key and add the path to the private key file.
+            $ ssh-add ~/.ssh/github_rsa
+        Then copy the contents of the public key and put it in github.
+            To copy the contents of the public folder use this command...
+                $ pbcopy < ~/.ssh/id_rsa.pub
+        Then got to github.com then profile/settings/SSH and GPGkeys and click the 'New ssh key' button. Specify a name for the machine you are on and paste in the key.
+
+        And now it is set up.
+
+        Run a test command to see if it's all linked up. This will just check connection. You should see a welcome message.
+            $ ssh -T git@github.com
+                //The '-T' is to disable things we don't need
+
+        next copy the github SSH address for your repo and then go to the command line and connect it by typing...
+            $ git remote add origin *the ssh address from github*
+        Now the local git repo knows there is a remote external repository.
+
+        If you run
+            $ git remote -v
+            //This will tell you what the fetch and push addresses are for this repo on github.
+
+        Now to push everything up to github for the first time we do...
+            $ git push -u origin master
+            //This is pushing up all our files to the master branch.
+        The repo with all our files should be on github now.
