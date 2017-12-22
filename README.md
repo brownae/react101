@@ -6,6 +6,14 @@ Run program for the first time load dev dependencies - $ yarn install
 Run the dev server - $ yarn run dev-server
 Run the test suite - $ yarn test --watch
 
+Git short list.
+$ git init - Create a new git repo
+$ git status - View the changes to your project code
+$ git add - Add files to staging area
+$ git commit - Create a new commit with files from staging area
+$ git log - View recent commits
+
+
 Notes:
 From root of folder...
 To reinstall dependencies: $ yarn install
@@ -3812,3 +3820,29 @@ Lecture 129 Installing git
 
 Lecture 130 What is Git?
     A high level overview of what git does.
+
+Lecture 131 Integrating Git into our Project
+    In this lecture we go over basic command line git commands. We deleted a few lines in app.js that we didn't need to use as an example.
+
+    Initializing the project with Git - go to the root of the project in the terminal. This initializes the project into git. Nothing will be tracked, it it just aware of the project from here up.
+        $ git init
+
+    To see what is going on with this project and git. Lets you see what is staged and not staged.
+        $ git status
+
+    Here is a good point to make the '.gitignore' file on the root and specify what you DO NOT want to track. Like 'node_modules'. If you do a git status now it will no longer see 'node_modules'.
+
+    To add the files we want to track and stage for commit we simply use...
+        //To add one file just add the file name.
+        $ git add package.json
+        //To add all the files from our root...
+        $ git add .
+
+    To commit everything that is 'staged' we use git commit and also trail it with our required message about this commit.
+        $ git commit -m "Initial commit"
+
+    Note to stage the README.md file on the root you need to use 'sudo'. It will require the password for the user of the computer.
+        $ sudo git add ../README.md
+
+    To see recent commits use git log.
+        $ git log
