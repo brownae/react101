@@ -1,7 +1,10 @@
 # react101
 A place where I'm going to put all the things about react.js
 
-
+Command line short list.
+Run program for the first time load dev dependencies - $ yarn install
+Run the dev server - $ yarn run dev-server
+Run the test suite - $ yarn test --watch
 
 Notes:
 From root of folder...
@@ -3803,3 +3806,6 @@ Lecture 127 Testing ExpenstListFilters: Part II
 
 Lecture 128 Section Intro: Deploying Your Apps
     High level overview of what we will be doing. Nothing specific.
+
+Lecture 129 Installing git
+    Just installed git. I already had it installed.
