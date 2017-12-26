@@ -1,8 +1,12 @@
+// Must give ENTRY point and OUTPUT
 const path = require('path');//this gives us access to the node .join() function.
-// must give ENTRY point and OUTPUT
+
+const ExtractTextPlugin = require('extract-text-webpack-plugin');//this imports the webpack plugin 'extract-text-webpack-plugin'
+
 
 module.exports = (env) => {
     const isProduction = env === 'production';
+    const CSSExtract = new ExtractTextPlugin('styles.css');//This creates a new instance of the 'extract-text-webpack-plugin' and we pass in what we want the file to be named.
 
     return {
         entry: './src/app.js',
@@ -17,14 +21,28 @@ module.exports = (env) => {
                 exclude: /node_modules/
             }, {
                 test: /\.(sass|css)$/,
-                use: [
-                    'style-loader',
-                    'css-loader',
-                    'sass-loader'
-                ]
+                use: CSSExtract.extract({
+                    use: [
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                sourceMap: true
+                            }
+                        },
+                        {
+                            loader: 'sass-loader',
+                            options: {
+                                sourceMap: true
+                            }
+                        }
+                    ]
+                })
             }]
         },
-        devtool: isProduction ? 'source-map' : 'cheap-module-eval-source-map',
+        plugins: [
+            CSSExtract
+        ],
+        devtool: isProduction ? 'source-map' : 'inline-source-map',
         devServer: {
             contentBase: path.join(__dirname, 'public'),
             historyApiFallback: true

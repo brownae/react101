@@ -3955,3 +3955,85 @@ Lecture 133 Production Webpack
                 }
             };
         };
+
+Lecture 134 Creating Separate CSS Files
+    In this lecture we configure webpack to give us seperate css files outside of the bundle. This saves us time. When CSS is inside the bundle that means all the JavaScript has to run before the css can get compiled by the browser.
+
+    We install a webpack plugin called 'extract-text-webpack-plugin'. docs here...
+    https://github.com/webpack-contrib/extract-text-webpack-plugin/releases
+
+    $ yarn add extract-text-webpack-plugin
+
+    We import the plugin to the webpack.config.js...
+
+        //this imports the webpack plugin 'extract-text-webpack-plugin' with node there isn't an import command but a 'require()' function.
+        const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+        module.exports = (env) => {
+            const isProduction = env === 'production';
+
+        //This creates a new instance of the 'extract-text-webpack-plugin' and we pass in what we want the file to be named.
+            const CSSExtract = new ExtractTextPlugin('styles.css');
+
+            return {
+                entry: './src/app.js',
+                output: {
+                    path: path.join(__ dirname, 'public'),
+                    filename: 'bundle.js'
+                },
+            ...
+
+    We change this...
+        }, {
+            test: /\.(sass|css)$/,
+            use: [
+                'style-loader',
+                'css-loader',
+                'sass-loader'
+            ]
+        }
+
+    To this...
+        }, {
+                test: /\.(sass|css)$/,
+                use: CSSExtract.extract({
+                    use: [
+                        'css-loader',
+                        'sass-loader'
+                    ]
+                })
+            }]
+        },
+        plugins: [  //This part is new.
+            CSSExtract
+        ],
+
+    Now it should create a seperate css file when we run $ yarn run build:prod.
+
+    Next we want to have css maping in production so we do the following.
+
+    change the dev-tool in webpack.config to...
+
+        devtool: isProduction ? 'source-map' : 'inline-source-map',
+        //The inline-source-map is a tad slower but more useful.
+
+    Then we change our 'use:' array to to return objects of the the 'css-loader' and 'sass-loader' so we can specify options...
+
+        use: CSSExtract.extract({
+            use: [
+                {
+                    loader: 'css-loader',
+                    options: {
+                        sourceMap: true //By default sourceMap is false. We are switching that.
+                    }
+                },
+                {
+                    loader: 'sass-loader',
+                    options: {
+                        sourceMap: true
+                    }
+                }
+            ]
+        })
+
+    Now when we use the dev tools style selector it tells us where in our files the location is not the location in the compressed file.
