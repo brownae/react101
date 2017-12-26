@@ -3896,4 +3896,62 @@ Lecture 132 Setting up SSH and Github
             $ git push -u origin master
             //This is pushing up all our files to the master branch.
         The repo with all our files should be on github now.
-  
+
+Lecture 133 Production Webpack
+    In this lecture we setup Webpack to have two build scripts. One is for development and the other is for production. The idea being we need on big file to map our code when we are developing and two files when we are sending to production. The production script bundles out the code that a developer would need it will only run if someone opens the dev tools otherwise the only the small code to run the app will be opened and ran. This give us great saving in terms of the total size of our app.
+
+    So in package.json we added "build:dev" and "build:prod" ...
+
+        ...
+        "name": "expensify",
+        "version": "1.0.0",
+        "main": "index.js",
+        "author": "Aaron Brown",
+        "license": "MIT",
+        "scripts": {
+          "serve": "live-server public/",
+          "build:dev": "webpack",
+          "build:prod": "webpack -p --env production",
+          "dev-server": "webpack-dev-server",
+          "test": "jest --config=jest.config.json"
+        },
+        ...
+        // the '-p' is the webpack command to build for production mode. It minifies our code and signals 3rd party libraries to build for production as well.
+        // '--env production' means set 'env to "production"' We created this hook so when we run 'build:prod' we can make some tweaks to how it's put together.
+
+    Next in 'webpack.config' we changed the 'module.exports' to return a function that returns an object. Before it just returned an object. By doing this we are able to run some logic and pass in a variable.
+
+        module.exports = (env) => {
+            // Set 'isProduction' to true or false depending on weather or not env is equal to the string 'production'. This is the hook we set up.
+            const isProduction = env === 'production';
+
+            return {
+                entry: './src/app.js',
+                output: {
+                    path: path.join(__ dirname, 'public'),
+                    filename: 'bundle.js'
+                },
+                module: {
+                    rules: [{
+                        loader: 'babel-loader',
+                        test: /\.js$/,
+                        exclude: /node_modules/
+                    }, {
+                        test: /\.(sass|css)$/,
+                        use: [
+                            'style-loader',
+                            'css-loader',
+                            'sass-loader'
+                        ]
+                    }]
+                },
+
+                //Here is where we use the slow code if we are launching production and then fast code if for development. 'source-map' runs slower.
+
+                devtool: isProduction ? 'source-map' : 'cheap-module-eval-source-map',
+                devServer: {
+                    contentBase: path.join(__ dirname, 'public'),
+                    historyApiFallback: true
+                }
+            };
+        };
