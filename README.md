@@ -4037,3 +4037,29 @@ Lecture 134 Creating Separate CSS Files
         })
 
     Now when we use the dev tools style selector it tells us where in our files the location is not the location in the compressed file.
+
+Lecture 125 A Production Web Server with Express
+    In this lecture we learned a tiny bit about express.js and made an express server. Note... I need to learn more about this.
+
+    We installed express in the project...
+        $ yarn add express
+
+    We created on the root of the app 'server/server.js'. In server.js we wrote... (Note: added a space after '__ ' and '* ' for commenting purposes only)
+
+        const path = require('path'); //Imports in the path.
+        const express = require('express');//Imports express
+        const app = express();  //Creates instance of express application.
+        const publicPath = path.join(__ dirname, '..', 'public'); //creates the path for our app in which we go down a level and into the public folder.
+
+        app.use(express.static(publicPath)); //Here is where we tell it to use the public directory to create our static assets.
+
+        //req = request res=response
+        app.get('* ', (req, res) => {
+            res.sendFile(path.join(publicPath, 'index.html'));
+        }); //Above says if you can't find what was requested in the public folder then return 'index.html'. Which will make the path correct.
+
+        app.listen(3000,() => {
+            console.log('Express server is up.');
+        }); //Here we tell express server to launch on port 3000.
+
+    We don't go very in depth in this lecture, should do more research.
