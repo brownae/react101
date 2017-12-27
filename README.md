@@ -4063,3 +4063,80 @@ Lecture 125 A Production Web Server with Express
         }); //Here we tell express server to launch on port 3000.
 
     We don't go very in depth in this lecture, should do more research.
+
+Lecture 136 Deploying with Heroku
+    Note: we use Heroku almost exclusivley through command line.
+    In this lecture I signed up for Heroku and then downloaded the 'Heroku cli' for MacOS from https://devcenter.heroku.com/articles/heroku-cli#macos
+
+    We check to make sure it's there...
+        $ heroku --version
+        //Should show a version
+
+    To login to heroku via the command line...
+        $ heroku login
+        //Then follow prompts for e-mail and pw.
+
+    Now we can start to launch our app with heroku. We can just run...
+        $ heroku create
+        //In this case heroku will generate a random name.
+        $ heroku create react-expensify-app-aebrown9
+        //This command created the application and ALSO creates another git remote to the locat repository. So now if we run '$ git remote'. We see 'origin' which we created and 'heroku'. NOTE: I did NOT see this but it did give me the two ...
+            https://react-expensify-app-aebrown9.herokuapp.com/
+            https://git.heroku.com/react-expensify-app-aebrown9.git
+        So I'm going to keep plugging along.
+
+    Next we update 'package.json'. Heroku will run through this and here we can instruct it to go to the server and run it.
+
+        ...
+        "scripts": {
+          "serve": "live-server public/",
+          "build:dev": "webpack",
+          "build:prod": "webpack -p --env production",
+          "dev-server": "webpack-dev-server",
+          "test": "jest --config=jest.config.json",
+          "start": "node server/server.js" //We add this line. telling heroku to run this node command.
+        },...
+
+    We also update our express server.js file. We added 'port' and then call it as the first argument in the 'listen()' funciton.
+
+        const path = require('path');
+        const express = require('express');
+        const app = express();
+        const publicPath = path.join(__ dirname, '..', 'public');
+        const port = process.env.PORT || 3000;
+        //The port location provided by Heroku. if not found then use port 3000.
+
+        app.use(express.static(publicPath));
+
+        //req = request res=response
+        app.get('* ', (req, res) => {
+            res.sendFile(path.join(publicPath, 'index.html'));
+        });
+
+        app.listen(port,() => {
+            console.log('Express server is up.');
+        });
+
+    Now our express server is compatible for heroku.
+
+    Next we teach heroku how to run webpack by including one more script in package.json.
+        ...
+        "scripts": {
+          "serve": "live-server public/",
+          "build:dev": "webpack",
+          "build:prod": "webpack -p --env production",
+          "dev-server": "webpack-dev-server",
+          "test": "jest --config=jest.config.json",
+          "start": "node server/server.js",
+          "heroku-postbuild":"yarn run build:prod" //This line.
+        },
+        ...
+
+    AND we need to add the files produced when we do the 'build:prod' to 'gitignore' so it's not added to the repo. It will be compiled each time it's pushed up to the heroku server.
+
+        public/bundle.js
+        public/bundle.js.map
+        public/styles.css
+        public/styles.css.map
+
+    
