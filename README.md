@@ -4153,9 +4153,66 @@ BRANCH - Here I had to create a new branch that had expensify app at the root so
     This built the app on heroku and at the end of the process it spits out a url that you can see the app on. It's ...
         https://react-expensify-app-aebrown9.herokuapp.com
 
-    You can also open the site in your browser from the terminal by using hte heroku command...
+    You can also open the site in your browser from the terminal by using the heroku command...
         $ heroku open
 
     If there are errors we can run...
         $ heroku log
         //this will show us where the problem might have come from.
+
+Lecture 137 Regular vs Development Dependencies
+    In this lecture we learn how to install something as a dev dependency. So Heroku won't install things it doesn't actually need.
+    We installed 'Chalk' we don't use it we just installed it as an example then deleted it. add the '--dev' to make it a dev dependency.
+        $ yarn add chalk --dev
+        //This says to install chalk but intall it as a dev dependency.
+
+    Next we did a little re-organizing. making the test dependencies dev dependencies.
+        //We took thses from dependencies and put them down here.
+        "devDependencies": {
+          "enzyme": "3.2.0",
+          "enzyme-adapter-react-16": "1.0.0",
+          "enzyme-to-json": "3.2.2",
+          "jest": "21.2.1",
+          "react-test-renderer": "16.2.0",
+          "webpack-dev-server": "2.5.1"
+        }
+
+    Next we created a dist folder in public to clean things up and changed file paths so that the dist folder would be where all the output will go.
+        We updated the index.html page to with the path 'dist/bundle.js' and 'dist/styles.css'.
+
+    in the 'webpack.config.js' we updated the output to have a 3rd argument where we add on 'dist'.
+
+        output: {
+            path: path.join(__ dirname, 'public', 'dist'),
+            filename: 'bundle.js'
+        },
+
+    at the bottom on the same file we added " publicPath: '/dist/' " which makes dist the root for the dev server.
+
+        devServer: {
+            contentBase: path.join(__ dirname, 'public'),
+            historyApiFallback: true,
+            publicPath: '/dist/'
+        }
+
+    Then we deleted the four assets in public...
+        public/bundle.js
+        public/bundle.js.map
+        public/styles.css
+        public/styles.css.map
+
+    Then we ran the dev Server
+        $ yarn run dev-server
+        //This worked and does NOT create the files but serves them directly to the browser. (localhost:8080)
+
+    Then we built the app by running
+        $ yarn run build:prod
+        //This built the app for production and created the files in dist.
+
+    Then we ran the node express server by running
+        $ yarn start
+        //this runs the node server.
+
+    Everything worked so we saved and then uploaded the updates to github and heroku.
+
+    $ git push heroku expensify-app-branch:master
