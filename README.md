@@ -4140,3 +4140,22 @@ Lecture 136 Deploying with Heroku
         public/styles.css.map
 
 BRANCH - Here I had to create a new branch that had expensify app at the root so Heroku could have JUST the expensify app. The branch name is 'expensify-app-branch'.
+
+    So to push to Heroku I did...
+
+        $ git push heroku expensify-app-branch
+        Which created the branch remotely on Heroku but did not runt the app.
+
+    So I had to do...
+        $ git push heroku expensify-app-branch:master
+        //This says push the expensify-app-branch to the master on heroku.
+
+    This built the app on heroku and at the end of the process it spits out a url that you can see the app on. It's ...
+        https://react-expensify-app-aebrown9.herokuapp.com
+
+    You can also open the site in your browser from the terminal by using hte heroku command...
+        $ heroku open
+
+    If there are errors we can run...
+        $ heroku log
+        //this will show us where the problem might have come from.
