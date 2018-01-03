@@ -4139,4 +4139,4 @@ Lecture 136 Deploying with Heroku
         public/styles.css
         public/styles.css.map
 
-    
+BRANCH - Here I had to create a new branch that had expensify app at the root so Heroku could have JUST the expensify app. The branch name is 'expensify-app-branch'.
