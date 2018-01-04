@@ -4260,3 +4260,55 @@ Lecture 138 New Feature Workflow
         $ git push heroku expensify-app-branch:master
 
     Everything worked.
+
+    There was an issue uploading to Heroku but that was an error on their side. Was not able to upload.
+
+Lecture 139 Adding Total Selector
+    In this lecture we add a selector function called expenses-total.js and we created a test for it as well, expenses-total.test.js.
+
+    I got super hung up on '.reduce()', it didn't make sense to me. But we created both files.
+        src/selectors/expenses-total.js
+        src/tests/components/expenses-total.test.js
+
+    Then we wrote our tests first.
+        // We would need both of these imported.
+        import getExpenseTotal from '../../selectors/expenses-total';
+        import expenses from '../fixtures/expenses';
+
+
+        test('Should return 0 if no expenses',() =>{
+            const response = getExpenseTotal([]);
+            expect(response).toBe(0);
+        });
+
+        test('Should correctly add up a single expense',() =>{
+            const response = getExpenseTotal([expenses[0]]);
+            expect(response).toBe(195);
+        });
+
+        test('Should correctly add up all expenses',() =>{
+            const response = getExpenseTotal(expenses);
+            expect(response).toBe(114195);
+        });
+
+    Then we wrote our function in src/selectors/expenses-total.js
+
+        export default (expenses) => {
+            if (expenses.length === 0 ){
+                return 0
+            } else {
+                return expenses
+                    .map((expense) => expense.amount) //this implicitly returns just the numbers of the 'amount' in each object. Then we connect it by adding '.reduce()'.
+                    .reduce((sum, value) => sum + value, 0);
+                    //reduce takes two arguments the first is a function...
+                        (sum, value) => sum + value
+                    And the second is the value to start off with...
+                        0
+            }
+        };
+
+    Then we refactored it to be this and we know everything is ok because all our tests pass.
+
+        return expenses
+            .map((expense) => expense.amount)
+            .reduce((sum, value) => sum + value, 0);
