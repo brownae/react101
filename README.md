@@ -4216,3 +4216,47 @@ Lecture 137 Regular vs Development Dependencies
     Everything worked so we saved and then uploaded the updates to github and heroku.
 
     $ git push heroku expensify-app-branch:master
+
+Lecture 138 New Feature Workflow
+    In this lecture we update and make changes to 'ExpenseListItem' component and learn how to make the changes and deploy them.
+
+    We imported moment.js and numeral.js. Numeral is similar to moment and helps us format our numbers.
+
+        import React from 'react';
+        import { Link } from 'react-router-dom';
+        import moment from 'moment';
+        import numeral from 'numeral';
+
+
+
+        const ExpenseListItem = ({ id, description, amount, createdAt }) =>(
+            <div>
+                <Link to={`/edit/${id}`}>
+                    <h3>{description}</h3>
+                </Link>
+                <p> //Here is where we reformatted.
+                    {numeral(amount/100).format('$0,0.00')}
+                     -
+                    {moment(createdAt).format('MMMM Do, YYYY')}
+                </p>
+            </div>
+        );
+
+        export default ExpenseListItem;
+
+    When we changed the formatting we kept the test suite running to update the changes. We also opened another terminal tab to run the dev server.
+
+    For test suite...
+        $ yarn test -- --watch
+    for dev server...
+        $ yarn run dev-server
+
+    We did have to install numeral.js (http://numeraljs.com/#format).
+        $ yarn add numeral
+
+    after we updated the tests and confirmed the formatting worked in the browser via dev-server we saved and uploaded to github. Then we uploaded to heroku.
+
+    In my case...
+        $ git push heroku expensify-app-branch:master
+
+    Everything worked.
