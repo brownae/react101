@@ -16,11 +16,3 @@ test('Should correctly add up all expenses',() =>{
     const response = getExpenseTotal(expenses);
     expect(response).toBe(114195);
 });
-
-// test('Should return number of expenses',() =>{
-//     const response = getExpenseTotal(expenses);
-//     expect(response).toBe(3);
-// });
-
-// const test = getExpenseTotal(expenses)
-// console.log(test);

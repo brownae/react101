@@ -4312,3 +4312,66 @@ Lecture 139 Adding Total Selector
         return expenses
             .map((expense) => expense.amount)
             .reduce((sum, value) => sum + value, 0);
+
+Lecture 140 Build it: Adding Summary Component
+    In this lecture we added a line above the "<ExpenseListFilters />" on the 'ExpenseDashboardPage'. We created a new component called 'ExpensesSummary.js' that adds the line "Viewing 0 expenses totalling $0.00"
+
+    First I created the component and put in some dummy text to see if it was working. I did get it to work on my own but I am going to outline the order Andrew did it here.
+
+    Next we created the test component. tests/components/ExpensesSummary.test.js.
+    Ideally tests should be written first then they should pass as we build the component.
+
+        //import the things we KNOW we're going to need. ExpensesSummary needs to be in '{ }' or we are not importing the component directly.
+        import React from 'react';
+        import { shallow } from 'enzyme';
+        import { ExpensesSummary } from '../../components/ExpensesSummary';
+        import expenses from '../fixtures/expenses';
+
+        //Here we decide we want to pass in two props of numbers as objects.
+        test('Should render ExpensesSummary correctly with 1 expense',() =>{
+            const wrapper = shallow(<ExpensesSummary expenseCount={1} expensesTotal={235}/>);
+            expect(wrapper).toMatchSnapshot();
+        });
+
+        test('Should render ExpensesSummary correctly with multiple expenses',() =>{
+            const wrapper = shallow(<ExpensesSummary expenseCount={23} expensesTotal={2352345234}/>);
+            expect(wrapper).toMatchSnapshot();
+        });
+    //This part is still difficult for my mind to wrap around when thinking about it from square one.
+
+    Next we went to our component...
+
+    //import things we'll need...
+        import React from 'react';
+        import { connect } from 'react-redux';
+        import numeral from 'numeral';
+        import selectExpenses from '../selectors/expenses';
+    //We used this on the ExpenseList.js page to bring in filtered results.
+        import selectExpenseTotal from '../selectors/expenses-total';
+    //The function we just created.
+
+        export const ExpensesSummary = ({expenseCount, expensesTotal}) => {
+            const expenseWord = expenseCount === 1 ? 'expense' : 'expenses';
+        //The value of the word 'expense' depending on the value viewing.
+            const formattedExpensesTotal = numeral(expensesTotal/100).format('$0,0.00')
+
+            return (
+                <div>
+                    <h1>Viewing {expenseCount} {expenseWord} totalling {formattedExpensesTotal}</h1>
+                </div>
+            );
+        };
+
+
+        const mapStateToProps = (state)=> { //this is a function we make to define what we want to bring in from the store so we can manipulate it and use it for our needs in this component.
+            const visibleExpenses = selectExpenses(state.expenses, state.filters);
+
+            return {
+                expenseCount: visibleExpenses.length,
+                expensesTotal: selectExpenseTotal(visibleExpenses)
+            };
+        };
+
+        export default connect(mapStateToProps)(ExpensesSummary);//Here we use a built in react-redux HOC component that connects our store with OUR component.
+
+    The end of the section
