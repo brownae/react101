@@ -4375,3 +4375,6 @@ Lecture 140 Build it: Adding Summary Component
         export default connect(mapStateToProps)(ExpensesSummary);//Here we use a built in react-redux HOC component that connects our store with OUR component.
 
     The end of the section
+
+Lecture 141 Intro to Firebase.
+    Firebase is a database solution created by Google. It also helps with authorization. We are going to focus on all the CRUD operations. Later we will explore authorization.
