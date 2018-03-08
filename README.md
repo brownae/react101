@@ -4436,4 +4436,55 @@ Lecture 143 writing to the database
     If we want to update somthing that isn't on the root level like city, this is how we update it.
         database.ref('location/city').set('Portland');
         // we use a '/' to burrow down.
+
+Lecture 144 ES6 Promises
+    In this lecture we went to a test area to see how promises work. Promises are just a way to sync up our asynchronous operation. We sent out a request, once it's done then do this with it when its back. we create a dummy promise that waits 5 seconds then runs to play with it.
+
+    This is a promise. A promise has 3 states. They are:
+        Promise is pending: You don't know yet.
+
+        Promise is resolved: it succeeded.
+
+        Promise is rejected: It failed.
+    You can only call one 'resolve' or 'reject' per promise.
+
+    in each resolve() you can only pass in one argument. If you need more info than just the one argument you can pass in an js object.
+
+        const promise = new Promise((resolve,reject) => {
+            setTimeout(()=>{
+                resolve({ //like this...
+                    name: 'Aaron',
+                    age: 35
+                });
+            }, 5000);
+        });
+
+        promise.then((data) => {
+            console.log(data);
+        });
+
+    To use the reject we need to add it on to the '.then()' and call '.catch()'.
+        const promise = new Promise((resolve,reject) => {
+            setTimeout(()=>{
+            //     resolve({
+            //         name: 'Aaron',
+            //         age: 35
+            //     });
+            reject('something went wrong');
+            }, 5000);
+        });
+
+        promise.then((data) => {
+            console.log(data);
+        }).catch((error)=>{     //like HERE.
+            console.log('error: ', error);
+        });
+    If we dont do this then the browser will throw an error saying a reject was created but wasn't called. With this syntax it will only be called if there is an error. 'catch' and 'then' take a function as its arguement.
+
+    it is possible to pass in two function arguements into '.then()' if that is done then the second function acts as a catch. This is not as clear to read as '.then().catch()'.
+
+    NOTE: most of the time we don't create promises, they are already created by the library we are using. We just call on them and use them.
+
+    ** we also deleted the playground/promise.js import from our app once we finished.
+
     
