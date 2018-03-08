@@ -4378,3 +4378,33 @@ Lecture 140 Build it: Adding Summary Component
 
 Lecture 141 Intro to Firebase.
     Firebase is a database solution created by Google. It also helps with authorization. We are going to focus on all the CRUD operations. Later we will explore authorization.
+
+Lecture 142 Getting Firebase
+    In this lecture we remove the authentication from our database so we can read and write to it without authenticating. We set the rules read and write to true Then we use npm to bring in a firebase library. And then add in the config information provided to a new folder and file we created in 'src' -> 'firebase/firebase.js'. Inside that file we wrote ...
+        import * as firebase from 'firebase';
+        //Which says bring in everything from firebase and store it on a variable named firebase.
+    Then we copied our password config information from firebase and pasted it below.
+        // Initialize Firebase
+        const config = {
+            apiKey: "AIzaSyDAWxyEfaRUGL3wPZhiC7iW3tWa6sKysqg",
+            authDomain: "expensify-b91ca.firebaseapp.com",
+            databaseURL: "https://expensify-b91ca.firebaseio.com",
+            projectId: "expensify-b91ca",
+            storageBucket: "expensify-b91ca.appspot.com",
+            messagingSenderId: "736882551504"
+        };
+        This is essentially our password to get into our database.
+
+    Then we wrote...
+        firebase.initializeApp(config);
+        //This is what runs firebase when called.
+
+        firebase.database().ref().set({
+            name: 'Aaron Brown'
+        });
+        //Here we use firebase tools they give us, this line tells it to go to the db and .ref() we don't pass anything which is the root of our db and we use set() and pass in an object with a key-value pair to add in.
+    At this point nothing is calling our firebase.js file so we work around that by going to the app.js and importing this file.
+        import './firebase/firebase';
+        //We just tag this on the end of the import list
+
+    Now when we go to the terminal and run the dev-server it should put the js object in our db.
