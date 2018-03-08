@@ -4408,3 +4408,32 @@ Lecture 142 Getting Firebase
         //We just tag this on the end of the import list
 
     Now when we go to the terminal and run the dev-server it should put the js object in our db.
+
+Lecture 143 writing to the database
+    In this lecture we're learning how we use firebase. firebase has lots of features besides a db so to let it know who we are talking to we will always get to the db by writing 'firebase.database()'. to make it simpler we did throw that in a variable 'const database = firebase.database();'
+
+        firebase.initializeApp(config);
+
+        database.ref().set({ //this is less typing and simpler.
+            name: 'Aaron Brown',
+            age: 35,
+            isSingle: false,
+            location: {
+                city: 'Seattle',
+                country: 'United states of America'
+            }
+        });
+        //firebase can handle any datatype.
+
+    ".ref()" is short for reference and it is for getting us to a certain part of our database. Similar to getting to a table in a sql database. So we could reference "users" "products" etc. If we don't pass in anything then it keeps us on the root.
+
+    ".set()" can be called on a reference and it sets the value on that reference. You do not have to pass in an object you can also just pass in a string.
+        database.ref().set('This is my data');
+        // this erases the object and just puts the string in the db.
+    If to upadate a part of our object we...
+        database.ref('age').set(37);
+        //this will just update the age of my object.
+    If we want to update somthing that isn't on the root level like city, this is how we update it.
+        database.ref('location/city').set('Portland');
+        // we use a '/' to burrow down.
+    
