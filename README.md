@@ -4485,4 +4485,4 @@ Lecture 144 ES6 Promises
 
     NOTE: most of the time we don't create promises, they are already created by the library we are using. We just call on them and use them.
 
-    ** we also deleted the playground/promise.js import from our app once we finished.
+    ** we also deleted the playground/promise.js import from our app once we finished.  
