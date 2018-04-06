@@ -4499,3 +4499,24 @@ Lecture 145 Promises with Firebase.
         });
     We also went to the firebase website and looked at where the documentation is. There are a lot of other methods available to us there.
     https://firebase.google.com/docs/reference/js/firebase.database
+
+Lecture 146 - Removing Data From Firebase.
+    In this lecture we learned 2 ways to remove data from firebase.
+
+    The first is to use the '.remove()' method. We target the area we want to remove with '.ref()' and then tag on '.remove()' at the end. Like...
+
+        database.ref('isSingle').remove() //only this part is required.
+            .then(()=>{
+                console.log('data was removed!');
+            })
+            .catch((e)=>{
+            console.log('data was NOT removed!', e);
+            });
+        //This removes the isSingle from the db.
+
+    The second way is to set/override the data to null. like this...
+
+        database.ref('isSingle').set(null);
+        //'then' and 'catch' could be added on if we wanted to know if the data changed from the browser console.
+
+    
