@@ -4519,4 +4519,42 @@ Lecture 146 - Removing Data From Firebase.
         database.ref('isSingle').set(null);
         //'then' and 'catch' could be added on if we wanted to know if the data changed from the browser console.
 
-    
+Lecture 147 - Updating Data
+    With the methods we know we can already update our firebase db. However using the '.update()' method we can be much more efficient. With update we can do multiple things in one call, like delete some data, correct the spelling of a last name and add a field all in one call. Like this...
+
+        database.ref().update({
+            name: 'Mike', //Changed name
+            age: 29, //updated age
+            job: 'Software Developer', //added job field
+            isSingle: null // removed 'isSingle'
+        });
+
+    Nested data when updated will remove items not explicity updated. For instance.
+
+        //This is our data.
+        database.ref().set({
+            name: 'Aaron Brown',
+            age: 35,
+            job: 'Software Developer',
+            location: {
+                city: 'Seattle',
+                country: 'United states of America'
+            }
+        }):
+
+        //We run this update...
+        database.ref().update({
+            job: 'Manager',
+            location: {
+                city: 'Boston'
+            }
+        });
+        // The field "country: 'United states of America'" will be deleted.
+
+    To fix this and only update the nested data we want without deleting the other data we dont want to update, we do this...
+
+        database.ref().update({
+            job: 'Manager',
+            'location/city': 'Boston'
+        });
+        //We wrap location with the forward slash and city so that we can use correct JSON notation and also be specific about what we want updated exactly inside the nested location area. This is a little odd but we probably won't use this method very often.
