@@ -4430,10 +4430,10 @@ Lecture 143 writing to the database
     ".set()" can be called on a reference and it sets the value on that reference. You do not have to pass in an object you can also just pass in a string.
         database.ref().set('This is my data');
         // this erases the object and just puts the string in the db.
-    If to upadate a part of our object we...
+    If to update a part of our object we...
         database.ref('age').set(37);
         //this will just update the age of my object.
-    If we want to update somthing that isn't on the root level like city, this is how we update it.
+    If we want to update something that isn't on the root level like city, this is how we update it.
         database.ref('location/city').set('Portland');
         // we use a '/' to burrow down.
 
@@ -4486,3 +4486,16 @@ Lecture 144 ES6 Promises
     NOTE: most of the time we don't create promises, they are already created by the library we are using. We just call on them and use them.
 
     ** we also deleted the playground/promise.js import from our app once we finished.  
+
+Lecture 145 Promises with Firebase.
+    In this lecture we used the '.then()' and '.catch()' in firebase.js file. We talked about how we call it and it's just like above.
+        database.ref('attributes').set({
+            height: 68,
+            weight: 180.1
+        }).then(()=>{
+            console.log('Second call worked');
+        }).catch((e)=>{
+            console.log('Things did not work for the second error', e);
+        });
+    We also went to the firebase website and looked at where the documentation is. There are a lot of other methods available to us there.
+    https://firebase.google.com/docs/reference/js/firebase.database
