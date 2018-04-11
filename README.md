@@ -4607,3 +4607,60 @@ Lecture 148 - Fetching Data from firebase.
         setTimeout(()=>{ //This changes but does NOT get printed to the console.
             database.ref('job/company').set('Patagonia');
         }, 10500);
+
+Lecture 149 - Array data in firebase Part 1
+    Firebase does not let you store arrays. So in this lecture we learn how to store array based data.
+
+    If we were to store this object with two arrays. firebase turns it into an object with number idexes that firebase chooses. Which becomes too difficult to guess or know what it will choose.
+
+        const notes = [{
+            id: '12',
+            title: 'First Note!',
+            body: 'This is my first note!'
+        }, {
+            id: '561',
+            title: 'another Note!',
+            body: 'This is another note!'
+        }];
+
+    So we have to learn to structure our data differently so that we can predict the id for our data and access it. it will be something like this...
+        //if se sent this to firebase then it wouldn't name or assign anything new and it's what we created.
+        const firebaseNotes = {
+            notes: {
+                asdfj: {  //this is an id. We just know that it is because it's how we're choosing to structure our data.
+                    title: 'First Note!',
+                    body: 'This is my first note!'
+                },
+                jkllh: {
+                    title: 'another Note!',
+                    body: 'This is another note!'
+                },
+            }
+        };
+
+    The next question becomes, how do we set choose our id's? We use .push().
+    This is new and it pushes what we send to the db and assigns a random id.
+
+        database.ref('notes').push({
+            title: 'Course topics',
+            body: 'React native'
+        });
+
+    What gets made in the db is something like this... and if we did it again with different data like, "body: "Go for a run" title: "To-do list".
+
+        notes:
+            -L9qkmqw02Rp-xgwgQGa
+                body: "React native"
+                title: "Course topics"
+            -L9qkP0jz_Nx6NXrFfF5
+                body: "Go for a run"
+                title: "To-do list"
+        //Here is how it's structured in firebase.
+
+    So whenever we need to use arrays we use .push() because it generates an id for us and then we can go and get it from the db and target just that list like.
+        //we burrow straight to the id and manipulate it
+
+        database.ref('notes/-L9qkP0jz_Nx6NXrFfF5').set(); //Create
+        database.ref('notes/-L9qkP0jz_Nx6NXrFfF5').on(); //Read
+        database.ref('notes/-L9qkP0jz_Nx6NXrFfF5').update(); //Update
+        database.ref('notes/-L9qkP0jz_Nx6NXrFfF5').remove(); //Delete
