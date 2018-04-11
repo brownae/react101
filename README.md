@@ -4558,3 +4558,52 @@ Lecture 147 - Updating Data
             'location/city': 'Boston'
         });
         //We wrap location with the forward slash and city so that we can use correct JSON notation and also be specific about what we want updated exactly inside the nested location area. This is a little odd but we probably won't use this method very often.
+
+Lecture 148 - Fetching Data from firebase.
+    There are two ways of fetching data. The first is a single call to go to db and fetch the data. The second is to subscribe and to be notified and updated if the data changes in real time.
+
+    We will focus on the first.
+
+    We grab the db and we can reference the root or a specific place then we use the '.once()' method and use the 'value' as the only argument and event, it will return a promise with data, so we tag on the '.then()' anf the '.catch()'. in the 'then' we get back a snapshot of where we referenced in the db. By taging on the method '.val()' we get the value returned into the variable that we can log to the console. However it only runs the one time if it succeeds or fails thats all it will do.
+
+        database.ref('location/city')
+            .once('value') // This just runs the one time that the code runs through.
+            .then((snapshot)=>{
+                const val = snapshot.val();
+                console.log(val);
+            }).catch((e)=>{
+                console.log('Error fetching data',e);
+            });
+
+    The other method is '.on()'. This method will allow us to listen for something over and over again. It takes two arguments. the first the event type and the second a callback function. '.on('value', ()=>{});'. The use will look like this...
+
+        database.ref().on('value', (snapshot) => {
+                console.log(snapshot.val());
+            });
+        //When using the .on() method we don't want to use the promises .then() or .catch(). They each can get called only once and we want the function running EVERY time we have a change.
+
+    We also learned about the '.off()' method which turns off the subscription to being notified of change but the data will still change once it's off.
+
+        firebase.initializeApp(config); //Connect to db
+
+        const database = firebase.database(); //make less to type
+
+        database.ref('job/company').set('Amazon'); //set company to amazon in db.
+
+        //by storing in a variable it makes it easy to unsubscribe from this one subscription if we had more.
+        const onValueChange = database.ref().on('value', (snapshot) => {
+                const val = snapshot.val();//This makes for less typing.
+                console.log(`${val.name} is a ${val.job.title} at ${val.job.company}`);
+            });
+
+        setTimeout(()=>{ //This gets printed to the console
+            database.ref('name').set("Brown");
+        }, 3500);
+
+        setTimeout(()=>{ //This turns off subscription
+            database.ref().off(onValueChange);
+        }, 7000); // If we passed in nothing to .off() then ALL subscriptions would be turned off from the root level.
+
+        setTimeout(()=>{ //This changes but does NOT get printed to the console.
+            database.ref('job/company').set('Patagonia');
+        }, 10500);
