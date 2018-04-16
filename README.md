@@ -4699,3 +4699,6 @@ Lecture 150 - Array Data in Firebase Part 2
         database.ref('expenses').on('child_added', (snapshot)=>{
             console.log(snapshot.key, snapshot.val());
         });
+
+Lecture 151 - Section Intro - Firebase with redux
+    
