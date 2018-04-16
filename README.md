@@ -4664,3 +4664,38 @@ Lecture 149 - Array data in firebase Part 1
         database.ref('notes/-L9qkP0jz_Nx6NXrFfF5').on(); //Read
         database.ref('notes/-L9qkP0jz_Nx6NXrFfF5').update(); //Update
         database.ref('notes/-L9qkP0jz_Nx6NXrFfF5').remove(); //Delete
+
+Lecture 150 - Array Data in Firebase Part 2
+    We learn how to fetch our array like data from our firebase object structure and do something meaningful with it. The code below is how we take the data and make it into an array that will be easier to use with JavaScript.
+
+        database.ref('expenses')
+            .on('value', (snapshot)=>{ //On data change run the function.
+
+                const expenses = []; //creates a var that is an empt array.
+
+                snapshot.forEach((childSnapshot)=>{ //for each child snapshot
+                    expenses.push({ //assign 'id' to the childsnapshot key.
+                        id: childSnapshot.key,
+                        ...childSnapshot.val() // then take a copy of everything inside the childSnapshot as is and then push it into the empty array we just created.
+                    });
+                });
+            console.log(expenses); // show me what's in the expenses var.
+            });
+        //this takes our data and makes it into a js array.
+
+    We also learned about the other 3 methods that can be used with '.on()'. They are...
+
+        // child_removed - fires only when a child is deleted or removed
+        database.ref('expenses').on('child_removed', (snapshot)=>{
+            console.log(snapshot.key, snapshot.val());
+        });
+
+        // child_changed - fires onlt when a child is changed
+        database.ref('expenses').on('child_changed', (snapshot)=>{
+            console.log(snapshot.key, snapshot.val());
+        });
+
+        // child_added - fires when first loaded AND when a child is added.
+        database.ref('expenses').on('child_added', (snapshot)=>{
+            console.log(snapshot.key, snapshot.val());
+        });
