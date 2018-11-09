@@ -4701,4 +4701,5 @@ Lecture 150 - Array Data in Firebase Part 2
         });
 
 Lecture 151 - Section Intro - Firebase with redux
-    
+
+Before running "yarn upgrade-interactive --latest" 
