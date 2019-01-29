@@ -1,10 +1,11 @@
 # react101
+
 A place where I'm going to put all the things about react.js
 
 Command line short list.
 Run program for the first time load dev dependencies - $ yarn install
 Run the dev server - $ yarn run dev-server
-Run the test suite - $ yarn test --watch
+Run the test suite - \$ yarn test --watch
 
 Git short list.
 $ git init - Create a new git repo
@@ -14,31 +15,31 @@ $ git commit - Create a new commit with files from staging area
 $ git log - View recent commits
 $ q - To quit the git log
 
-
 Notes:
 From root of folder...
 To reinstall dependencies: $ yarn install
 To run babel and have it watch: $ babel src/app.js --out-file=public/scripts/app.js --presets=env,react --watch
 
 You can run two terminal windows at the same time.
-To run live server: $ live-server public //public is folder to run.
+To run live server: \$ live-server public //public is folder to run.
 
 To template in react create and js object and then inject using {}'s. Then render in the html using ReactDOM.render(name of template, where you want it to go)
 
 Example:
 //////////////////////////
 var user = {
-    name : 'Aaron',
-    Age : 27,
-    Location : 'Seattle, WA'
+name : 'Aaron',
+Age : 27,
+Location : 'Seattle, WA'
 }
 
 var templateTwo = (
-    <div>
-        <h1>{user.name}</h1>
-        <p>Age: {user.Age}</p>
-        <p>Location: {user.Location}</p>
-    </div>
+
+<div>
+<h1>{user.name}</h1>
+<p>Age: {user.Age}</p>
+<p>Location: {user.Location}</p>
+</div>
 );
 
 var appRoot = document.getElementById('app');
@@ -49,20 +50,20 @@ ReactDOM.render(template, appRoot);
 lecture 11 Conditional Rendering
 Leaned 3 ways of Conditional rendering. 1 through a function, 2 through shorthand ternary operator and 3 logical && operator.
 
-
 ///////////////////////////Examples
 function getLocation(location){
-    if (location){
-        return <p>Location: {location}</p>;
-    }
+if (location){
+return <p>Location: {location}</p>;
+}
 };
 
 var templateTwo = (
-    <div>
-        <h1>{user.name ? user.name : 'Anonymous'}</h1>
-        {(user.age && user.age >= 18) && <p>Age: {user.age}</p>}
-        {getLocation(user.location)}
-    </div>
+
+<div>
+<h1>{user.name ? user.name : 'Anonymous'}</h1>
+{(user.age && user.age >= 18) && <p>Age: {user.age}</p>}
+{getLocation(user.location)}
+</div>
 );
 
 var appRoot = document.getElementById('app');
@@ -87,8 +88,8 @@ manually bound data using a custom function that re-rendered the template after 
 ///////////////////// example
 let count = 0;
 const addOne = () => {
-    count++;
-    renderCounterApp();
+count++;
+renderCounterApp();
 };
 
 const renderCounterApp = () => {
@@ -103,6 +104,7 @@ const renderCounterApp = () => {
     );
 
     ReactDOM.render(templateTwo, appRoot);
+
 };
 
 renderCounterApp();
@@ -122,6 +124,7 @@ const onFormSubmit = (e) => {
         e.target.elements.option.value = '';
         render();
     };
+
 };
 
 <form onSubmit={onFormSubmit}>
@@ -134,6 +137,7 @@ Lecture 19 Arrays in JSX
 Arrays are supported by JSX. You can use boolean values but they will not render. Strings, numbers and floats will render. You can also put JSX in the array and it will render. When rendering repeating li's or other elements the key property must be added and have a unique value. react keeps track of every element and it must have an identifier.
 /////////////////////Example
 //in this example we looped/mapped through the app.options and updated the array with the value wrapped in an li tag with a key that is the same value.
+
 <ol>
     {
         app.options.map((option) => {
@@ -148,10 +152,10 @@ How to set up a randomNum using the Math.random and then picking a random option
 
 /////////////////////Example
 const onMakeDecision = () => {
-    const randomNum = Math.floor(Math.random() * app.options.length);
-    const option = app.options[randomNum];
-    alert(option);
-    console.log(randomNum);
+const randomNum = Math.floor(Math.random() \* app.options.length);
+const option = app.options[randomNum];
+alert(option);
+console.log(randomNum);
 };
 
 <button disabled={app.options.length === 0} onClick={onMakeDecision}>What should I do?</button>
@@ -162,23 +166,24 @@ This was a challenge exercise to make a simple toggle option to hide and show de
 /////////////////////Example
 let toggle = false;
 
-
 let toggler = () => {
-    toggle = !toggle;
-    render();
-    console.log('End ');
+toggle = !toggle;
+render();
+console.log('End ');
 };
 
 const render = () => {
-    const template = (
-        <div>
-            <h1>Visibility Toggle</h1>
+const template = (
+
+<div>
+<h1>Visibility Toggle</h1>
 
             <button onClick={toggler}>{toggle ? 'Hide Details' : 'Show Details'}</button>
             {toggle && <p>Some details about things</p>}
         </div>
     );
     ReactDOM.render(template, document.getElementById('app'));
+
 };
 
 render();
@@ -188,18 +193,19 @@ Lecture 24 ES6 Classes pt 1
 Class = bluepint. Learned about creating classes and the syntax to set default values in the constructor.
 /////////////////////Example
 class Person {
-    constructor(name = 'Anonymous', age = 0) {
-        this.name = name;
-        this.age = age;
-    }
-    getGreeting(){
-        //return 'Hi! I am '+ this.name;
-        return `Hi I am ${this.name}!`;
-    }
+constructor(name = 'Anonymous', age = 0) {
+this.name = name;
+this.age = age;
+}
+getGreeting(){
+//return 'Hi! I am '+ this.name;
+return `Hi I am ${this.name}!`;
+}
 
     getDescription(){
         return `${this.name} is ${this.age} years old.`;
     }
+
 }
 
 const me = new Person('Aaron', 34);
@@ -214,10 +220,10 @@ How to extend class. 'super' is used to refer to parent class and pass on to ext
 /////////////////////Example
 
 class Traveler extends Person {
-    constructor(name,age,homeLocation){
-        super(name,age);//super means get from parent
-        this.homeLocation = homeLocation;//connect the new property
-    }
+constructor(name,age,homeLocation){
+super(name,age);//super means get from parent
+this.homeLocation = homeLocation;//connect the new property
+}
 
     getDescription(){  this is overriding the parent class.
         let greeting = super.getGreeting();
@@ -243,23 +249,25 @@ react components are just extended react classes. The have to be named with an u
 //This is a bare bones working react component with static values.
 
 class Header extends React.Component {
-    render(){
-        return (
-            <div>
-                <h1>Indecision</h1>
-                <h2>Put your life in the hands of a computer</h2>
-            </div>
-        );
-    }
+render(){
+return (
+
+<div>
+<h1>Indecision</h1>
+<h2>Put your life in the hands of a computer</h2>
+</div>
+);
+}
 }
 
 const jsx = (
-    <div>
-        <Header /> // this is calling the header above.
-        <Action />
-        <Options />
-        <AddOption />
-    </div>
+
+<div>
+<Header /> // this is calling the header above.
+<Action />
+<Options />
+<AddOption />
+</div>
 );
 
 ReactDOM.render(jsx, document.getElementById('app'));
@@ -282,7 +290,7 @@ Our components can render jsx, so they can render other components inside. The p
     }
 
 // we can render the top level parent in the ReactDOM and it will render the components inside of it and on down the line
-    ReactDOM.render(<IndecisionApp />, document.getElementById('app'));
+ReactDOM.render(<IndecisionApp />, document.getElementById('app'));
 /////////////////////End
 
 Lecture 28 Component Props
@@ -290,10 +298,10 @@ Props are properties. We learned how to pass data down the line to nested compon
 /////////////////////Example
 
 class IndecisionApp extends React.Component {
-    render(){
-        const title = 'Indecision';
-        const subtitle = 'Put your life in the hands of a computer';
-        const options = ['Thing One','Thing Two','Thing Three'];
+render(){
+const title = 'Indecision';
+const subtitle = 'Put your life in the hands of a computer';
+const options = ['Thing One','Thing Two','Thing Three'];
 
         return (
             <div> //With 'title={title}' we are setting up key value pairs essentially.
@@ -304,28 +312,31 @@ class IndecisionApp extends React.Component {
             </div>
         );
     }
+
 }
 
 class Options extends React.Component {
-    render(){
-        return (
-            <div>
-            { //HERE we grabbed the array through the parent prop and then looped through each item in the array and passed it as a prop to the 'Option' component.
-                this.props.options.map((option) => <Option key={option} optionText={option}/>)
-            }
-            </div>
-        );
-    }
+render(){
+return (
+
+<div>
+{ //HERE we grabbed the array through the parent prop and then looped through each item in the array and passed it as a prop to the 'Option' component.
+this.props.options.map((option) => <Option key={option} optionText={option}/>)
+}
+</div>
+);
+}
 }
 
 class Option extends React.Component {
-    render(){
-        return (
-            <div>//HERE we are each optionText is returned
-                {this.props.optionText}
-            </div>
-        );
-    }
+render(){
+return (
+
+<div>//HERE we are each optionText is returned
+{this.props.optionText}
+</div>
+);
+}
 }
 
 /////////////////////End
@@ -334,8 +345,8 @@ Lecture 29 Events and Methods.
 (Methods are functions of a class). Here we added an event handler 'onSubmit' and we wrote the method right inside the prop and handled it.
 /////////////////////Example
 class AddOption extends React.Component{
-    handleAddOption(e){
-        e.preventDefault();
+handleAddOption(e){
+e.preventDefault();
 
         const option = e.target.elements.option.value.trim();
         if (option){
@@ -354,6 +365,7 @@ class AddOption extends React.Component{
             </div>
         );
     }
+
 }
 /////////////////////End
 
@@ -362,10 +374,10 @@ When we created the 'handleRemoveAll' method in the Options class it changed the
 
 /////////////////////Example
 class Options extends React.Component {
-    constructor(props){
-        super(props); // this has to be done or we don't carry on the data and methods from React.Component.
-        this.handleRemoveAll = this.handleRemoveAll.bind(this);
-    }
+constructor(props){
+super(props); // this has to be done or we don't carry on the data and methods from React.Component.
+this.handleRemoveAll = this.handleRemoveAll.bind(this);
+}
 
     handleRemoveAll(){
         // alert('handleRemoveAll!');
@@ -382,6 +394,7 @@ class Options extends React.Component {
             </div>
         );
     }
+
 }
 /////////////////////End
 
@@ -391,27 +404,27 @@ React Component state
 <Counter />
 
 {
-    count: 0
+count: 0
 }
 
 1. Set up default state of object.
-2. Component rendered with default state values.*
+2. Component rendered with default state values.\*
 3. Change state based on event.
-4. Component re-rendered using new state values.*
+4. Component re-rendered using new state values.\*
 5. Start again at 3
-(* this happens automatically.)
+   (\* this happens automatically.)
 
 Lecture 32 Adding State to Counter App: Part 1
 returning to counter-example.js we re-write it to use props. and bind the methods to the correct context. Buttons just spit out a console.log().
 
 /////////////////////Example
 class Counter extends React.Component {
-    constructor(props){
-        super(props);
-        this.handleAddOne = this.handleAddOne.bind(this);
-        this.handleMinusOne = this.handleMinusOne.bind(this);
-        this.handleReset = this.handleReset.bind(this);
-    };
+constructor(props){
+super(props);
+this.handleAddOne = this.handleAddOne.bind(this);
+this.handleMinusOne = this.handleMinusOne.bind(this);
+this.handleReset = this.handleReset.bind(this);
+};
 
     handleAddOne(){
         console.log('+1');
@@ -435,6 +448,7 @@ class Counter extends React.Component {
             </div>
         );
     }
+
 }
 ReactDOM.render(<Counter />, document.getElementById('app'));
 /////////////////////End
@@ -442,18 +456,19 @@ ReactDOM.render(<Counter />, document.getElementById('app'));
 Lecture 33 Adding State to Counter App: Part 2
 wired up the buttons to live update the json object property 'counter:0'. The object is built right inside of constructor.
 /////////////////////Example
-* nothing inside the render section changed and here is an example of handleAddOne and the constructor.
+
+- nothing inside the render section changed and here is an example of handleAddOne and the constructor.
 
 class Counter extends React.Component {
-    constructor(props){
-        super(props);
-        this.handleAddOne = this.handleAddOne.bind(this);
-        this.handleMinusOne = this.handleMinusOne.bind(this);
-        this.handleReset = this.handleReset.bind(this);
-        this.state = {
-            count: 0
-        };
-    };
+constructor(props){
+super(props);
+this.handleAddOne = this.handleAddOne.bind(this);
+this.handleMinusOne = this.handleMinusOne.bind(this);
+this.handleReset = this.handleReset.bind(this);
+this.state = {
+count: 0
+};
+};
 
     handleAddOne(){
         this.setState((prevState)=> { //prevState or parameter grabs the state in the constructor.
@@ -462,23 +477,24 @@ class Counter extends React.Component {
             }
         });
     }
+
 /////////////////////End
 
 Lecture 34 Alternative setState syntax
 Below is alternate syntax used twice to show point that react is asynchronous and so both are done at the same time and the second method is getting old data at the same time the one above is switching it to 0. It's shorter but when it's put inside an Anonymous function one runs and completes before the next starts.
 /////////////////////Example
 handleReset(){
-    // this.setState(()=>{ //original
-    //     return {
-    //         count : 0
-    //     }
-    // });
-    this.setState({ //First
-        count: 0
-    });
-    this.setState({ // Second executed asynchronously
-        count: this.state.count + 1
-    });
+// this.setState(()=>{ //original
+// return {
+// count : 0
+// }
+// });
+this.setState({ //First
+count: 0
+});
+this.setState({ // Second executed asynchronously
+count: this.state.count + 1
+});
 }
 /////////////////////End
 
@@ -487,13 +503,13 @@ Took the build-it-visible.js and made it into a prop and re-wrote methods in con
 
 /////////////////////Example
 class VisibilityToggle extends React.Component{
-    constructor(props){
-        super(props);
-        this.handleToggleVisibility = this.handleToggleVisibility.bind(this);
-        this.state = {
-            toggle : false
-        };
-    };
+constructor(props){
+super(props);
+this.handleToggleVisibility = this.handleToggleVisibility.bind(this);
+this.state = {
+toggle : false
+};
+};
 
     handleToggleVisibility(){
         this.setState((prevState) => {
@@ -513,6 +529,7 @@ class VisibilityToggle extends React.Component{
             </div>
         );
     }
+
 }
 
 ReactDOM.render(<VisibilityToggle />, document.getElementById('app'));
@@ -531,14 +548,14 @@ Also in the 'Action' class we put in an inline method 'hasOptions={this.state.op
 
 /////////////////////Example
 class IndecisionApp extends React.Component {
-    constructor(props){
-        super(props);
-        this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
-        this.handlePick = this.handlePick.bind(this);
-        this.state = {
-            options: ['Thing One','Thing Two','Thing Four']
-        };
-    }
+constructor(props){
+super(props);
+this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
+this.handlePick = this.handlePick.bind(this);
+this.state = {
+options: ['Thing One','Thing Two','Thing Four']
+};
+}
 
     handleDeleteOptions(){
         this.setState(() => {
@@ -574,18 +591,20 @@ class IndecisionApp extends React.Component {
             </div>
         );
     }
+
 }
 
 class Action extends React.Component{
-    render(){
-        return (
-            <div>
-                <button onClick={this.props.handlePick} disabled={!this.props.hasOptions}>
-                    What should I do?
-                </button>
-            </div>
-        );
-    }
+render(){
+return (
+
+<div>
+<button onClick={this.props.handlePick} disabled={!this.props.hasOptions}>
+What should I do?
+</button>
+</div>
+);
+}
 }
 /////////////////////End
 
@@ -596,15 +615,15 @@ We also learned how to pass back an error message if something goes wrong.
 
 /////////////////////Example
 class IndecisionApp extends React.Component {
-    constructor(props){
-        super(props);
-        this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
-        this.handlePick = this.handlePick.bind(this);
-        this.handleAddOption = this.handleAddOption.bind(this);
-        this.state = {
-            options: []
-        };
-    }
+constructor(props){
+super(props);
+this.handleDeleteOptions = this.handleDeleteOptions.bind(this);
+this.handlePick = this.handlePick.bind(this);
+this.handleAddOption = this.handleAddOption.bind(this);
+this.state = {
+options: []
+};
+}
 
     handleAddOption(option){
         if(!option){
@@ -643,15 +662,15 @@ class IndecisionApp extends React.Component {
     }
 
 class AddOption extends React.Component{
-    constructor(props){
-        super(props);
-        this.handleAddOption = this.handleAddOption.bind(this);
-        this.state = {
-            error: undefined
-        }
-    }
-    handleAddOption(e){
-        e.preventDefault();
+constructor(props){
+super(props);
+this.handleAddOption = this.handleAddOption.bind(this);
+this.state = {
+error: undefined
+}
+}
+handleAddOption(e){
+e.preventDefault();
 
         const option = e.target.elements.option.value.trim();
         const error = this.props.handleAddOption(option);
@@ -673,24 +692,25 @@ class AddOption extends React.Component{
             </div>
         );
     }
+
 }
 /////////////////////End
 
 Lecture 38 Summary: Props vs States.
 
 Props -
-    an object
-    Can be used when rendering
-    Changes from above cause re-rendering
-    Comes from above
-    Can't be changed by component itself
+an object
+Can be used when rendering
+Changes from above cause re-rendering
+Comes from above
+Can't be changed by component itself
 
 State -
-    an object
-    Can be used when rendering
-    Changes cause re-rendering
-    Defined in component itself
-    Can't be changed by component itself
+an object
+Can be used when rendering
+Changes cause re-rendering
+Defined in component itself
+Can't be changed by component itself
 
 Lecture 40 SECTION 5 Intro Stateless functional components
 Here we switched some class based components to function based components.
@@ -703,22 +723,23 @@ Class based is when you need to do more complicated things like add a state.
 
 //NEW function based component
 const Option = (props) => { //pass in the props
-    return (
-        <div>
-            {props.optionText} // drop the 'this' not needed.
-        </div>
-    );
+return (
+
+<div>
+{props.optionText} // drop the 'this' not needed.
+</div>
+);
 };
 
 //OLD
 // class Option extends React.Component {
-//     render(){
-//         return (
-//             <div>
-//                 {this.props.optionText}
-//             </div>
-//         );
-//     }
+// render(){
+// return (
+// <div>
+// {this.props.optionText}
+// </div>
+// );
+// }
 // }
 
 /////////////////////End
@@ -731,16 +752,17 @@ You can then get rid of where it was called earlier and it will get overridden i
 /////////////////////Example
 
 const Header = (props) =>{
-    return (
-        <div>
-            <h1>{props.title}</h1>
-            {props.subtitle && <h2>{props.subtitle}</h2>}
-        </div>
-    );
+return (
+
+<div>
+<h1>{props.title}</h1>
+{props.subtitle && <h2>{props.subtitle}</h2>}
+</div>
+);
 };
 
 Header.defaultProps = {
-    title: 'Indecision'
+title: 'Indecision'
 };
 
 <Header title={'New Name'} /> //this would override the default.
@@ -754,16 +776,18 @@ converting 'this.setState' from explicitly using a return to implicitly return a
 
 We also added a button to each option in the list. We created a function 'handleDeleteOption' and passed it down the chain through <Options /> to <Option />.
 /////////////////////Example
-    //Before
-    <!-- handleDeleteOptions(){
+//Before
+
+<!-- handleDeleteOptions(){
         this.setState(() => {
             return {
                 options : []
             };
         });
     } -->
-    //after
-    this.setState(()=>({options : [] }));
+
+//after
+this.setState(()=>({options : [] }));
 /////////////////////////
 
     handleDeleteOption(optionToRemove){ //Created function
@@ -826,25 +850,26 @@ We also added a button to each option in the list. We created a function 'handle
             </div>
         );
     };
+
 /////////////////////End
 
 Lecture 44 Lifecycle methods
 methods that will fire at specific times in the components lifecycle.
 They are only available in class based components. They do not work in stateless functional components.
 /////////////////////Example
-    componentDidMount(){
-        console.log('fetching data!');
-    }
-    componentDidUpdate(prevProp, prevState){
-        console.log('saving data');
-    }
-    componentWillUnmount(){
-        console.log('componentWillUnmount');
-    }
+componentDidMount(){
+console.log('fetching data!');
+}
+componentDidUpdate(prevProp, prevState){
+console.log('saving data');
+}
+componentWillUnmount(){
+console.log('componentWillUnmount');
+}
 /////////////////////End
 
 Lecture 45 Saving and loading options data
-    Here we used 'localStorage' to save our data. 'localStorage' is a browser based session. It persists as long as the window is open. 'localStorage(key, value)' takes two parameters. Note: 'localStorage' only works with string data.
+Here we used 'localStorage' to save our data. 'localStorage' is a browser based session. It persists as long as the window is open. 'localStorage(key, value)' takes two parameters. Note: 'localStorage' only works with string data.
 
     1. We learned how to only store data if there is something there and to show error in body if there is one.
     2. I learned that we can call the same method from the button later at the top. when it's clicked it fires the local method and then fires the parent method when it gets to it.
@@ -853,10 +878,9 @@ Lecture 45 Saving and loading options data
 
     I'm pretty sure this is right. :-/
 
-/////////////////////Example
-1.
-    handleAddOption(e){
-        e.preventDefault();
+/////////////////////Example 1.
+handleAddOption(e){
+e.preventDefault();
 
         const option = e.target.elements.option.value.trim();//grabs input
         const error = this.props.handleAddOption(option);// sets message to error var.
@@ -879,16 +903,17 @@ Lecture 45 Saving and loading options data
         );
     }
     }
+
 End 1.
 
 2.
-    //From the parent level(IndecisionApp class) which gets called last when there is a change...
-    handleAddOption(option){
-        if(!option){
-            return 'Enter valid value to add item';
-        } else if (this.state.options.indexOf(option) > -1) {
-            return 'This option already exists'
-        }
+//From the parent level(IndecisionApp class) which gets called last when there is a change...
+handleAddOption(option){
+if(!option){
+return 'Enter valid value to add item';
+} else if (this.state.options.indexOf(option) > -1) {
+return 'This option already exists'
+}
 
         this.setState((prevState)=>({
                 options: prevState.options.concat(option)//here the new option gets concatenated onto the option list.
@@ -947,20 +972,21 @@ End 1.
 /////////////////////End
 
 Lecture 45 Saving and loading the count
-    We used the lifecycle methods to store the count every time the number was updated in componentDidUpdate(prevProp, prevState) and then to call the number from localStorage in componentWillMount() which happens when the page loads. it parses the localStorage value to an int and then passes it to the this.state.count.
+We used the lifecycle methods to store the count every time the number was updated in componentDidUpdate(prevProp, prevState) and then to call the number from localStorage in componentWillMount() which happens when the page loads. it parses the localStorage value to an int and then passes it to the this.state.count.
 
     essentially the localStorage always keeps track of the count and then passes it back in when the page is loaded
+
 /////////////////////Example
 class Counter extends React.Component {
-    constructor(props){ // constructor method
-        super(props);
-        this.handleAddOne = this.handleAddOne.bind(this);
-        this.handleMinusOne = this.handleMinusOne.bind(this);
-        this.handleReset = this.handleReset.bind(this);
-        this.state = {
-            count: 0 // <-This is not even needed
-        };
-    };
+constructor(props){ // constructor method
+super(props);
+this.handleAddOne = this.handleAddOne.bind(this);
+this.handleMinusOne = this.handleMinusOne.bind(this);
+this.handleReset = this.handleReset.bind(this);
+this.state = {
+count: 0 // <-This is not even needed
+};
+};
 
     componentWillMount(){
         try {
@@ -996,7 +1022,7 @@ Lecture 48 What is Webpack?
 High level overview. Webpack is a bundler and task runner.
 
 Lecture 49 Avoid Global Modules
-    When we download global modules it doesn't save in dependencies in the package.json file. So if we are sharing the project the next person will be missing useful tool.
+When we download global modules it doesn't save in dependencies in the package.json file. So if we are sharing the project the next person will be missing useful tool.
 
     How to uninstall babel-cli & live-server:
     $ yarn global remove babel-cli live-server
@@ -1007,27 +1033,27 @@ Lecture 49 Avoid Global Modules
     next in the package.json we add a "scripts" section and create a key value pair for what we want to have happen when a script is called by name. like "serve":"live-server public/", This will start the live server with the '$yarn serve' command in terminal.
 
 /////////////////////Example
-    {
-      "name": "indecision-app",
-      "version": "1.0.0",
-      "main": "index.js",
-      "author": "Aaron Brown",
-      "license": "MIT",
-      "scripts":{
-        "serve":"live-server public/",
-        "build":"babel src/app.js --out-file=public/scripts/app.js --presets=env,react --watch"
-      },
-      "dependencies": {
-        "babel-cli": "6.24.1",
-        "babel-preset-env": "1.5.2",
-        "babel-preset-react": "6.24.1",
-        "live-server": "^1.2.0"
-      }
-    }
+{
+"name": "indecision-app",
+"version": "1.0.0",
+"main": "index.js",
+"author": "Aaron Brown",
+"license": "MIT",
+"scripts":{
+"serve":"live-server public/",
+"build":"babel src/app.js --out-file=public/scripts/app.js --presets=env,react --watch"
+},
+"dependencies": {
+"babel-cli": "6.24.1",
+"babel-preset-env": "1.5.2",
+"babel-preset-react": "6.24.1",
+"live-server": "^1.2.0"
+}
+}
 /////////////////////End
 
 Lecture 50 Installing and configuring Webpack
-    THIS IS TO SET UP A BARE BONES CONFIGURATION.
+THIS IS TO SET UP A BARE BONES CONFIGURATION.
 
     To install basic. from project root folder.
     $ yarn add webpack
@@ -1079,7 +1105,7 @@ Lecture 51 ES6 import/export
     ///////End
 
 Lecture 52 Default exports
-    With default exports we can just have one.
+With default exports we can just have one.
 
     ///////Example
     //In export area you need to set 'as default'. You can only do it to one.
@@ -1113,11 +1139,11 @@ Lecture 52 Default exports
     ///////End
 
 Lecture 53 Import NPM modules
-    Find a useful npm module and install it locally. To call that file write in the top of the page...
-    Read module docs to know how to use the functions installed.
-    ///////Example
-    (validatior is the name of the package module we installed)
-        import validator from 'validator';
+Find a useful npm module and install it locally. To call that file write in the top of the page...
+Read module docs to know how to use the functions installed.
+///////Example
+(validatior is the name of the package module we installed)
+import validator from 'validator';
 
         console.log(validator.isEmail('test'));
 
@@ -1175,7 +1201,7 @@ We need to use a loader for webpack to know what to do with the files before it 
     ///////End
 
 Lecture 55 One Component per file
-    In this lecture we moved each component to it's own file. Webpack stitches them together.
+In this lecture we moved each component to it's own file. Webpack stitches them together.
 
     Note: When exporting a class that will do one thing we can export it inline. like...
     ///////Example
@@ -1215,9 +1241,9 @@ Lecture 55 One Component per file
     ///////End
 
 Lecture 56 Source Maps with Webpack
-    Here we add a webpack dev-tool called cheap-module-eval-source-map
-    https://webpack.js.org/configuration/devtool/
-    It's set up inside of webpack.config.js and then we need to restart webpack from terminal.
+Here we add a webpack dev-tool called cheap-module-eval-source-map
+https://webpack.js.org/configuration/devtool/
+It's set up inside of webpack.config.js and then we need to restart webpack from terminal.
 
     This tool lets the chrome browser know where a bug originated in our code.
     ///////Example
@@ -1242,10 +1268,10 @@ Lecture 56 Source Maps with Webpack
     ///////End
 
 Lecture 57 Webpack Dev-Server
-    Here we are going to switch from using 'liveServer' to Webpacks development server. It comes with nice to have features.
-    https://webpack.js.org/configuration/dev-server/
-    We installed locally
-        $ yarn add webpack-dev-server@2.5.1
+Here we are going to switch from using 'liveServer' to Webpacks development server. It comes with nice to have features.
+https://webpack.js.org/configuration/dev-server/
+We installed locally
+$ yarn add webpack-dev-server@2.5.1
     We then setup in our webpack.config.js 'devServer.contentBase'. This tells webpack where our public file is to take and render to browser.
     ///////Example
     module.exports = {
@@ -1258,34 +1284,34 @@ Lecture 57 Webpack Dev-Server
             rules: [{
                 loader: 'babel-loader',
                 test: /\.js$/,
-                exclude: /node_modules/
-            }]
-        },
-        devtool: 'cheap-module-eval-source-map',
-        devServer: {             
-        //this is what we added. I ad a space here in the read only between the underscores and dirname.
-            contentBase: path.join(__ dirname, 'public')
-        }
-    };
-    ///////End
-    NEXT we write a script to call to run when we want to run the server.
-    In package.json.
-        {
-          "name": "indecision-app",
-          "version": "1.0.0",
-          "main": "index.js",
-          "author": "Aaron Brown",
-          "license": "MIT",
-          "scripts": {
-            "serve": "live-server public/",
-            "build": "webpack",
-            "dev-server": "webpack-dev-server"
-        }, ...
+exclude: /node_modules/
+}]
+},
+devtool: 'cheap-module-eval-source-map',
+devServer: {
+//this is what we added. I ad a space here in the read only between the underscores and dirname.
+contentBase: path.join(\_\_ dirname, 'public')
+}
+};
+///////End
+NEXT we write a script to call to run when we want to run the server.
+In package.json.
+{
+"name": "indecision-app",
+"version": "1.0.0",
+"main": "index.js",
+"author": "Aaron Brown",
+"license": "MIT",
+"scripts": {
+"serve": "live-server public/",
+"build": "webpack",
+"dev-server": "webpack-dev-server"
+}, ...
 
     "webpack-dev-server" when ran '$ yarn run dev-server' will render the bundle.js in it's head and send it to the browser and listen for changes. It is really fast. when we need a bundle for distrobution we can run '$ yarn run build'.
 
 Lecture 58 ES6 Class properties
-    We installed a bable plugin called 'Class properties transform' (http://babeljs.io/docs/plugins/transform-class-properties/). This allows us to convert our class based components to the brand new class properties syntax. We no longer have to worry about binding the 'this' value to the class scope and we don't need to add the constructor.   
+We installed a bable plugin called 'Class properties transform' (http://babeljs.io/docs/plugins/transform-class-properties/). This allows us to convert our class based components to the brand new class properties syntax. We no longer have to worry about binding the 'this' value to the class scope and we don't need to add the constructor.
 
     SETUP:
         $ yarn add babel-plugin-transform-class-properties@6.24.1
@@ -1330,10 +1356,10 @@ Lecture 58 ES6 Class properties
     ///////End
 
 Lecture 59 Section Intro: Using a Third Party Component.
-    We are going to use a third party component that adds a modal instead of the alert.
+We are going to use a third party component that adds a modal instead of the alert.
 
 Lecture 60 Passing Children to Component
-    In this one we learned two ways to pass data into a component.
+In this one we learned two ways to pass data into a component.
 
     ONE:
     //We can add a prop to the Layout component and then call it inside with props.content
@@ -1385,8 +1411,8 @@ Lecture 60 Passing Children to Component
             ), document.getElementById('app'));
 
 Lecture 61 Setting up React-Modal
-    We installed the react-modal and put it in it's own file in OptionModal.js, we also had to import 'import Modal from 'react-modal'; at the top.'. Then in IndecisionApp we added an object to the 'state' called 'selectedOption: undefined' and made a method in the called 'clearSelectedOption' and then passed it down to the OptionModal. The method is set to undefined but gets set to a value which changes it's state to truthy.
-    https://github.com/reactjs/react-modal
+We installed the react-modal and put it in it's own file in OptionModal.js, we also had to import 'import Modal from 'react-modal'; at the top.'. Then in IndecisionApp we added an object to the 'state' called 'selectedOption: undefined' and made a method in the called 'clearSelectedOption' and then passed it down to the OptionModal. The method is set to undefined but gets set to a value which changes it's state to truthy.
+https://github.com/reactjs/react-modal
 
     ///////Example
 
@@ -1428,7 +1454,7 @@ Lecture 61 Setting up React-Modal
     Then we added it in the bottom of the IndecisionApp and passed in a prop.
 
 Lecture 62 Bonus Refactoring Other Stateless Functional Components
-    We can explicitly return a component that only returns one thing. So in this section we go through and remove the return lines from components that only return one thing and are stateless.
+We can explicitly return a component that only returns one thing. So in this section we go through and remove the return lines from components that only return one thing and are stateless.
 
     //Before
         import React from 'react';
@@ -1458,31 +1484,31 @@ Lecture 62 Bonus Refactoring Other Stateless Functional Components
         export default Action;
 
 Lecture 63 Section Intro - Styling React
-    Just an intro to talk about using scss.
+Just an intro to talk about using scss.
 
 Lecture 64 Setting up webpack with SCSS
-    Installing two packages...
-        https://www.npmjs.com/package/css-loader
-        https://www.npmjs.com/package/style-loader
-        $ yarn add style-loader@0.19.0 css-loader@0.28.7
+Installing two packages...
+https://www.npmjs.com/package/css-loader
+https://www.npmjs.com/package/style-loader
+$ yarn add style-loader@0.19.0 css-loader@0.28.7
     Then we add to the webpack.config.js
         module: {
             rules: [{
                 loader: 'babel-loader',
                 test: /\.js$/,
-                exclude: /node_modules/
-            }], { // add a comma and add another rule
-                test:/\.css$/
-                use: [
-                    'style-loader',
-                    'css-loader'
-                ]
-            }
-        },
-        This will render just our css.
-    In the head of the app.js file we import the css like this...
-        import './styles/styles.css';
-    When we run our dev-server it will work. At this point we COULD style the entire app using css.
+exclude: /node_modules/
+}], { // add a comma and add another rule
+test:/\.css\$/
+use: [
+'style-loader',
+'css-loader'
+]
+}
+},
+This will render just our css.
+In the head of the app.js file we import the css like this...
+import './styles/styles.css';
+When we run our dev-server it will work. At this point we COULD style the entire app using css.
 
     //Next we are setting up for sass. we installed these two packages
         $ yarn add sass-loader@6.0.6 node-sass@4.5.3
@@ -1508,16 +1534,16 @@ Lecture 64 Setting up webpack with SCSS
     Run the dev-server.
 
 Lecture 65 Architecture and Header Styles
-    We learned how to break up our styles into multiple styles. I also learned a little about...
-        //BEM(block element modifier) naming convention
-    //Example...
-        Block component
-            .btn {}
+We learned how to break up our styles into multiple styles. I also learned a little about...
+//BEM(block element modifier) naming convention
+//Example...
+Block component
+.btn {}
 
         Element that depends upon the block
             .btn__price {}
 
-        Modifier that changes the style of the block            
+        Modifier that changes the style of the block
             .btn--orange {}
             .btn--big {}
 
@@ -1560,31 +1586,31 @@ Lecture 66 Reset That $#!*
         ReactDOM.render(<IndecisionApp />, document.getElementById('app'));
 
 Lecture 67 Theming with variables
-    We are setting up a settings.sass file where we define our spacing sizes and colors.
+We are setting up a settings.sass file where we define our spacing sizes and colors.
 
 Lecture 68 Big Button & Options List
-    We learned about sass functions.
-    http://sass-lang.com/documentation/Sass/Script/Functions.html
-    we used the darken function...
-        .big-button
-            background-color: $purple
+We learned about sass functions.
+http://sass-lang.com/documentation/Sass/Script/Functions.html
+we used the darken function...
+.big-button
+background-color: $purple
             border: none
             border-bottom: .6rem solid darken($purple, 10%)
-    Learned about the css sudo class ':disabled'.
-        .big-button:disabled
-            opacity: .5
-        //when button is disabled it will change opacity
-    Did styles on buttons.
+Learned about the css sudo class ':disabled'.
+.big-button:disabled
+opacity: .5
+//when button is disabled it will change opacity
+Did styles on buttons.
 
 Lecture 69 Styling the Options List
-    We styled the widget and the things inside it. Pretty straight forward.
+We styled the widget and the things inside it. Pretty straight forward.
 
 Lecture 70 Styling Option Items
-    We created add-option.sass and option.sass
-    I learned about CSS flex-grow Property. It tells the element you are styling to grow into the available space.
+We created add-option.sass and option.sass
+I learned about CSS flex-grow Property. It tells the element you are styling to grow into the available space.
 
 Lecture 71 Styling React Modal
-    Styled the modal by targeting it's built in classes and also set up a parameter for the modal tha allows us to name the class inside the modal div.
+Styled the modal by targeting it's built in classes and also set up a parameter for the modal tha allows us to name the class inside the modal div.
 
     //Example
     <Modal
@@ -1601,24 +1627,24 @@ Lecture 71 Styling React Modal
     </Modal>
 
 Lecture 72 Mobile Considerations
-    We set up media queries and made a few tweaks
+We set up media queries and made a few tweaks
 
 Lecture 73 Favicon
-    We installed a favicon
+We installed a favicon
 
 Lecture 74 - 75
-    Explains React Router and client side vs server side rendering.
+Explains React Router and client side vs server side rendering.
 
 Lecture 76 Setting Up Expensify app
-    Cloning indecision-app and making a basic boilerplate for starting new projects and the next project "Expensify app".
-    We saved one as a boilerplate and made another one we will work in called expensify-app.
+Cloning indecision-app and making a basic boilerplate for starting new projects and the next project "Expensify app".
+We saved one as a boilerplate and made another one we will work in called expensify-app.
 
 Lecture 77 React-router 101
-    We install react React-router
-    $ yarn add react-router-dom@4.2.2
-    We then imported two things in app.js, 'BrowserRouter, Route'.
-        import { BrowserRouter, Route } from 'react-router-dom';
-    We then set added a tweak to the dev-server in webpack.config.js ... the dev sever need to not look to the server for pages but the app.js for pages(Hence client side server) so we added a line to the dev-sever... this means when you get a 404 not found look to the client for the page to render.
+We install react React-router
+\$ yarn add react-router-dom@4.2.2
+We then imported two things in app.js, 'BrowserRouter, Route'.
+import { BrowserRouter, Route } from 'react-router-dom';
+We then set added a tweak to the dev-server in webpack.config.js ... the dev sever need to not look to the server for pages but the app.js for pages(Hence client side server) so we added a line to the dev-sever... this means when you get a 404 not found look to the client for the page to render.
 
         devServer: {
             contentBase: path.join(__ dirname, 'public'),
@@ -1666,8 +1692,8 @@ Lecture 77 React-router 101
     //Example-End
 
 Lecture 78 Setting Up a 404
-    We use an element provided by react-router called <Switch>.
-    We import it at the top of app.js and then replace our div that is wrapping the routes with the <Switch> tag. This changes the behavior of how it goes through the child elements. It looks through and stops when it finds a match instead of rendering everything that can be rendered. If no matches then it will match with the route that has no path and render the 404 page.
+We use an element provided by react-router called <Switch>.
+We import it at the top of app.js and then replace our div that is wrapping the routes with the <Switch> tag. This changes the behavior of how it goes through the child elements. It looks through and stops when it finds a match instead of rendering everything that can be rendered. If no matches then it will match with the route that has no path and render the 404 page.
 
         import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
@@ -1686,27 +1712,28 @@ Lecture 78 Setting Up a 404
         ReactDOM.render(routes, document.getElementById('app'));
 
 Lecture 79 Linking Between Routes
-    Here we learned that anchor tags be default go to the server. We could us JS to prevent but React-router has a build it element/component for this called <Link>. This is to take advantage of the speed of client side routing.
-        // Here is how you would use in place of an <a></a> tag.
-            <div>
-                404 - <Link to="/">Go to Home Page</Link>
-            </div>
-    What if we want a header on every page? BrowserRouter needs the next child to be a container element/component. So we can creat a div inside of <BrowserRouter> and around <Switch>.
-        // Like so...
-        const routes = (
-            <BrowserRouter>
-                <div> // <- div wrapping Switch
-                    <Header /> // <- Header added
-                    <Switch>
-                        <Route path='/' component={ExpenseDashboardPage} exact={true}/>
-                        <Route path='/create'  component={AddExpensePage}/>
-                        <Route path='/edit'  component={EditExpensePage}/>
-                        <Route path='/help'  component={HelpPage}/>
-                        <Route component={NotFoundPage}/>
-                    </Switch>
-                </div>
-            </BrowserRouter>
-        );
+Here we learned that anchor tags be default go to the server. We could us JS to prevent but React-router has a build it element/component for this called <Link>. This is to take advantage of the speed of client side routing.
+// Here is how you would use in place of an <a></a> tag.
+
+<div>
+404 - <Link to="/">Go to Home Page</Link>
+</div>
+What if we want a header on every page? BrowserRouter needs the next child to be a container element/component. So we can creat a div inside of <BrowserRouter> and around <Switch>.
+// Like so...
+const routes = (
+<BrowserRouter>
+<div> // <- div wrapping Switch
+<Header /> // <- Header added
+<Switch>
+<Route path='/' component={ExpenseDashboardPage} exact={true}/>
+<Route path='/create'  component={AddExpensePage}/>
+<Route path='/edit'  component={EditExpensePage}/>
+<Route path='/help'  component={HelpPage}/>
+<Route component={NotFoundPage}/>
+</Switch>
+</div>
+</BrowserRouter>
+);
 
         ReactDOM.render(routes, document.getElementById('app'));
     The <Link> tag is useful for switching between pages within the app, BUT the NavLink is ideal for a nav bar becasue it adds extra features, like highlighting the page you are currently on. SO we will set up our header with NavLink tags. First we have to import it at the top....
@@ -1729,7 +1756,7 @@ Lecture 79 Linking Between Routes
     We should use <Link> almost everywhere in our app except with the nav bar.
 
 Lecture 80 Organizing Our Routes
-    Here we break things into their own files AND we put the AppRouter in it's own folder called 'router' to keep it out of the way. A couple things to remember... When you put the component in it's own file it still needs access to "React from 'react'" so we need to import it at the top as well as any other asset we may be using in that page like <Link> or <NavLink> as well as exporting the default...
+Here we break things into their own files AND we put the AppRouter in it's own folder called 'router' to keep it out of the way. A couple things to remember... When you put the component in it's own file it still needs access to "React from 'react'" so we need to import it at the top as well as any other asset we may be using in that page like <Link> or <NavLink> as well as exporting the default...
 
     //Example
         import React from 'react';
@@ -1749,7 +1776,7 @@ Lecture 80 Organizing Our Routes
         import NotFoundPage from '../components/NotFoundPage';
 
 Lecture 81 Query Strings and URL parameters
-    In this video we are learning about the props that react router passes as it renders pages. These props are 'history', 'location', 'match', 'staticContext'. Location keeps an eye on the URL and when things are passed through on it. We learn how to make the URL dynamic so that when we want to edit a page or a post we can pass the id on the end and get a specific post or query.
+In this video we are learning about the props that react router passes as it renders pages. These props are 'history', 'location', 'match', 'staticContext'. Location keeps an eye on the URL and when things are passed through on it. We learn how to make the URL dynamic so that when we want to edit a page or a post we can pass the id on the end and get a specific post or query.
 
     //example
         <BrowserRouter>
@@ -1784,18 +1811,17 @@ Lecture 81 Query Strings and URL parameters
         //End
 
 Lecture 82 Build It: Router for Portfolio Site
-    We clone the exspensify-app and make a portfolio app. We had to delete most of the components and pages routed in the AppRouter and the nav section in the header and redo this app with 4 pages(HomePage, PortfolioPage, ContactPage and 404). Then we hooked it back up. On the porfolio page we had to put two <Link>'s to two portfolio pieces and pass in a number 1 to display the correct project.
-        //Examples
-        //AppRouter.js
-        import React from 'react';
-        import { BrowserRouter, Route, Switch, Link, NavLink } from 'react-router-dom';
-        import HomePage from '../components/HomePage';
-        import ProjectPortfolioPage from '../components/ProjectPortfolioPage';
-        import ContactPage from '../components/ContactPage';
-        import ProjectPage from '../components/ProjectPage';
-        import NotFoundPage from '../components/NotFoundPage';
-        import Header from '../components/Header';
-
+We clone the exspensify-app and make a portfolio app. We had to delete most of the components and pages routed in the AppRouter and the nav section in the header and redo this app with 4 pages(HomePage, PortfolioPage, ContactPage and 404). Then we hooked it back up. On the porfolio page we had to put two <Link>'s to two portfolio pieces and pass in a number 1 to display the correct project.
+//Examples
+//AppRouter.js
+import React from 'react';
+import { BrowserRouter, Route, Switch, Link, NavLink } from 'react-router-dom';
+import HomePage from '../components/HomePage';
+import ProjectPortfolioPage from '../components/ProjectPortfolioPage';
+import ContactPage from '../components/ContactPage';
+import ProjectPage from '../components/ProjectPage';
+import NotFoundPage from '../components/NotFoundPage';
+import Header from '../components/Header';
 
         const AppRouter = () => (
             <BrowserRouter>
@@ -1845,15 +1871,15 @@ Lecture 82 Build It: Router for Portfolio Site
         export default ProjectPage;
 
 Lectures 83 & 84
-    Explains why we need redux. What I got is that data needs to be passed down from top to bottom but some components on the bottom of the structure need access to some data that their parents don't so by using redux we can bypass sending data down from the top only and instead supply data directly to the component that needs it. This also allows components to be free standing and flexible, so They can be used in lots of different places.
+Explains why we need redux. What I got is that data needs to be passed down from top to bottom but some components on the bottom of the structure need access to some data that their parents don't so by using redux we can bypass sending data down from the top only and instead supply data directly to the component that needs it. This also allows components to be free standing and flexible, so They can be used in lots of different places.
 
     Think of redux as something similar to the window object. It is a global object that can be used anywhere in the client side of the program.
 
 Lecture 85 Setting Up Redux
-    Here we installed redux with
-        $ yarn add redux@3.7.2
-    Then we told webpack.config.js to listen to the redux-101.js file instead of app.js. We created that file in playground.
-    To use redux we must use 'createStore' so we import it and then make a very simple example.
+Here we installed redux with
+\$ yarn add redux@3.7.2
+Then we told webpack.config.js to listen to the redux-101.js file instead of app.js. We created that file in playground.
+To use redux we must use 'createStore' so we import it and then make a very simple example.
 
     The first argument in createStore(), must be a function. and in the params of the function we pass in the default state. This is just returning the default state.
 
@@ -1871,7 +1897,7 @@ Lecture 85 Setting Up Redux
     In the next video we will learn how to change the default with actions.
 
 Lecture 86 Dispatching Actions
-    Learning all about Actions which allows us to change things in the redux store.
+Learning all about Actions which allows us to change things in the redux store.
 
     Action is an object that gets sent to the store, it's our way to communicate with the store. We pass a second argument to 'createStore()' called 'action', then inside we create a switch statement where we do different things depending on the action sent in.
 
@@ -1921,9 +1947,9 @@ Lecture 86 Dispatching Actions
     console.log(store.getState());
 
 Lecture 87 Subscribing and Dynamic Actions
-    Here we learn more options that redux provides.
-    'subscribe' allows us listen to the store for ANY changes.
-    and adding onto the object after 'type' allows us to create dynamic actions when that action type is called.
+Here we learn more options that redux provides.
+'subscribe' allows us listen to the store for ANY changes.
+and adding onto the object after 'type' allows us to create dynamic actions when that action type is called.
 
     'subscribe' allows us listen to the store for ANY changes. Every time a change is made it runs the subscribe.
     //Example
@@ -1980,7 +2006,7 @@ Lecture 87 Subscribing and Dynamic Actions
         });
 
 Lecture 88 ES6 Object Destructuring
-    In this lecture we learned we can destructure objects. Which can make passing down the data more clear and/or less typing.
+In this lecture we learned we can destructure objects. Which can make passing down the data more clear and/or less typing.
 
     This is a slight break from redux to point out a new ES6 syntax for object destructuring which will help to work with arrays and objects.
 
@@ -2036,7 +2062,7 @@ Lecture 88 ES6 Object Destructuring
         //temp is now temperature and if it's not there then the default will be 'Unkown'.
 
 Lecture 89 Array Destructuring
-    Here we learned how to restructure an array for many of hte same reasons as destructuring an object.
+Here we learned how to restructure an array for many of hte same reasons as destructuring an object.
 
     Our Array...
         const address = ['1299 S Juniper Street', 'Philadelphia', 'Pennsylvania', '19147'];
@@ -2074,7 +2100,7 @@ Lecture 89 Array Destructuring
         //it's kind of goofy but the default naming would only really work if the array came in empty or if the last item in the array was not there and the order of naming assignments lined up.
 
 Lecture 90 Refactoring and Organizing
-    In this lecture we learned about Action generators. Where we tell 'store.dispatch' what we want to do through a function.  We prefer them over inline action objects. So instead of having to define and pass data each time like this object...
+In this lecture we learned about Action generators. Where we tell 'store.dispatch' what we want to do through a function. We prefer them over inline action objects. So instead of having to define and pass data each time like this object...
 
         store.dispatch({
             type: 'INCREMENT',
@@ -2097,9 +2123,9 @@ Lecture 90 Refactoring and Organizing
     In the above function we did a bit of destructuring. The first line says... A const with a name of 'incrementBy' set to an arrow function that implicitly returns an object. We pass in the first parenthesis '{ incrementBy = 1 } = {}', which says if incrementBy exists  and has a value great, but if not set it to 1 and the '= {}' means it is an object by default then it gets decontructed and will pass in the 'incrementBy: 1'. Yes, it's kind of confusing.
 
 Lecture 91 Reducers
-    Reducers are a core concept in Redux. The definition of reducer from the redux website is...
-        "Actions describe the fact that something happened, but don't specify HOW the application's state changes in response. This is the job of reducers."
-    The switch we wrote is a perfect example of a reducer.
+Reducers are a core concept in Redux. The definition of reducer from the redux website is...
+"Actions describe the fact that something happened, but don't specify HOW the application's state changes in response. This is the job of reducers."
+The switch we wrote is a perfect example of a reducer.
 
     Key attributes of a reducer...
         1. Reducers are pure functions. They take what is given to them and process it. They do not rely on variables outside their own scope/function. The output is determined by the input. It does not change anything outside of the scope.
@@ -2108,9 +2134,9 @@ Lecture 91 Reducers
     So my understanding is that reducers read the 'state' and 'action' and then create & modify a new instance of it and return that value. It doesn't actually change the value at the source. That will happen if need be outside of the reducer via react or redux.
 
 Lecture 92 Working with Multiple Reducers
-    In the previous example we passed in a single reducer to
-        'store = createStore(countReducer);'
-    That can get really messy when you need to do a lot of things. So in this lecture we learned about and imported 'combineReducers'. This is a built in redux function that lets us combine reducers. We created two reducers called, 'expensesReducer' and 'filtersReducer' and we created variables that set their default states...
+In the previous example we passed in a single reducer to
+'store = createStore(countReducer);'
+That can get really messy when you need to do a lot of things. So in this lecture we learned about and imported 'combineReducers'. This is a built in redux function that lets us combine reducers. We created two reducers called, 'expensesReducer' and 'filtersReducer' and we created variables that set their default states...
 
         const expensesReducerDefaultState = [];
 
@@ -2152,9 +2178,9 @@ Lecture 92 Working with Multiple Reducers
     When we log 'store.getState()' to the console we get an object with expenses: [] and filer with the default object settings from 'filtersReducerDefaultState'.
 
 Lecture 93 ES6 Spread Operator in Reducers on arrays
-    Note we installed uuid which generated "universally unique id's". This is used temporarily until our database does this.
-        https://www.npmjs.com/package/uuid
-    Here we created an addExpense function. and we deconstructed the input parameters to make a object if one does not exist.
+Note we installed uuid which generated "universally unique id's". This is used temporarily until our database does this.
+https://www.npmjs.com/package/uuid
+Here we created an addExpense function. and we deconstructed the input parameters to make a object if one does not exist.
 
         // ADD_EXPENSE
         const addExpense = (//we broke it down into lines-easy to read.
@@ -2233,7 +2259,7 @@ Lecture 93 ES6 Spread Operator in Reducers on arrays
     This one really confused me.
 
 Lecture 94 Spreading Objects Operator
-    using the spreading objects operator we are able to create new objects bringing in data from existing objects.
+using the spreading objects operator we are able to create new objects bringing in data from existing objects.
 
     BUT browsers don't currently support it so we need to bring in a plugin from to babel.
         https://babeljs.io/docs/plugins/transform-object-rest-spread/
@@ -2267,7 +2293,7 @@ Lecture 94 Spreading Objects Operator
             };
 
 Lecture 95 Wrapping Up Our Reducers
-    In this lecture we created the action objects to SORT_BY_DATE & SORT_BY_AMOUNT.
+In this lecture we created the action objects to SORT_BY_DATE & SORT_BY_AMOUNT.
 
     //Make the call and name the function. we set the first to take a number argument and the second blank so it will reset to undefined
         store.dispatch(setStartDate(125));
@@ -2291,7 +2317,7 @@ Lecture 95 Wrapping Up Our Reducers
     Now all our action objects are set for the reducers.
 
 Lecture 96 Filtering Redux Data
-    In this lecture we set up the filter by creating the fucntion 'getVisibleExpenses'.
+In this lecture we set up the filter by creating the fucntion 'getVisibleExpenses'.
 
     first inside the store.subscribe() section we created a const where we stored the state and then another where we passed the state into a function called 'getVisibleExpenses' which we have not created yet and sotred that in side of 'const visibleExpenses', then spit that out to the console.
 
@@ -2327,9 +2353,9 @@ Lecture 96 Filtering Redux Data
             store.dispatch(setTextFilter('rent'));
 
 Lecture 97 Sorting Redux Data
-    In this lecture we added onto the 'getVisibleExpenses' function. by concatenating the .sort() function.
-        ....
-            const textMatch = expense.description.toLowerCase().includes(text.toLowerCase());
+In this lecture we added onto the 'getVisibleExpenses' function. by concatenating the .sort() function.
+....
+const textMatch = expense.description.toLowerCase().includes(text.toLowerCase());
 
             return startDateMatch && endDateMatch && textMatch;
 
@@ -2345,10 +2371,10 @@ Lecture 97 Sorting Redux Data
         So if 'a.createdAt < b.createdAt' then that is true and 1 is returned and 'b.createdAt' gets moved above a. if a.        So if 'a.createdAt < b.createdAt' then that is true and 1 is returned and 'b.createdAt' gets moved above a. if 'a.createdAt' was more than 'b.createdAt' then it would be false and -1 would be returned and b would stay beneath.
 
 Lecture 98 Section Intro: Connecting React and Redux
-    We need to connect the two so that components can grab info from the redux store and so that components can do something when they are interacted with and update the store.
+We need to connect the two so that components can grab info from the redux store and so that components can do something when they are interacted with and update the store.
 
 Lecture 99 Organizing Redux
-    In this lecture we broke up the redux-expensify.js file into pieces and moved them into the expensify app. (so out of playground). We created 4 folders and put the following files inside...
+In this lecture we broke up the redux-expensify.js file into pieces and moved them into the expensify app. (so out of playground). We created 4 folders and put the following files inside...
 
         actions ->  expenses.js (addExpense,removeExpense, editExpense)
                     filters.js (setTextFilter, sortByDate, sortByAmount, setStartDate, setEndDate)
@@ -2377,7 +2403,7 @@ Lecture 99 Organizing Redux
         store.dispatch(setTextFilter('water'));
 
 Lecture 100 The Higher Order Component
-    Higher Order Component(HOC) - Is just a react component that renders another component. The HOC is the component that creates the lower ones inside it. This is useful when you want to use a component you already have but want to modify it in some way.
+Higher Order Component(HOC) - Is just a react component that renders another component. The HOC is the component that creates the lower ones inside it. This is useful when you want to use a component you already have but want to modify it in some way.
 
     The point of HOC is to reuse code. We can ...
         Render hijacking
@@ -2413,9 +2439,9 @@ Lecture 100 The Higher Order Component
             //AuthInfo is the component and we add a prop to it 'isAuthenticated={false}', which gets passed down as a prop that gets used in our HOC component. In the requireAuthentication function we return a jsx 'div' and inside we use a ternary operator that says if 'isAuthenticated' is true then show the Info component. If it's false then show the message 'Must login to see info.'.
 
 Lecture 101 Connecting Store and Component with React-Redux
-    //Switch webpack.config.js back to watching app.js.
-    We install the react-redux library and import it in app.js.
-    $ yarn add react-redux@5.0.6
+//Switch webpack.config.js back to watching app.js.
+We install the react-redux library and import it in app.js.
+\$ yarn add react-redux@5.0.6
 
     In app.js we import Provider from react redux and then make a new const below to allow our components to use it. It has a prop that IS the store. Then we tell ReactDOM to render that(jsx).
 
@@ -2469,7 +2495,7 @@ Lecture 101 Connecting Store and Component with React-Redux
     This allows our components to exist in isolation with out having to be tethered to parents and children.
 
 Lecture 102 Rendering Individual Expenses
-    Here we create the ExpenseListItem component and then pass it over to the ExpenseList component and use the .map to loop through our expenses to the screen.
+Here we create the ExpenseListItem component and then pass it over to the ExpenseList component and use the .map to loop through our expenses to the screen.
 
     //ExpenseListItem
         import React from 'react';
@@ -2511,7 +2537,7 @@ Lecture 102 Rendering Individual Expenses
     // This is a lot going on. Maybe watch again.
 
 Lecture 103 Controlled Input for Filters
-    In this lecture we did two things.
+In this lecture we did two things.
 
     1. we created a new component that is an input box called 'ExpenseListFilters' and then exported it and then imported it to the 'ExpenseDashboardPage'. Once it was showing up we went back to 'ExpenseListFilters' and did the following...(For the sake of being able to type input and then filter the view of results)
 
@@ -2559,7 +2585,7 @@ Lecture 103 Controlled Input for Filters
         export default connect()(ExpenseListItem);
 
 Lecture 104 Dropdown for Picking Sortby
-    In this lecture we created the select dropdown and then set its value base on the current value set in the store. Then we listen to the onChange event and if the value changes to the other it then sends out a dispatch with the correct action object function. This was added just beneath the 'input' in 'ExpenseListFilters'. We did have to import 'sortByDate' & 'sortByAmount' from '../actions/filters'.
+In this lecture we created the select dropdown and then set its value base on the current value set in the store. Then we listen to the onChange event and if the value changes to the other it then sends out a dispatch with the correct action object function. This was added just beneath the 'input' in 'ExpenseListFilters'. We did have to import 'sortByDate' & 'sortByAmount' from '../actions/filters'.
 
         <select
             value={props.filters.sortBy}
@@ -2576,7 +2602,7 @@ Lecture 104 Dropdown for Picking Sortby
         </select>
 
 Lecture 105 Creating Expense Add/Edit Form
-    In this lecture we focused on setting up the Expense Form which we created in components/ExpenseForm.js. We plan on using this format and code on the other pages so we created a class component. We plug in the classs component in the AddExpensePage.js.
+In this lecture we focused on setting up the Expense Form which we created in components/ExpenseForm.js. We plan on using this format and code on the other pages so we created a class component. We plug in the classs component in the AddExpensePage.js.
 
         import React from 'react';
         import ExpenseForm from './ExpenseForm';
@@ -2651,10 +2677,7 @@ Lecture 105 Creating Expense Add/Edit Form
     We also learned regex101.com is a great tool for making regular expressions.
 
 Lecture 106 Setting Up a Date Picker
-    In this lecture we set up the date picker. we started by installing 3 things
-        1. 'moment' momentjs.com - Is like a date() function but returns much better formatting.
-        2. 'react-dates' https://github.com/airbnb/react-dates is an airbnb react project that gives us their calendar date picker.
-        3. and 'react-addons-shallow-compare' which react-dates uses so we do too.  
+In this lecture we set up the date picker. we started by installing 3 things 1. 'moment' momentjs.com - Is like a date() function but returns much better formatting. 2. 'react-dates' https://github.com/airbnb/react-dates is an airbnb react project that gives us their calendar date picker. 3. and 'react-addons-shallow-compare' which react-dates uses so we do too.
 
         $ yarn add moment@2.18.1 react-dates@12.7.0 react-addons-shallow-compare@15.6.0
 
@@ -2698,7 +2721,7 @@ Lecture 106 Setting Up a Date Picker
     Everything is now working and updating in real time to the state inside this class component ExpenseForm. Next we need to wire it up to DO something when submitted.
 
 Lecture 107 Wiring Up Add Expense
-    In this lecture we did a few little tweaks in the beginning to make it so that a person cannot enter a decimal for the first number in amount.
+In this lecture we did a few little tweaks in the beginning to make it so that a person cannot enter a decimal for the first number in amount.
 
         //We updated the regular expression. and we change the conditional statement to say if it's NOT empty and meets the requirement of the regular expression then update.
         onAmountChange = (e) => {
@@ -2808,7 +2831,7 @@ Lecture 107 Wiring Up Add Expense
     //AND that's it.
 
 Lecture 108 Wiring up Edit Expense
-    First thing we needed to do was link each expense to the EditExpensePage.js and have the id of the expense go with it. We did this by importing the 'Link' from react-router and Then wrapping the h3 with the link tag. Then we passed in 'to={`/edit/${id}`}' which directs us to the page with the id of the item we clicked on.
+First thing we needed to do was link each expense to the EditExpensePage.js and have the id of the expense go with it. We did this by importing the 'Link' from react-router and Then wrapping the h3 with the link tag. Then we passed in 'to={`/edit/${id}`}' which directs us to the page with the id of the item we clicked on.
 
         const ExpenseListItem = ({ dispatch, id, description, amount, createdAt }) =>(
             <div>
@@ -2859,7 +2882,7 @@ Lecture 108 Wiring up Edit Expense
 
         export default class ExpenseForm extends React.Component {
                 //NOTE with our 'transform-class-properties' plugin the constructor isn't really necessary but we used it anyway.
-            constructor(props){  
+            constructor(props){
                 super(props);
 
                 this.state = {
@@ -2869,7 +2892,7 @@ Lecture 108 Wiring up Edit Expense
                     createdAt: props.expense ? moment(props.expense.createdAt) : moment(),
                     calendarFocused: false,
                     error: ''
-                };      
+                };
                 //On 'amount' we took the value and divided it by 100 to make it not in pennies anymore and we converted it to a string.
 
                 //On 'createdAt' we just needed to wrap it in the moment() function so it would return a date.
@@ -2889,7 +2912,7 @@ Lecture 108 Wiring up Edit Expense
         }}>Remove</button>
 
 Lecture 109 Redux Dev Tools
-    We are installing REDUX deve tools for the chrome browser. We first install the extension in chrome web store then we modify how we 'createStore()' in our code.
+We are installing REDUX deve tools for the chrome browser. We first install the extension in chrome web store then we modify how we 'createStore()' in our code.
 
     https://github.com/zalmoxisus/redux-devtools-extension
 
@@ -2911,7 +2934,7 @@ Lecture 109 Redux Dev Tools
     And that's it.
 
 Lecture 110 Filtering By dates
-    We are setting the start date and end date for our app so the user can filter between a date range.
+We are setting the start date and end date for our app so the user can filter between a date range.
 
     First we updated filter.js. We imported the moment.js lib and we called momnet two times to set the startDate and endDate with the start of the current month to the end of the current month.
 
@@ -3002,12 +3025,12 @@ Lecture 110 Filtering By dates
             ...
 
 Lecture 111 Into: Testing React Components
-    Here Andrew explains why writting tests for our app is useful. It seems mundane with a small app but as the app grows it will become a LOT of work to test each component. By having a testing script we can make changes and run the script and know we didn't break anything in less than 2 seconds.
+Here Andrew explains why writting tests for our app is useful. It seems mundane with a small app but as the app grows it will become a LOT of work to test each component. By having a testing script we can make changes and run the script and know we didn't break anything in less than 2 seconds.
 
 Lecture 112 Setting up jest.
-    In this lecture we install and set up Jest.
-    install to our project...
-        $ yarn add jest@21.2.1
+In this lecture we install and set up Jest.
+install to our project...
+$ yarn add jest@21.2.1
     And then add a script to our package.json...
         "scripts": {
           "serve": "live-server public/",
@@ -3016,7 +3039,7 @@ Lecture 112 Setting up jest.
           "test":"jest" //HERE
         },
     Now if we run '$ yarn test' it will look through our project for any test cases and run them. However at this point none exist. If we want to keep it running and do a watch we just write.
-        $ yarn test --watch
+\$ yarn test --watch
 
     Next we create a 'test' folder in our 'src'. All our tests will go here.
     we create file 'add.test.js'. NOTE 'test.js' is the extension that Jest looks for to know it's a test.
@@ -3049,9 +3072,9 @@ Lecture 112 Setting up jest.
     All these tests should pass.
 
 Lecture 113 Testing Expenses Action Generator
-    Note I wrote the first test in this lecture and was getting an error. I went to the Q&A and found others had a similar problem. So I needed to intall babel-jest to fix.
-        $ yarn add babel-jest
-    Now it works.
+Note I wrote the first test in this lecture and was getting an error. I went to the Q&A and found others had a similar problem. So I needed to intall babel-jest to fix.
+\$ yarn add babel-jest
+Now it works.
 
     In this lecture we are writing test cases for our action/expeses.js functions.
 
@@ -3094,7 +3117,7 @@ Lecture 113 Testing Expenses Action Generator
         });
 
 Lecture 114 Testing Filters Action Generators
-    In this lecture we created tests for our actions/filters.js. Nothing was that different from the last lecture except the 'sortByDate' and 'sortByAmount' shorthand we used...
+In this lecture we created tests for our actions/filters.js. Nothing was that different from the last lecture except the 'sortByDate' and 'sortByAmount' shorthand we used...
 
         test('Should set sort by date action object', () => {
             expect(sortByDate()).toEqual({ type: 'SORT_BY_DATE' });
@@ -3114,7 +3137,7 @@ Lecture 114 Testing Filters Action Generators
         // We needed to make sure we set the time in the moment or they would not match. Thus the '0' in moment(0).
 
 Lecture 115 Testing Expenses Selector
-    In this lecture we wrote 5 tests for the 'selectors/expenses.js', 'selectExpenses' function. Which gets called and used in 'components/ExpenseList.js'. It populates the value of the expenses js object from the state only with items that match the filter.
+In this lecture we wrote 5 tests for the 'selectors/expenses.js', 'selectExpenses' function. Which gets called and used in 'components/ExpenseList.js'. It populates the value of the expenses js object from the state only with items that match the filter.
 
     We imported 'moment' and 'selectExpenses'. Then we created some test data and made an array of 3 objects.
 
@@ -3140,7 +3163,7 @@ Lecture 115 Testing Expenses Selector
     ...
 
 Lecture 116 Testing Filters Reducer
-    In this lecture we tested the filters in 'reducers/filters.js'. It was pretty straight forward. Here are two samples explained.
+In this lecture we tested the filters in 'reducers/filters.js'. It was pretty straight forward. Here are two samples explained.
 
         //Default - nothing passed in.
 
@@ -3165,7 +3188,7 @@ Lecture 116 Testing Filters Reducer
     Note: use .toEqual() when we are returning an object and .toBe() when we are returning a single value.
 
 Lecture 117 Testing Expenses Reducer
-    In this lecture we tested 'expensesReducer' in 'reducers/expenses.test.js'. We would need some test data to run these tests. So we removeed the test data we already wrote in 'selectors/expenses.test.js' and moved it to a new folder called 'fixtures' inside the file 'expenses.js'. Then we just imported that data to the files that would need it. like 'selectors/expenses.test.js' and 'reducers/expenses.test.js'. like ...
+In this lecture we tested 'expensesReducer' in 'reducers/expenses.test.js'. We would need some test data to run these tests. So we removeed the test data we already wrote in 'selectors/expenses.test.js' and moved it to a new folder called 'fixtures' inside the file 'expenses.js'. Then we just imported that data to the files that would need it. like 'selectors/expenses.test.js' and 'reducers/expenses.test.js'. like ...
 
         import expenses from '../fixtures/expenses';
 
@@ -3207,9 +3230,9 @@ Lecture 117 Testing Expenses Reducer
         });
 
 Lecture 118 Snapshot Testing
-    Testing components is very different than regular functions. They need to render to make sure they work. Facebook/React created a tool called 'react-test-renderer' to do render components in a testing atmosphere. We installed it using.
-        $ yarn add react-test-renderer@16.2.0
-    Next we import it into our test file. We are testing Header.js first since it is so simple. We created 'tests/components/Header.test.js'. In the top we import 3 things.
+Testing components is very different than regular functions. They need to render to make sure they work. Facebook/React created a tool called 'react-test-renderer' to do render components in a testing atmosphere. We installed it using.
+\$ yarn add react-test-renderer@16.2.0
+Next we import it into our test file. We are testing Header.js first since it is so simple. We created 'tests/components/Header.test.js'. In the top we import 3 things.
 
         import react from 'React';
         import ReactShallowRenderer from 'react-test-renderer/shallow';
@@ -3235,7 +3258,7 @@ Lecture 118 Snapshot Testing
         //Jest creates a folder automatically in our tests folder called '__snapshots__'. This is where it will store the snapshot of what ever component we save. Note the first time we run it, it will ALWAYS pass and create a snapshot. From there on out it will compair to see if it's different than the original. If it is, the test will fail. We can then either fix the mistake or type 'u' in the terminal to update the snapshot.
 
 Lecture 119 Enzyme
-    In this lecture we install 'Enzyme' which is apparently much better for testing. We also have to add a few other things with it so that it works...
+In this lecture we install 'Enzyme' which is apparently much better for testing. We also have to add a few other things with it so that it works...
 
     $ yarn add enzyme@3.2.0 enzyme-adapter-react-16@1.0.0 raf@3.3.2
     //The first is enzyme the second is an adapter so we don't need to code for older versions of react. The third(raf(request animation frame)) is something our browser has built in and does with our code automatically and it does not happen in a test environment unless we bring it in... so we are.
@@ -3297,7 +3320,7 @@ Lecture 119 Enzyme
                 "raf/polyfill",
                 "<rootDir>/src/tests/setupTests.js"
             ],//ADD THIS below...
-            "snapshopSerializers": [     
+            "snapshopSerializers": [
                 "enzyme-to-json/serializer"
             ]
         }
@@ -3316,7 +3339,7 @@ Lecture 119 Enzyme
     NOW we are set up! This video was painful. Seems like a ton of work. But I'm trusting it will make things run smoother.
 
 Lecture 120 Snapshot Testing with Dynamic Components
-    In this lecture we test our first component, ExpenseList.js. We did change the component to render a message if it was passed an empty array. and then to make the list like normal if a list is passed in.
+In this lecture we test our first component, ExpenseList.js. We did change the component to render a message if it was passed an empty array. and then to make the list like normal if a list is passed in.
 
     We also added 'export' in front of the component so we would be able to import the component itself into the test area. NOTE: the default export is the 'connected()()' part of the component which would bring in values from redux state, which we do NOT want to do. We want to test the component in isolation.
 
@@ -3360,7 +3383,7 @@ Lecture 120 Snapshot Testing with Dynamic Components
             ...shallow(<ExpenseListItem {...expenses[0]} />); ...
 
 Lecture 121 Mocking Libraries with Jest
-    In this lecture we solve the problem of taking snapshots with timestamps in them. Time is always changing so the snapshot will always be wrong.
+In this lecture we solve the problem of taking snapshots with timestamps in them. Time is always changing so the snapshot will always be wrong.
 
     We look in the docs under 'Manual Mocks'.
     https://facebook.github.io/jest/docs/en/manual-mocks.html#content
@@ -3399,8 +3422,8 @@ Lecture 121 Mocking Libraries with Jest
         //I'm not sure why on the second test we pass in the expense this way instead of '<ExpenseForm {...expenses[1]}/>' <-this does NOT work.
 
 Lecture 122 Testing User Interaction
-    http://airbnb.io/enzyme/docs/api/ShallowWrapper/simulate.html
-    In this lecture we learned about three new things, 'simulate()','.at()' and that we can put '.state()' on the component we are testing and have access to it's state, we can be specific by passing in what we want on that state. like ...'wrapper.state('note')' (wrapper is a var holding our component).
+http://airbnb.io/enzyme/docs/api/ShallowWrapper/simulate.html
+In this lecture we learned about three new things, 'simulate()','.at()' and that we can put '.state()' on the component we are testing and have access to it's state, we can be specific by passing in what we want on that state. like ...'wrapper.state('note')' (wrapper is a var holding our component).
 
     '.simulate()' is a built in method with enzyme. It allows us to simulate all kinds of changes, like click, change, submit and more... See the docs. It takes two arguments the first is what to simulate and the second is the mock event object that will get passed through to the event handlers. This is where we burrow in to set what we need to pass into the event. for example on a 'change' event we expect the value to be on 'e.target.value'. So the second argument would be '{ target: { value } });'. I'm still a little confused on why this works.
 
@@ -3432,8 +3455,8 @@ Lecture 122 Testing User Interaction
         //In this test we expect nothing to be set becuse we don't allow 2 places past the decimal.
 
 Lecture 123 Test Spies
-    (Note: I was not really understaning this as I went trough it. Maybe re-watch)
-    In this lecture we learned about spies aka mocked functions. You create a new spy by simply attaching a 'jest.fn()' to a variable like this....
+(Note: I was not really understaning this as I went trough it. Maybe re-watch)
+In this lecture we learned about spies aka mocked functions. You create a new spy by simply attaching a 'jest.fn()' to a variable like this....
 
         const onSubmitSpy = jest.fn();
 
@@ -3488,7 +3511,7 @@ Lecture 123 Test Spies
         });
 
 Lecture 124 Testing AddExpensePage
-    In this lecture we do a little refactoring to make the component more easily testable.
+In this lecture we do a little refactoring to make the component more easily testable.
 
     We started with this....
 
@@ -3593,7 +3616,7 @@ Lecture 124 Testing AddExpensePage
     This was confusing for me and I think I understand about 70%.
 
 Lecture 125 Testing EditExpensePage
-    In this lecture we did a little refactoring. We changed "EditExpensePage" component to a class based component. We used "mapDispatchToProps".
+In this lecture we did a little refactoring. We changed "EditExpensePage" component to a class based component. We used "mapDispatchToProps".
 
     // Changed to class based and added "mapStateToProps".
         import React from 'react';
@@ -3684,7 +3707,7 @@ Lecture 125 Testing EditExpensePage
         });
 
 Lecture 126 Testing ExpenstListFilters
-    In this lecture we go into 'ExpenstListFilters' and take out all the inline functions and make them into methods above and call them. We did that with these two, they are now methods...
+In this lecture we go into 'ExpenstListFilters' and take out all the inline functions and make them into methods above and call them. We did that with these two, they are now methods...
 
         onTextChange = (e)=>{
         this.props.dispatch(setTextFilter(e.target.value));
@@ -3766,7 +3789,7 @@ Lecture 126 Testing ExpenstListFilters
         });
 
 Lecture 127 Testing ExpenstListFilters: Part II
-    In this lecture we wrote the rest of the test cases. Here are the ones I found tricky explained...
+In this lecture we wrote the rest of the test cases. Here are the ones I found tricky explained...
 
         //Because the default filter setting which is called 'filter' and imported from fixtures is set to 'sortByDate', we want to test that it changes to 'sortByDate', so we override with the 'altFilters' which is set to 'sortByAmount'.
 
@@ -3814,16 +3837,16 @@ Lecture 127 Testing ExpenstListFilters: Part II
     //I should go through and rewatch this whole testing section. I understand after we do it but feel kinda blank when I have to think about doing it myself.
 
 Lecture 128 Section Intro: Deploying Your Apps
-    High level overview of what we will be doing. Nothing specific.
+High level overview of what we will be doing. Nothing specific.
 
 Lecture 129 Installing git
-    Just installed git. I already had it installed.
+Just installed git. I already had it installed.
 
 Lecture 130 What is Git?
-    A high level overview of what git does.
+A high level overview of what git does.
 
 Lecture 131 Integrating Git into our Project
-    In this lecture we go over basic command line git commands. We deleted a few lines in app.js that we didn't need to use as an example.
+In this lecture we go over basic command line git commands. We deleted a few lines in app.js that we didn't need to use as an example.
 
     Initializing the project with Git - go to the root of the project in the terminal. This initializes the project into git. Nothing will be tracked, it it just aware of the project from here up.
         $ git init
@@ -3849,9 +3872,9 @@ Lecture 131 Integrating Git into our Project
         $ git log
 
 Lecture 132 Setting up SSH and Github
-    Documentation here - https://help.github.com/articles/connecting-to-github-with-ssh/
-    In this lecture we log into our github account and we link our git repo to it. I already had this done so I am just along for the ride.
-    'SSH' = Secure Shell. A safe way for two machines to communicate.
+Documentation here - https://help.github.com/articles/connecting-to-github-with-ssh/
+In this lecture we log into our github account and we link our git repo to it. I already had this done so I am just along for the ride.
+'SSH' = Secure Shell. A safe way for two machines to communicate.
 
     Check to see if SSH is already set up.
         // 'ls' :list all the folders. '-a' :Show all the hidden folders as well. '~/.ssh' :tilda is short for user directory and were looking for the .ssh just one level up. If you see only '. ..' you don't have keys set up. If you see things like.. 'github_rsa github_rsa.pub' then you do. The '.pub' is the public key. Never share the other key. It is a password.
@@ -3898,7 +3921,7 @@ Lecture 132 Setting up SSH and Github
         The repo with all our files should be on github now.
 
 Lecture 133 Production Webpack
-    In this lecture we setup Webpack to have two build scripts. One is for development and the other is for production. The idea being we need on big file to map our code when we are developing and two files when we are sending to production. The production script bundles out the code that a developer would need it will only run if someone opens the dev tools otherwise the only the small code to run the app will be opened and ran. This give us great saving in terms of the total size of our app.
+In this lecture we setup Webpack to have two build scripts. One is for development and the other is for production. The idea being we need on big file to map our code when we are developing and two files when we are sending to production. The production script bundles out the code that a developer would need it will only run if someone opens the dev tools otherwise the only the small code to run the app will be opened and ran. This give us great saving in terms of the total size of our app.
 
     So in package.json we added "build:dev" and "build:prod" ...
 
@@ -3957,7 +3980,7 @@ Lecture 133 Production Webpack
         };
 
 Lecture 134 Creating Separate CSS Files
-    In this lecture we configure webpack to give us seperate css files outside of the bundle. This saves us time. When CSS is inside the bundle that means all the JavaScript has to run before the css can get compiled by the browser.
+In this lecture we configure webpack to give us seperate css files outside of the bundle. This saves us time. When CSS is inside the bundle that means all the JavaScript has to run before the css can get compiled by the browser.
 
     We install a webpack plugin called 'extract-text-webpack-plugin'. docs here...
     https://github.com/webpack-contrib/extract-text-webpack-plugin/releases
@@ -4039,7 +4062,7 @@ Lecture 134 Creating Separate CSS Files
     Now when we use the dev tools style selector it tells us where in our files the location is not the location in the compressed file.
 
 Lecture 125 A Production Web Server with Express
-    In this lecture we learned a tiny bit about express.js and made an express server. Note... I need to learn more about this.
+In this lecture we learned a tiny bit about express.js and made an express server. Note... I need to learn more about this.
 
     We installed express in the project...
         $ yarn add express
@@ -4065,8 +4088,8 @@ Lecture 125 A Production Web Server with Express
     We don't go very in depth in this lecture, should do more research.
 
 Lecture 136 Deploying with Heroku
-    Note: we use Heroku almost exclusivley through command line.
-    In this lecture I signed up for Heroku and then downloaded the 'Heroku cli' for MacOS from https://devcenter.heroku.com/articles/heroku-cli#macos
+Note: we use Heroku almost exclusivley through command line.
+In this lecture I signed up for Heroku and then downloaded the 'Heroku cli' for MacOS from https://devcenter.heroku.com/articles/heroku-cli#macos
 
     We check to make sure it's there...
         $ heroku --version
@@ -4161,10 +4184,10 @@ BRANCH - Here I had to create a new branch that had expensify app at the root so
         //this will show us where the problem might have come from.
 
 Lecture 137 Regular vs Development Dependencies
-    In this lecture we learn how to install something as a dev dependency. So Heroku won't install things it doesn't actually need.
-    We installed 'Chalk' we don't use it we just installed it as an example then deleted it. add the '--dev' to make it a dev dependency.
-        $ yarn add chalk --dev
-        //This says to install chalk but intall it as a dev dependency.
+In this lecture we learn how to install something as a dev dependency. So Heroku won't install things it doesn't actually need.
+We installed 'Chalk' we don't use it we just installed it as an example then deleted it. add the '--dev' to make it a dev dependency.
+\$ yarn add chalk --dev
+//This says to install chalk but intall it as a dev dependency.
 
     Next we did a little re-organizing. making the test dependencies dev dependencies.
         //We took thses from dependencies and put them down here.
@@ -4218,7 +4241,7 @@ Lecture 137 Regular vs Development Dependencies
     $ git push heroku expensify-app-branch:master
 
 Lecture 138 New Feature Workflow
-    In this lecture we update and make changes to 'ExpenseListItem' component and learn how to make the changes and deploy them.
+In this lecture we update and make changes to 'ExpenseListItem' component and learn how to make the changes and deploy them.
 
     We imported moment.js and numeral.js. Numeral is similar to moment and helps us format our numbers.
 
@@ -4264,7 +4287,7 @@ Lecture 138 New Feature Workflow
     There was an issue uploading to Heroku but that was an error on their side. Was not able to upload.
 
 Lecture 139 Adding Total Selector
-    In this lecture we add a selector function called expenses-total.js and we created a test for it as well, expenses-total.test.js.
+In this lecture we add a selector function called expenses-total.js and we created a test for it as well, expenses-total.test.js.
 
     I got super hung up on '.reduce()', it didn't make sense to me. But we created both files.
         src/selectors/expenses-total.js
@@ -4314,7 +4337,7 @@ Lecture 139 Adding Total Selector
             .reduce((sum, value) => sum + value, 0);
 
 Lecture 140 Build it: Adding Summary Component
-    In this lecture we added a line above the "<ExpenseListFilters />" on the 'ExpenseDashboardPage'. We created a new component called 'ExpensesSummary.js' that adds the line "Viewing 0 expenses totalling $0.00"
+In this lecture we added a line above the "<ExpenseListFilters />" on the 'ExpenseDashboardPage'. We created a new component called 'ExpensesSummary.js' that adds the line "Viewing 0 expenses totalling \$0.00"
 
     First I created the component and put in some dummy text to see if it was working. I did get it to work on my own but I am going to outline the order Andrew did it here.
 
@@ -4377,23 +4400,23 @@ Lecture 140 Build it: Adding Summary Component
     The end of the section
 
 Lecture 141 Intro to Firebase.
-    Firebase is a database solution created by Google. It also helps with authorization. We are going to focus on all the CRUD operations. Later we will explore authorization.
+Firebase is a database solution created by Google. It also helps with authorization. We are going to focus on all the CRUD operations. Later we will explore authorization.
 
 Lecture 142 Getting Firebase
-    In this lecture we remove the authentication from our database so we can read and write to it without authenticating. We set the rules read and write to true Then we use npm to bring in a firebase library. And then add in the config information provided to a new folder and file we created in 'src' -> 'firebase/firebase.js'. Inside that file we wrote ...
-        import * as firebase from 'firebase';
-        //Which says bring in everything from firebase and store it on a variable named firebase.
-    Then we copied our password config information from firebase and pasted it below.
-        // Initialize Firebase
-        const config = {
-            apiKey: "AIzaSyDAWxyEfaRUGL3wPZhiC7iW3tWa6sKysqg",
-            authDomain: "expensify-b91ca.firebaseapp.com",
-            databaseURL: "https://expensify-b91ca.firebaseio.com",
-            projectId: "expensify-b91ca",
-            storageBucket: "expensify-b91ca.appspot.com",
-            messagingSenderId: "736882551504"
-        };
-        This is essentially our password to get into our database.
+In this lecture we remove the authentication from our database so we can read and write to it without authenticating. We set the rules read and write to true Then we use npm to bring in a firebase library. And then add in the config information provided to a new folder and file we created in 'src' -> 'firebase/firebase.js'. Inside that file we wrote ...
+import \* as firebase from 'firebase';
+//Which says bring in everything from firebase and store it on a variable named firebase.
+Then we copied our password config information from firebase and pasted it below.
+// Initialize Firebase
+const config = {
+apiKey: "AIzaSyDAWxyEfaRUGL3wPZhiC7iW3tWa6sKysqg",
+authDomain: "expensify-b91ca.firebaseapp.com",
+databaseURL: "https://expensify-b91ca.firebaseio.com",
+projectId: "expensify-b91ca",
+storageBucket: "expensify-b91ca.appspot.com",
+messagingSenderId: "736882551504"
+};
+This is essentially our password to get into our database.
 
     Then we wrote...
         firebase.initializeApp(config);
@@ -4410,7 +4433,7 @@ Lecture 142 Getting Firebase
     Now when we go to the terminal and run the dev-server it should put the js object in our db.
 
 Lecture 143 writing to the database
-    In this lecture we're learning how we use firebase. firebase has lots of features besides a db so to let it know who we are talking to we will always get to the db by writing 'firebase.database()'. to make it simpler we did throw that in a variable 'const database = firebase.database();'
+In this lecture we're learning how we use firebase. firebase has lots of features besides a db so to let it know who we are talking to we will always get to the db by writing 'firebase.database()'. to make it simpler we did throw that in a variable 'const database = firebase.database();'
 
         firebase.initializeApp(config);
 
@@ -4438,7 +4461,7 @@ Lecture 143 writing to the database
         // we use a '/' to burrow down.
 
 Lecture 144 ES6 Promises
-    In this lecture we went to a test area to see how promises work. Promises are just a way to sync up our asynchronous operations. We sent out a request, once it's done then do this with it when its back. we create a dummy promise that waits 5 seconds then runs to play with it.
+In this lecture we went to a test area to see how promises work. Promises are just a way to sync up our asynchronous operations. We sent out a request, once it's done then do this with it when its back. we create a dummy promise that waits 5 seconds then runs to play with it.
 
     This is a promise. A promise has 3 states. They are:
         Promise is pending: You don't know yet.
@@ -4485,23 +4508,23 @@ Lecture 144 ES6 Promises
 
     NOTE: most of the time we don't create promises, they are already created by the library we are using. We just call on them and use them.
 
-    ** we also deleted the playground/promise.js import from our app once we finished.  
+    ** we also deleted the playground/promise.js import from our app once we finished.
 
 Lecture 145 Promises with Firebase.
-    In this lecture we used the '.then()' and '.catch()' in firebase.js file. We talked about how we call it and it's just like above.
-        database.ref('attributes').set({
-            height: 68,
-            weight: 180.1
-        }).then(()=>{
-            console.log('Second call worked');
-        }).catch((e)=>{
-            console.log('Things did not work for the second error', e);
-        });
-    We also went to the firebase website and looked at where the documentation is. There are a lot of other methods available to us there.
-    https://firebase.google.com/docs/reference/js/firebase.database
+In this lecture we used the '.then()' and '.catch()' in firebase.js file. We talked about how we call it and it's just like above.
+database.ref('attributes').set({
+height: 68,
+weight: 180.1
+}).then(()=>{
+console.log('Second call worked');
+}).catch((e)=>{
+console.log('Things did not work for the second error', e);
+});
+We also went to the firebase website and looked at where the documentation is. There are a lot of other methods available to us there.
+https://firebase.google.com/docs/reference/js/firebase.database
 
 Lecture 146 - Removing Data From Firebase.
-    In this lecture we learned 2 ways to remove data from firebase.
+In this lecture we learned 2 ways to remove data from firebase.
 
     The first is to use the '.remove()' method. We target the area we want to remove with '.ref()' and then tag on '.remove()' at the end. Like...
 
@@ -4520,7 +4543,7 @@ Lecture 146 - Removing Data From Firebase.
         //'then' and 'catch' could be added on if we wanted to know if the data changed from the browser console.
 
 Lecture 147 - Updating Data
-    With the methods we know we can already update our firebase db. However using the '.update()' method we can be much more efficient. With update we can do multiple things in one call, like delete some data, correct the spelling of a last name and add a field all in one call. Like this...
+With the methods we know we can already update our firebase db. However using the '.update()' method we can be much more efficient. With update we can do multiple things in one call, like delete some data, correct the spelling of a last name and add a field all in one call. Like this...
 
         database.ref().update({
             name: 'Mike', //Changed name
@@ -4560,7 +4583,7 @@ Lecture 147 - Updating Data
         //We wrap location with the forward slash and city so that we can use correct JSON notation and also be specific about what we want updated exactly inside the nested location area. This is a little odd but we probably won't use this method very often.
 
 Lecture 148 - Fetching Data from firebase.
-    There are two ways of fetching data. The first is a single call to go to db and fetch the data. The second is to subscribe and to be notified and updated if the data changes in real time.
+There are two ways of fetching data. The first is a single call to go to db and fetch the data. The second is to subscribe and to be notified and updated if the data changes in real time.
 
     We will focus on the first.
 
@@ -4609,7 +4632,7 @@ Lecture 148 - Fetching Data from firebase.
         }, 10500);
 
 Lecture 149 - Array data in firebase Part 1
-    Firebase does not let you store arrays. So in this lecture we learn how to store array based data.
+Firebase does not let you store arrays. So in this lecture we learn how to store array based data.
 
     If we were to store this object with two arrays. firebase turns it into an object with number idexes that firebase chooses. Which becomes too difficult to guess or know what it will choose.
 
@@ -4666,7 +4689,7 @@ Lecture 149 - Array data in firebase Part 1
         database.ref('notes/-L9qkP0jz_Nx6NXrFfF5').remove(); //Delete
 
 Lecture 150 - Array Data in Firebase Part 2
-    We learn how to fetch our array like data from our firebase object structure and do something meaningful with it. The code below is how we take the data and make it into an array that will be easier to use with JavaScript.
+We learn how to fetch our array like data from our firebase object structure and do something meaningful with it. The code below is how we take the data and make it into an array that will be easier to use with JavaScript.
 
         database.ref('expenses')
             .on('value', (snapshot)=>{ //On data change run the function.
@@ -4700,6 +4723,8 @@ Lecture 150 - Array Data in Firebase Part 2
             console.log(snapshot.key, snapshot.val());
         });
 
-Lecture 151 - Section Intro - Firebase with redux
+Before running "yarn upgrade-interactive --latest"
 
-Before running "yarn upgrade-interactive --latest" 
+updated the firebase folder to ignore the config info but track the firebase folder.
+
+Lecture 151 - Section Intro - Firebase with redux

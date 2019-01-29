@@ -2,4 +2,4 @@
 *.css.map
 node_modules
 public/dist/
-src/firebase/firebase.js
+src/firebase/config.js
