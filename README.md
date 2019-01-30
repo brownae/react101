@@ -4731,3 +4731,6 @@ Lecture 151 - Section Intro - Firebase with redux
 
 Lecture 152 - Asynchronous Redux Actions
 https://github.com/reduxjs/redux-thunk
+https://github.com/dmitry-zaets/redux-mock-store
+https://www.npmjs.com/package/cross-env
+https://www.npmjs.com/package/dotenv
