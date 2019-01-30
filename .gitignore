@@ -3,3 +3,5 @@
 node_modules
 public/dist/
 src/firebase/config.js
+.env.test
+.env.development

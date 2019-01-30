@@ -4728,3 +4728,6 @@ Before running "yarn upgrade-interactive --latest"
 updated the firebase folder to ignore the config info but track the firebase folder.
 
 Lecture 151 - Section Intro - Firebase with redux
+
+Lecture 152 - Asynchronous Redux Actions
+https://github.com/reduxjs/redux-thunk
